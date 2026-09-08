@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 
 export default function InvestigationNote({
@@ -23,47 +22,39 @@ export default function InvestigationNote({
       whileHover={
         prefersReducedMotion ? undefined : { rotate: rotate + 1, y: -4 }
       }
-      className={`relative ${className}`}
+      className={`flex max-w-[380px] flex-col items-start pl-[16%] pr-[8%] text-left sm:pl-[17%] lg:max-w-[550px] lg:pl-[16%] lg:pr-[4%] ${className}`}
     >
-      <Image
-        src="/torn-paper-note.png"
-        alt=""
-        width={1254}
-        height={1254}
-        className="h-auto w-full drop-shadow-[0_18px_30px_rgba(60,42,24,0.22)]"
-      />
+      <p className="text-burgundy mb-[8px] font-mono text-[13px] font-semibold tracking-[0.15em] uppercase lg:mb-[10px] lg:text-[14px] lg:tracking-[0.13em]">
+        Investigative note
+      </p>
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-[16%] text-center">
-        <p className="text-burgundy font-mono text-[9px] font-semibold tracking-[0.16em] uppercase">
-          Investigative note
-        </p>
+      <p className="font-hand text-ink/85 text-[19px] leading-[1.35] lg:text-[19px] lg:leading-[1.4]">
+        &ldquo;The outliers aren&apos;t noise.
+        <br />
+        They&apos;re where the{" "}
+        <span className="relative inline-block">
+          story hides.
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 100 14"
+            className="text-burgundy/70 absolute -bottom-1 left-0 h-2.5 w-full"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M2 8 Q 25 2 50 7 T 98 6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+            />
+          </svg>
+        </span>
+        &rdquo;
+      </p>
 
-        <p className="font-hand text-ink/85 mt-2 text-[15px] leading-[1.15] sm:text-lg">
-          &ldquo;The outliers aren&apos;t noise.
-          <br />
-          They&apos;re where the{" "}
-          <span className="relative inline-block">
-            story hides.
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 100 14"
-              className="text-burgundy/70 absolute -bottom-1 left-0 h-2.5 w-full"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M2 8 Q 25 2 50 7 T 98 6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-            </svg>
-          </span>
-          &rdquo;
-        </p>
-
-        <p className="font-hand text-ink/70 mt-1.5 text-base">— A.C.</p>
-      </div>
+      <p className="font-hand text-ink/70 mt-[6px] text-[16px] lg:mt-[8px] lg:text-[16px]">
+        — A.C.
+      </p>
     </motion.div>
   );
 }

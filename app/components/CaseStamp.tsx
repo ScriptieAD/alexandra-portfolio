@@ -32,7 +32,19 @@ export default function CaseStamp({
       whileHover={prefersReducedMotion ? undefined : { scale: [1, 1.06, 1] }}
       className={`pointer-events-auto aspect-square select-none ${className}`}
     >
-      <svg viewBox="0 0 120 120" className="h-full w-full mix-blend-multiply">
+      {/* faint mis-registered ghost pass, like an ink stamp pressed slightly
+          off-true — a second, tinier copy nudged and rotated behind the
+          main print */}
+      <svg
+        viewBox="0 0 120 120"
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full rotate-[3deg] scale-[1.02] opacity-25 mix-blend-multiply"
+      >
+        <circle cx="60" cy="60" r="57" fill="none" stroke="#8f2138" strokeWidth="1.1" />
+        <circle cx="60" cy="60" r="51" fill="none" stroke="#8f2138" strokeWidth="1.1" />
+      </svg>
+
+      <svg viewBox="0 0 120 120" className="h-full w-full opacity-[0.82] mix-blend-multiply">
         <circle
           cx="60"
           cy="60"

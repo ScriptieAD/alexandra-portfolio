@@ -107,6 +107,44 @@ body {
   }
 }
 
+/* Quiet paper — same warm grain, cropped away from the hearts doodle
+   in the source image and washed out further, for long reading sections. */
+.bg-paper-quiet {
+  background-color: var(--color-ivory);
+  background-image: linear-gradient(180deg, rgba(244, 241, 235, 0.94), rgba(244, 241, 235, 0.97)),
+    url("/paper-hearts.png");
+  background-size: cover;
+  background-position: center 35%;
+  background-repeat: no-repeat;
+}
+
+.bg-paper-quiet-deep {
+  background-color: var(--color-ivory-deep);
+  background-image: linear-gradient(180deg, rgba(232, 226, 216, 0.94), rgba(232, 226, 216, 0.97)),
+    url("/paper-hearts.png");
+  background-size: cover;
+  background-position: center 35%;
+  background-repeat: no-repeat;
+}
+
+/* Hearts confined to the intro section only — contained by the section's
+   own box (no fixed attachment), so they scroll away with it and never
+   reappear lower on the page. */
+.bg-hero-hearts {
+  background-color: var(--color-ivory);
+  background-image: linear-gradient(180deg, rgba(244, 241, 235, 0.74), rgba(244, 241, 235, 0.92)),
+    url("/paper-hearts.png");
+  background-size: 420px auto;
+  background-position: top right;
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 1024px) {
+  .bg-hero-hearts {
+    background-size: 560px auto;
+  }
+}
+
 .bg-paper-dark {
   background-color: var(--color-ink);
   background-image: linear-gradient(180deg, rgba(23, 23, 23, 0.6), rgba(23, 23, 23, 0.78)),
@@ -121,6 +159,14 @@ body {
     url("/paper-hearts.png");
   background-size: cover;
   background-position: center;
+}
+
+/* Desaturated kraft folder — a quieter, greige stand-in for the bright
+   yellow manila tone, with no hearts texture (a folder shouldn't read
+   as "paper stationery" the way sheets and notes do). */
+.bg-manila-folder-quiet {
+  background-color: #cbbfa8;
+  background-image: linear-gradient(155deg, rgba(210, 199, 176, 0.96), rgba(178, 163, 137, 0.96));
 }
 
 .bg-paper-bloom {

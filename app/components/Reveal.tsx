@@ -1,10 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
-
-const initial = { opacity: 0, y: 18 };
-const animate = { opacity: 1, y: 0 };
 
 export default function Reveal({
   children,
@@ -17,7 +14,13 @@ export default function Reveal({
   delay?: number;
   onLoad?: boolean;
 }) {
-  const transition = { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as const };
+  const prefersReducedMotion = useReducedMotion();
+
+  const initial = prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 18 };
+  const animate = { opacity: 1, y: 0 };
+  const transition = prefersReducedMotion
+    ? { duration: 0.4, delay: delay * 0.4 }
+    : { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as const };
 
   if (onLoad) {
     return (

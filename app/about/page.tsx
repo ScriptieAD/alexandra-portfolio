@@ -23,7 +23,7 @@ const focusAreas: FocusArea[] = [
             "Transaction monitoring, suspicious behaviour and investigative analytics.",
         variant: "burgundy",
         span: "lg:col-span-5",
-        microLine: "currently going down this rabbit hole ↓",
+        microLine: "new territory, built on purpose ↓",
         badge: "Currently exploring",
     },
     {
@@ -55,7 +55,7 @@ const skillGroups = [
 
 export default function AboutPage() {
     return (
-        <main className="bg-paper min-h-screen overflow-x-hidden text-ink">
+        <main className="bg-paper-quiet min-h-screen overflow-x-hidden text-ink">
 
             {/* NAVBAR */}
             <nav className="sticky top-0 z-50 border-b border-black/10 bg-ivory/90 backdrop-blur-md">
@@ -103,21 +103,22 @@ export default function AboutPage() {
             </nav>
 
             {/* ABOUT HERO */}
-            <section className="mx-auto max-w-[1400px] px-6 pb-24 pt-16 md:px-10 md:pt-24">
+            <section className="bg-hero-hearts relative overflow-hidden pb-16 pt-14 md:pb-20 md:pt-20">
+                <div className="mx-auto max-w-[1400px] px-6 md:px-10">
 
-                <div className="grid items-start gap-14 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
+                <div className="grid items-start gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
 
                     {/* PHOTO */}
                     <Reveal onLoad>
                         <div className="relative">
-                            <div className="group relative aspect-[4/5] overflow-hidden rounded-[30px] bg-[#ded8ce]">
+                            <div className="group relative aspect-[4/5] overflow-hidden rounded-[28px] bg-[#ded8ce]">
 
                                 <Image
                                     src="/about-me.png"
                                     alt="Alexandra Crăciunescu"
                                     fill
                                     priority
-                                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                                     sizes="(max-width: 1024px) 100vw, 40vw"
                                 />
 
@@ -126,8 +127,8 @@ export default function AboutPage() {
                             <PhotoStickers />
 
                             <div className="bg-velvet absolute -bottom-5 -right-4 max-w-[190px] rounded-2xl border border-white/10 px-5 py-4 text-white shadow-lg backdrop-blur-sm md:-right-6">
-                                <p className="text-[9px] uppercase tracking-[0.22em] text-white/60">
-                                    Current obsession
+                                <p className="text-[9px] uppercase tracking-[0.22em] text-white/75">
+                                    Current focus
                                 </p>
 
                                 <p className="mt-1.5 font-serif text-lg leading-tight">
@@ -135,20 +136,26 @@ export default function AboutPage() {
                                 </p>
                             </div>
                         </div>
+
+                        <div className="mt-6 flex flex-wrap items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-black/50">
+                            <span>Data</span>
+                            <span className="text-black/30">/</span>
+                            <span>Financial Crime</span>
+                            <span className="text-black/30">/</span>
+                            <span>Technology</span>
+                        </div>
                     </Reveal>
 
                     {/* TEXT */}
-                    <div className="lg:pt-4">
+                    <div>
 
                         <Reveal onLoad>
                             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-burgundy">
                                 About me
                             </p>
 
-                            <h1 className="mt-6 max-w-3xl font-serif text-5xl leading-[0.98] tracking-[-0.02em] sm:text-6xl md:text-7xl lg:text-[84px]">
-                                Data
-                                <br />
-                                but make it creative.
+                            <h1 className="mt-5 max-w-2xl text-pretty font-serif text-[clamp(2.25rem,1rem+4.4vw,4.5rem)] leading-[1.05] tracking-[-0.02em]">
+                                Data but make it creative.
                                 <br />
                                 <span className="text-burgundy">
                                     Curious by default.
@@ -157,40 +164,50 @@ export default function AboutPage() {
                         </Reveal>
 
                         <Reveal onLoad delay={0.1}>
-                            <div className="mt-10 max-w-xl space-y-5 text-lg leading-8 text-black/60">
+                            <div className="mt-8 max-w-xl space-y-4 text-lg leading-8 text-black/65">
                                 <p>
-                                    I’m into data when it feels like solving a puzzle. Give me messy datasets, weird patterns, systems that don’t quite make sense yet, and I’m interested.                                </p>
+                                    I&apos;m drawn to messy datasets, unexpected patterns, and
+                                    questions that don&apos;t have obvious answers.
+                                </p>
 
                                 <p>
-                                    That same curiosity recently pulled me toward financial crime and fraud analytics, understanding behaviour, spotting what looks off, and using data to connect the dots                                </p>
+                                    At Global Records, I work on financial and market analysis,
+                                    automated reporting, APIs, and internal analytical tools.
+                                </p>
+
+                                <p>
+                                    I&apos;m now building on that experience through practical
+                                    financial crime and transaction-monitoring projects.
+                                </p>
                             </div>
                         </Reveal>
 
-                        <Reveal onLoad delay={0.14}>
-                            <div className="group mt-9 max-w-sm border-l border-black/15 pl-5 transition-colors duration-300 hover:border-burgundy/40">
-                                <p className="font-serif text-base italic leading-relaxed text-black/40 transition-all duration-300 ease-out group-hover:translate-x-0.5 group-hover:text-black/60">
+                        <Reveal onLoad delay={0.16}>
+                            <div className="group mt-8 max-w-lg rounded-2xl border border-black/10 bg-white/50 px-6 py-5 transition-colors duration-300 hover:border-burgundy/30">
+                                <p className="font-serif text-base italic leading-relaxed text-black/55 transition-colors duration-300 group-hover:text-black/70">
                                     &ldquo;The truth&hellip; is always curious and beautiful to seekers after it.&rdquo;
                                 </p>
-                                <p className="mt-2 text-[11px] not-italic uppercase tracking-[0.18em] text-black/30 transition-colors duration-300 group-hover:text-black/45">
+                                <p className="mt-2 text-[11px] not-italic uppercase tracking-[0.18em] text-black/45 transition-colors duration-300 group-hover:text-black/60">
                                     — Agatha Christie
                                 </p>
-                            </div>
-                        </Reveal>
 
-                        <Reveal onLoad delay={0.18}>
-                            <p className="mt-12 max-w-xl border-t border-black/10 pt-8 font-serif text-3xl leading-tight sm:text-4xl md:text-5xl">
-                                I&apos;m interested in the detail that{" "}
-                                <span className="text-burgundy">doesn&apos;t quite fit.</span>
-                            </p>
+                                <div className="mt-4 border-t border-black/10 pt-4">
+                                    <p className="text-pretty font-serif text-xl leading-snug sm:text-2xl">
+                                        I&apos;m interested in the detail that{" "}
+                                        <span className="text-burgundy">doesn&apos;t quite fit.</span>
+                                    </p>
+                                </div>
+                            </div>
                         </Reveal>
 
                     </div>
 
                 </div>
+                </div>
             </section>
 
             {/* WHAT I BRING */}
-            <section className="bg-paper-deep border-b border-black/10 py-28">
+            <section className="bg-paper-quiet-deep border-b border-black/10 py-24">
                 <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
 
                     <Reveal>
@@ -201,18 +218,19 @@ export default function AboutPage() {
 
                             <SkillsHeading />
 
-                            <p className="mt-6 max-w-md leading-7 text-black/50">
-                                The things I’m curious about, getting better at, and probably overthinking right now </p>
+                            <p className="mt-6 max-w-md leading-7 text-black/60">
+                                The things I&apos;m curious about right now, and getting better at on purpose.
+                            </p>
                         </div>
                     </Reveal>
 
-                    {/* OVERTHINKING NOTE */}
+                    {/* MARGIN NOTE */}
                     <div className="pointer-events-none absolute right-10 top-1 hidden max-w-[190px] -rotate-2 select-none xl:block">
-                        <p className="font-serif text-base italic text-black/40">
-                            currently overthinking:
+                        <p className="font-serif text-base italic text-black/50">
+                            currently curious about:
                         </p>
 
-                        <p className="mt-2 font-mono text-[11px] leading-relaxed tracking-tight text-black/35">
+                        <p className="mt-2 font-mono text-[11px] leading-relaxed tracking-tight text-black/45">
                             patterns / fraud / systems / why things break
                         </p>
 
@@ -255,7 +273,7 @@ export default function AboutPage() {
             </section>
 
             {/* BACKGROUND — TIMELINE */}
-            <section className="mx-auto max-w-[1400px] px-6 py-28 md:px-10">
+            <section className="mx-auto max-w-[1400px] px-6 py-24 md:px-10">
 
                 <div className="grid gap-16 lg:grid-cols-[0.7fr_1.3fr]">
 
@@ -292,10 +310,10 @@ export default function AboutPage() {
 
                                     <Link
                                         href={`/about/${exp.slug}`}
-                                        className="group/exp -mx-4 block rounded-2xl px-4 py-2 transition hover:bg-black/[0.03]"
+                                        className="group/exp -mx-4 block rounded-2xl px-4 py-2 transition hover:bg-black/[0.03] motion-reduce:transition-colors"
                                     >
                                         <div className="flex flex-wrap items-center gap-3">
-                                            <p className="text-xs uppercase tracking-[0.2em] text-black/35">
+                                            <p className="text-xs uppercase tracking-[0.2em] text-black/50">
                                                 {exp.period}
                                             </p>
 
@@ -312,7 +330,7 @@ export default function AboutPage() {
                                         >
                                             {exp.company}
 
-                                            <span className="text-xl opacity-0 transition -translate-x-1 group-hover/exp:translate-x-0 group-hover/exp:opacity-100">
+                                            <span className="-translate-x-1 text-xl opacity-0 transition group-hover/exp:translate-x-0 group-hover/exp:opacity-100 motion-reduce:translate-x-0">
                                                 →
                                             </span>
                                         </h3>
@@ -321,7 +339,7 @@ export default function AboutPage() {
                                             {exp.role}
                                         </p>
 
-                                        <p className="mt-4 max-w-xl leading-7 text-black/50">
+                                        <p className="mt-4 max-w-xl leading-7 text-black/60">
                                             {exp.description}
                                         </p>
                                     </Link>
@@ -334,7 +352,7 @@ export default function AboutPage() {
             </section>
 
             {/* TOOLKIT */}
-            <section className="bg-paper-dark py-28 text-white">
+            <section className="bg-paper-dark py-24 text-white">
 
                 <div className="mx-auto max-w-[1400px] px-6 md:px-10">
 
@@ -363,7 +381,7 @@ export default function AboutPage() {
                                         {group.items.map((item) => (
                                             <li
                                                 key={item}
-                                                className="text-sm leading-6 text-white/55"
+                                                className="text-sm leading-6 text-white/75"
                                             >
                                                 {item}
                                             </li>
@@ -378,7 +396,7 @@ export default function AboutPage() {
             </section>
 
             {/* OFF SCREEN */}
-            <section className="mx-auto max-w-[1400px] px-6 py-28 md:px-10">
+            <section className="mx-auto max-w-[1400px] px-6 py-24 md:px-10">
                 <Reveal>
                     <p className="text-xs font-semibold uppercase tracking-[0.28em] text-burgundy">
                         Off screen
@@ -392,14 +410,14 @@ export default function AboutPage() {
             </section>
 
             {/* CURRENT DIRECTION */}
-            <section id="whats-next" className="mx-auto max-w-[1400px] px-6 pb-28 md:px-10">
+            <section id="whats-next" className="mx-auto max-w-[1400px] px-6 pb-24 md:px-10">
                 <Reveal>
                     <div className="bg-velvet overflow-hidden rounded-[32px] text-white">
 
                         <div className="grid gap-10 p-8 md:p-12 lg:grid-cols-[1.2fr_0.8fr] lg:p-16">
 
                             <div>
-                                <p className="text-xs uppercase tracking-[0.25em] text-white/50">
+                                <p className="text-xs uppercase tracking-[0.25em] text-white/65">
                                     What&apos;s next
                                 </p>
 
@@ -408,7 +426,7 @@ export default function AboutPage() {
                                     financial crime analytics.
                                 </h2>
 
-                                <p className="mt-7 max-w-2xl text-lg leading-8 text-white/65">
+                                <p className="mt-7 max-w-2xl text-lg leading-8 text-white/80">
                                     I&apos;m developing practical experience through transaction
                                     monitoring, fraud detection and risk-analysis projects while
                                     deepening my understanding of AML and financial crime.
@@ -419,7 +437,7 @@ export default function AboutPage() {
 
                                 <Link
                                     href="/#projects"
-                                    className="rounded-full bg-white px-7 py-4 text-sm font-medium text-burgundy transition hover:-translate-y-1"
+                                    className="rounded-full bg-white px-7 py-4 text-sm font-medium text-burgundy transition hover:-translate-y-1 motion-reduce:transition-colors motion-reduce:hover:translate-y-0"
                                 >
                                     Explore my projects →
                                 </Link>
@@ -433,7 +451,7 @@ export default function AboutPage() {
 
             {/* FOOTER */}
             <footer className="border-t border-black/10">
-                <div className="mx-auto flex max-w-[1400px] flex-col justify-between gap-4 px-6 py-10 text-xs text-black/40 sm:flex-row md:px-10">
+                <div className="mx-auto flex max-w-[1400px] flex-col justify-between gap-4 px-6 py-10 text-xs text-black/55 sm:flex-row md:px-10">
 
                     <p>Alexandra Crăciunescu</p>
 

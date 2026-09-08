@@ -61,7 +61,7 @@ export default function Home() {
       {/* PROJECTS */}
       <section
         id="projects"
-        className="bg-paper-deep border-y border-black/10 py-28"
+        className="bg-paper-quiet-deep border-y border-black/10 pt-12 pb-24 md:pt-16 md:pb-28"
       >
         <ProjectsSection onOpenCase={handleOpenCase} />
       </section>

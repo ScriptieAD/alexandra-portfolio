@@ -23,7 +23,11 @@ export default function ArchiveLabel({
       whileInView={{ opacity: 1, y: 0, rotate }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={`bg-[#faf7f0] shadow-paper-xs absolute rounded-[2px] px-2.5 py-1.5 font-mono text-[9px] leading-relaxed text-black/55 ${className}`}
+      style={{
+        boxShadow:
+          "0 18px 40px rgba(69,50,37,0.10), 0 3px 8px rgba(69,50,37,0.06)",
+      }}
+      className={`bg-[#faf7f0] absolute rounded-[2px] px-2.5 py-1.5 font-mono text-[9px] leading-relaxed text-black/55 ${className}`}
     >
       <p className="font-semibold tracking-[0.12em] text-black/70 uppercase">
         Case {caseNo}

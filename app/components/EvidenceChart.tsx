@@ -39,13 +39,13 @@ export default function EvidenceChart({
       viewport={{ once: true, margin: "-60px" }}
       transition={{ type: "spring", stiffness: 150, damping: 18, delay }}
       whileHover={prefersReducedMotion ? undefined : { y: -4 }}
-      className={`group bg-paper-card shadow-paper-sm relative rounded-[6px] p-4 sm:p-5 ${className}`}
+      className={`group relative ${className}`}
     >
-      <p className="max-w-[78%] text-[9px] font-semibold tracking-[0.16em] text-black/45 uppercase">
+      <p className="max-w-[78%] text-[10px] font-semibold tracking-[0.16em] text-black/45 uppercase sm:text-xs">
         Anomaly score over time
       </p>
 
-      <svg viewBox="0 0 100 76" className="mt-2 h-20 w-full overflow-visible">
+      <svg viewBox="0 0 100 76" className="mt-3 h-24 w-full overflow-visible sm:h-28">
         {Y_TICKS.map((tick, i) => {
           const y = 66 - i * 12;
           return (
@@ -106,7 +106,7 @@ export default function EvidenceChart({
           delay: delay + 0.35,
         }}
         whileHover={prefersReducedMotion ? undefined : { rotate: -2 }}
-        className="absolute -top-3 -right-3 rounded-[3px] bg-[#e9dcb0] px-2.5 py-1.5 text-center font-mono text-[8px] font-semibold tracking-[0.1em] text-black/60 uppercase shadow-sm"
+        className="absolute -top-3 -right-3 rounded-[3px] bg-[#e9dcb0] px-3 py-2 text-center font-mono text-[9px] font-semibold tracking-[0.1em] text-black/60 uppercase shadow-sm sm:text-[10px]"
       >
         Anomaly
         <br />

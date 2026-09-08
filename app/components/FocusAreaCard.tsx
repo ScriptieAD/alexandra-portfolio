@@ -95,7 +95,7 @@ export default function FocusAreaCard({
 
     return (
         <article
-            className={`group relative flex h-full min-h-[220px] flex-col justify-between overflow-hidden rounded-[24px] p-8 transition duration-300 hover:-translate-y-1.5 hover:shadow-xl ${cardStyles[item.variant]}`}
+            className={`group relative flex h-full min-h-[220px] flex-col justify-between overflow-hidden rounded-[24px] p-8 transition duration-300 hover:-translate-y-1.5 hover:shadow-xl motion-reduce:transition-colors motion-reduce:hover:translate-y-0 motion-reduce:hover:shadow-none ${cardStyles[item.variant]}`}
         >
             <div className="flex items-start justify-between">
                 <motion.span
@@ -134,7 +134,7 @@ export default function FocusAreaCard({
 
                 <p
                     className={`mt-4 max-w-sm text-sm leading-7 ${
-                        isIvory ? "text-black/50" : "text-white/70"
+                        isIvory ? "text-black/60" : "text-white/75"
                     }`}
                 >
                     {item.description}
@@ -143,8 +143,8 @@ export default function FocusAreaCard({
                 <p
                     className={`mt-4 border-t pt-3 font-mono text-[11px] tracking-tight ${
                         isIvory
-                            ? "border-black/10 text-black/35"
-                            : "border-white/10 text-white/40"
+                            ? "border-black/10 text-black/50"
+                            : "border-white/15 text-white/55"
                     }`}
                 >
                     {item.microLine}
