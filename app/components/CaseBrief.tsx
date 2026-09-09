@@ -63,38 +63,31 @@ const BRIEFS: {
 }[] = [
   {
     index: "01",
-    label: "Problem",
+    label: "Objective",
     span: "lg:col-span-8",
     content:
-      "Static transaction thresholds can create noisy alerts and miss changes in individual customer behaviour.",
+      "Detect unusual customer transaction behaviour and identify cases requiring investigation.",
   },
   {
     index: "02",
     label: "Data",
     span: "lg:col-span-4",
-    content:
-      "50,000 synthetic transactions across 2,500 customers, covering six months of transactional and KYC-style customer data.",
+    content: "50,000 transactions and 2,500 customer profiles.",
   },
   {
     index: "03",
-    label: "Objective",
+    label: "Approach",
     span: "lg:col-span-4",
     content:
-      "Detect unusual customer behaviour, convert rule triggers into investigation cases and calibrate alert prioritisation using precision and recall.",
+      "Behavioural baselines, threshold calibration, rule-based monitoring and network analysis.",
   },
   {
     index: "04",
-    label: "Stack",
+    label: "Tools",
     span: "lg:col-span-8",
     content: (
       <div className="flex flex-wrap gap-2">
-        {[
-          "Python",
-          "Pandas",
-          "Behavioural Feature Engineering",
-          "Rule-Based Monitoring",
-          "Threshold Calibration",
-        ].map((tool) => (
+        {["Python", "Pandas", "SQL", "Exploratory Analytics"].map((tool) => (
           <span
             key={tool}
             className="rounded-[2px] border border-black/15 px-2.5 py-1 font-mono text-xs text-black/65"
@@ -131,7 +124,7 @@ export default function CaseBrief() {
                   <h2 className="mt-3 font-serif text-5xl leading-[0.95] uppercase sm:text-6xl">
                     Case
                     <br />
-                    Brief
+                    Overview
                   </h2>
                 </div>
               </div>
@@ -139,12 +132,25 @@ export default function CaseBrief() {
 
             <Reveal delay={0.12}>
               <p className="mt-8 max-w-sm text-base leading-[1.8] text-black/60">
-                I built a rule-based AML transaction monitoring workflow that
+                I built a rule-based transaction monitoring workflow that
                 turns raw transaction data into customer behaviour profiles,
-                generates alerts, groups them into investigation cases and
-                calibrates prioritisation using{" "}
-                <Marked>hidden ground-truth labels</Marked>.
+                generates alerts and prioritises investigation cases using
+                thresholds <Marked>calibrated from the data itself</Marked>.
               </p>
+            </Reveal>
+
+            <Reveal delay={0.22}>
+              <div className="bg-ivory-deep/60 shadow-paper-xs border-t border-r border-b border-l-2 border-t-black/10 border-r-black/10 border-b-black/10 border-l-burgundy/40 mt-8 max-w-sm px-5 py-4">
+                <p className="text-burgundy/70 mb-1.5 font-mono text-[10px] font-bold tracking-[0.18em] uppercase">
+                  Methodology note
+                </p>
+                <p className="text-[13px] leading-[1.7] text-black/60 italic">
+                  The dataset&apos;s laundering labels were not used as the
+                  analytical answer. Detection logic was developed
+                  independently from customer behaviour and transaction
+                  patterns.
+                </p>
+              </div>
             </Reveal>
           </div>
 

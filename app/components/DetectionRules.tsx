@@ -38,14 +38,14 @@ const RULES: Rule[] = [
     label: "Profile Deviation",
     explanation: (
       <>
-        Detects months where a customer&apos;s total transaction volume
-        significantly exceeds the expected monthly volume from their{" "}
-        <Marked>customer profile</Marked>.
+        Detects customers whose monthly activity significantly{" "}
+        <Marked>exceeds their expected baseline</Marked>, calibrated from
+        their own customer profile.
       </>
     ),
-    metric: "total_volume / expected_monthly_volume",
-    threshold: "3.815793",
-    note: "actual activity vs expected behaviour",
+    metric: "monthly transaction volume / expected monthly volume",
+    threshold: "3.82×",
+    note: "95th percentile of observed customer-month behaviour",
     code: 'monthly_behavior["high_volume_flag"] = (\n    monthly_behavior["volume_vs_expected"] > 3.815793\n)',
   },
   {
@@ -55,32 +55,44 @@ const RULES: Rule[] = [
     label: "Transaction Concentration",
     explanation: (
       <>
-        Detects cases where one transaction is <Marked>unusually large</Marked>{" "}
+        Detects unusually large <Marked>individual transactions</Marked>{" "}
         relative to the customer&apos;s expected monthly activity.
       </>
     ),
-    metric: "max_amount / expected_monthly_volume",
-    threshold: "2.577652",
-    note: "one transaction can dominate an entire month",
+    metric: "maximum monthly transaction / expected monthly volume",
+    threshold: "2.58×",
+    note: "95th percentile of observed customer-month behaviour",
     code: 'monthly_behavior["large_single_txn_flag"] = (\n    monthly_behavior["max_vs_expected"] > 2.577652\n)',
   },
   {
     id: "03",
     evidenceId: "Evidence_R03",
-    name: "CROSS_BORDER_SPIKE",
-    label: "Behavioural Change",
+    name: "FAN-OUT",
+    label: "Fund Dispersion",
     explanation: (
       <>
-        Detects sudden increases in cross-border activity by comparing the
-        current month with the customer&apos;s{" "}
-        <Marked>own historical behaviour</Marked>.
+        Identifies customers <Marked>distributing funds</Marked> across an
+        unusually large number of counterparties.
       </>
     ),
-    metric: "cross_border_ratio - historical_cross_border_avg",
-    threshold: "0.40",
-    note: "compare the customer with themselves, not everyone else",
-    code: 'monthly_behavior["cross_border_spike_flag"] = (\n    monthly_behavior["cross_border_change"] > 0.40\n)',
-    emphasized: true,
+    metric: "number of unique receivers",
+    note: "spreading funds across many hands",
+    code: 'customer_month["fan_out_flag"] = (\n    customer_month["unique_receivers"] > fan_out_threshold\n)',
+  },
+  {
+    id: "04",
+    evidenceId: "Evidence_R04",
+    name: "FAN-IN",
+    label: "Fund Concentration",
+    explanation: (
+      <>
+        Identifies accounts <Marked>receiving funds</Marked> from an
+        unusually large number of counterparties.
+      </>
+    ),
+    metric: "number of unique senders",
+    note: "many senders, one destination",
+    code: 'customer_month["fan_in_flag"] = (\n    customer_month["unique_senders"] > fan_in_threshold\n)',
   },
 ];
 
@@ -96,7 +108,7 @@ export default function DetectionRules() {
       <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
           <p className="font-hand text-burgundy/70 -rotate-2 text-xl">
-            three signals. three different behaviours.
+            four signals. four different behaviours.
           </p>
           <h2 className="mt-4 max-w-2xl font-serif text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
             Detection Rules
@@ -109,11 +121,12 @@ export default function DetectionRules() {
             <RuleEvidenceCard rule={RULES[1]} rotate={1.1} delay={0.22} />
           </div>
 
-          <div className="mt-16 lg:col-span-7 lg:mt-0">
+          <div className="mt-16 flex flex-col gap-16 lg:col-span-7 lg:mt-0">
             <RuleEvidenceCard rule={RULES[2]} rotate={-0.8} delay={0.34} />
+            <RuleEvidenceCard rule={RULES[3]} rotate={0.9} delay={0.46} />
 
-            <InvestigationAnnotation className="mt-8 ml-2" rotate={-3} delay={1.15}>
-              this is where behaviour starts to matter
+            <InvestigationAnnotation className="mt-2 ml-2" rotate={-3} delay={1.15}>
+              this is where money moves, not just grows
             </InvestigationAnnotation>
           </div>
         </div>

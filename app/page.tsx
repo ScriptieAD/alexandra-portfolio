@@ -87,16 +87,17 @@ export default function Home() {
 
             <div>
               <p className="max-w-xl text-lg leading-8 text-black/60">
-                My background sits at the intersection of data, business and
-                technology. I enjoy understanding how systems behave,
-                identifying patterns and turning complex information into
-                solutions that are clear and useful.
+                My background combines data, business and technology. I
+                enjoy understanding how systems work, spotting patterns and
+                turning complex information into practical, clear solutions.
               </p>
 
               <p className="mt-6 max-w-xl text-lg leading-8 text-black/60">
-                I&apos;m currently developing deeper expertise in financial
-                crime, fraud analytics and transaction monitoring through
-                practical projects and continuous learning.
+                More recently, I&apos;ve been focusing on financial crime,
+                fraud analytics and transaction monitoring, building
+                hands-on projects to better understand how data can be used
+                to detect unusual behaviour and support real-world
+                investigations.
               </p>
 
               <Link

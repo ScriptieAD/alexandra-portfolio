@@ -3,6 +3,9 @@
 import Reveal from "./Reveal";
 import ProjectsIntro from "./ProjectsIntro";
 import InvestigationDossier from "./InvestigationDossier";
+import ProjectCaseCard from "./ProjectCaseCard";
+import EvidenceLog from "./EvidenceLog";
+import { caseFiles } from "../projects-data";
 
 export default function ProjectsSection({
   onOpenCase,
@@ -24,6 +27,19 @@ export default function ProjectsSection({
         <div className="min-w-0">
           <InvestigationDossier onOpenCase={onOpenCase} />
         </div>
+      </div>
+
+      {/* full case index — every project, including the featured one
+          above, as a compact evidence card. Read as the archive behind
+          the spotlighted case. */}
+      <div className="mx-auto mt-24 max-w-[1400px] px-6 sm:mt-28 md:px-10 lg:mt-32">
+        <div className="grid gap-6 sm:grid-cols-2">
+          {caseFiles.map((item, i) => (
+            <ProjectCaseCard key={item.id} item={item} index={i} />
+          ))}
+        </div>
+
+        <EvidenceLog count={caseFiles.length} />
       </div>
     </Reveal>
   );

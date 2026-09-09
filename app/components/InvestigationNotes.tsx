@@ -62,9 +62,9 @@ export default function InvestigationNotes() {
         <div className="mt-20 flex flex-col gap-16 lg:mt-28 lg:grid lg:grid-cols-12 lg:gap-x-10 lg:gap-y-0">
           <NoteFragment
             id="03"
-            title="Calibration changes the investigation queue"
-            copy="A stricter operating point produced high precision but poor coverage. Lowering the threshold improved recall substantially while keeping precision at a useful level."
-            highlight="strict ≠ optimal"
+            title="Percentile thresholds scale with behaviour"
+            copy="Setting thresholds from the data's own behavioural distribution, rather than a fixed cutoff, kept the alert queue proportional to how unusual the activity actually is."
+            highlight="percentile-based, not guessed"
             stamp="Calibrated"
             variant="typed"
             rotate={-0.8}
@@ -73,9 +73,9 @@ export default function InvestigationNotes() {
           />
           <NoteFragment
             id="04"
-            title="False negatives are useful evidence"
-            copy="Missed laundering cases revealed where prioritisation was too aggressive and helped guide threshold recalibration."
-            highlight="misses teach the system"
+            title="Two cases, two different stories"
+            copy="C02177 and C00046 both cleared the same volume threshold, but one spread funds across 40 receivers while the other rested on a single transaction. The rule was identical; the underlying behaviour was not."
+            highlight="same alert, different story"
             variant="memo"
             rotate={1.4}
             delay={0.15}

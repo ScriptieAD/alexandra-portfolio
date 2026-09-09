@@ -2,11 +2,19 @@
 
 import { motion } from "motion/react";
 import Reveal from "./Reveal";
-import LimitationNote from "./LimitationNote";
-import NextIterationNote from "./NextIterationNote";
 
 const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
+
+const LIMITATIONS = [
+  "Synthetic dataset",
+  "No KYC documentation available",
+  "No source-of-funds information",
+  "No device or IP intelligence",
+  "No external sanctions or adverse media screening",
+  "Thresholds would require validation and tuning in a production environment",
+  "Alerts represent unusual behaviour, not confirmed financial crime",
+];
 
 export default function ProjectLimitations() {
   return (
@@ -23,7 +31,7 @@ export default function ProjectLimitations() {
             Review Notes
           </p>
           <h2 className="mt-3 max-w-xl font-serif text-3xl leading-[1.1] sm:text-4xl">
-            Limitations / Next Iteration
+            Limitations
           </h2>
         </Reveal>
 
@@ -37,30 +45,31 @@ export default function ProjectLimitations() {
           className="bg-black/10 mt-8 h-px w-full"
         />
 
-        <div className="mt-10 grid gap-10 sm:grid-cols-3 sm:gap-8">
-          <LimitationNote
-            id="LIMIT_01"
-            title="Limited history"
-            text="The dataset covers only six months of activity, which limits the depth of behavioural baselines and long-term trend analysis."
-            delay={0.1}
-          />
-
-          <LimitationNote
-            id="LIMIT_02"
-            title="Synthetic data"
-            text="The project uses synthetic transaction and customer data, so rule performance should not be interpreted as production-ready."
-            delay={0.25}
-          />
-
-          <NextIterationNote
-            id="NEXT_01"
-            title="Next iteration"
-            text="A real next step would be to test additional scenarios such as transaction velocity, beneficiary concentration, rapid movement of funds and network-based laundering patterns."
-            extraLine="Thresholds would also need out-of-sample validation before any real deployment."
-            stampLabel="Reviewed"
-            delay={0.4}
-          />
-        </div>
+        <motion.ul
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{ hidden: {}, show: {} }}
+          className="mt-10 grid gap-x-10 gap-y-4 sm:grid-cols-2"
+        >
+          {LIMITATIONS.map((item, i) => (
+            <motion.li
+              key={item}
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                show: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] },
+                },
+              }}
+              className="flex gap-3 border-t border-black/10 py-3 text-sm leading-[1.6] text-black/60"
+            >
+              <span className="text-burgundy/60 font-mono text-xs">—</span>
+              {item}
+            </motion.li>
+          ))}
+        </motion.ul>
 
         <motion.p
           initial={{ opacity: 0, y: 10 }}

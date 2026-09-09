@@ -2,25 +2,6 @@
 
 import { motion } from "motion/react";
 
-const RINGS = Array.from({ length: 9 }, (_, i) => 28 + i * 8);
-
-function Fingerprint({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 220 260" className={className} aria-hidden="true">
-      {RINGS.map((r) => (
-        <path
-          key={r}
-          d={`M ${110 - r} 130 A ${r} ${r * 1.25} 0 1 1 ${110 + r} 130`}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-        />
-      ))}
-    </svg>
-  );
-}
-
 export default function ProjectsIntro() {
   return (
     <div className="relative">
@@ -91,36 +72,6 @@ export default function ProjectsIntro() {
         I build investigations around patterns, behaviour, systems and the
         occasional anomaly.
       </motion.p>
-
-      {/* fingerprint watermark, tucked behind the CTA — lots of quiet
-          space above it lets the heading breathe before this closing beat */}
-      <div className="relative mt-24 sm:mt-28 lg:mt-36">
-        <div className="text-ink pointer-events-none absolute -top-8 -left-7 h-[190px] w-[190px] opacity-[0.06] sm:-left-10">
-          <Fingerprint className="h-full w-full" />
-        </div>
-
-        <p className="text-burgundy/55 pointer-events-none relative -left-0.5 mb-6 rotate-[-4deg] font-mono text-[9px] leading-tight font-semibold tracking-[0.12em] uppercase">
-          Careful
-          <br />
-          what you
-          <br />
-          overlook
-        </p>
-
-        <motion.a
-          href="#experience"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, delay: 0.44 }}
-          className="group relative inline-flex items-center gap-2.5 text-sm font-semibold tracking-[0.08em] text-black/80 uppercase"
-        >
-          Explore the case files
-          <span className="text-burgundy transition-transform duration-300 group-hover:translate-x-1.5">
-            →
-          </span>
-        </motion.a>
-      </div>
     </div>
   );
 }

@@ -20,60 +20,51 @@ type Step = FlowStep & {
 const STEPS: Step[] = [
   {
     num: "01",
-    tag: "Input",
-    title: "Raw Transactions",
-    text: "Individual transaction records containing amount, sender, receiver, geography, channel and transaction type.",
-    detail: "source: transactions.csv",
+    tag: "Customer profiling",
+    title: "Customer Profiling",
+    text: "Expected monthly volume and customer attributes were used to establish behavioural context.",
+    detail: "source: customer_profile.py",
     rotate: -1.5,
     offsetY: 6,
   },
   {
     num: "02",
-    tag: "Feature Engineering",
-    title: "Monthly Behaviour",
-    text: "Transactions are aggregated by customer and month to create behavioural features such as total volume, transaction count, largest transaction and cross-border activity.",
-    detail: "source: behaviour_features.py",
+    tag: "Behavioural baseline",
+    title: "Monthly Baseline",
+    text: "Transactions were aggregated by customer and month to build a behavioural baseline for every account.",
+    detail: "source: monthly_behavior.py",
     rotate: 1,
     offsetY: -10,
-    annotation: "context matters",
-    annotationRotate: -4,
   },
   {
     num: "03",
-    tag: "Detection",
-    title: "AML Rules",
-    text: "Behavioural indicators are evaluated against rule thresholds to identify unusual activity.",
-    detail: "source: rules_engine.py",
+    tag: "Feature engineering",
+    title: "Metric Engineering",
+    text: "Seven behavioural metrics per customer-month: total volume, transaction count, average and maximum amount, unique receivers, and volume/maximum vs expected.",
+    detail: "source: behaviour_features.py",
     rotate: -1,
     offsetY: 4,
+    annotation: "seven signals, one profile",
+    annotationRotate: -4,
   },
   {
     num: "04",
-    tag: "Triage",
-    title: "Alerts",
-    text: "Each triggered rule generates an alert with its metric value and threshold.",
-    detail: "source: alerts.py",
+    tag: "Calibration",
+    title: "Threshold Calibration",
+    text: "Thresholds were derived from empirical distributions rather than manually selected.",
+    detail: "source: threshold_calibration.py",
     rotate: 1.4,
     offsetY: -8,
   },
   {
     num: "05",
     tag: "Investigation",
-    title: "Cases",
-    text: "Alerts for the same customer and month are grouped into one investigation case.",
-    detail: "source: case_grouping.py",
+    title: "Alert Investigation",
+    text: "Triggered customers were reviewed using transaction patterns, timing, counterparties and customer context.",
+    detail: "source: case_review.py",
     rotate: -1.2,
     offsetY: 6,
-  },
-  {
-    num: "06",
-    tag: "Calibration",
-    title: "Threshold Calibration",
-    text: "Hidden ground-truth labels are used only after detection to evaluate precision, recall and the operational trade-off between stricter and broader monitoring.",
-    detail: "source: calibration_report.py",
-    rotate: 1,
-    offsetY: -4,
-    annotation: "strict ≠ always better",
+    annotation: "rules flag, investigators decide",
     annotationRotate: 3,
   },
 ];
@@ -200,9 +191,6 @@ export default function InvestigationFlow() {
               <DesktopStep index={4} onHoverChange={handleHoverChange} />
             </div>
           </div>
-
-          <DesktopConnector a={4} b={5} hovered={hovered} delay={0.72} />
-          <DesktopStep index={5} onHoverChange={handleHoverChange} />
         </div>
 
         {/* MOBILE TRAIL */}

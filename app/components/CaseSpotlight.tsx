@@ -6,9 +6,8 @@ import Reveal from "./Reveal";
 import CaseTab from "./CaseTab";
 import CaseProfile from "./CaseProfile";
 import EvidenceMetric from "./EvidenceMetric";
-import TransactionTimeline, { type TimelineTx } from "./TransactionTimeline";
+import CashDepositTimeline, { type CashDeposit } from "./CashDepositTimeline";
 import TriggeredRules from "./TriggeredRules";
-import CaseNote from "./CaseNote";
 
 const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
@@ -16,35 +15,30 @@ const GRAIN =
 const currencyFmt = (v: number) =>
   `€${v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const ratioFmt = (v: number) => `${v.toFixed(2)}×`;
-const percent0Fmt = (v: number) => `${Math.round(v)}%`;
-const percent1Fmt = (v: number) => `${v.toFixed(1)}%`;
-const ppFmt = (v: number) => `+${v.toFixed(1)} pp`;
 
-const TRANSACTIONS: TimelineTx[] = [
-  {
-    date: "05 JUN",
-    fullDate: "05 Jun 2026",
-    amount: "€3,405.80",
-    type: "cash deposit",
-    typeRaw: "CASH_DEPOSIT",
-    channel: "ATM",
-    route: "RO → PL",
-    receiver: "C01553",
-  },
-  {
-    date: "07 JUN",
-    fullDate: "07 Jun 2026",
-    amount: "€14,833.44",
-    type: "wire",
-    typeRaw: "WIRE",
-    channel: "BRANCH",
-    route: "RO → PL",
-    receiver: "C01080",
-    dominant: true,
-  },
+const DEPOSITS: CashDeposit[] = [
+  { day: "MAY 09", time: "19:00", amount: "8,659.62", channel: "ATM" },
+  { day: "MAY 09", time: "20:00", amount: "8,745.48", channel: "ATM" },
+  { day: "MAY 10", time: "00:00", amount: "8,938.82", channel: "ATM" },
+  { day: "MAY 11", time: "15:00", amount: "9,751.68", channel: "ATM" },
+  { day: "MAY 11", time: "16:00", amount: "9,757.70", channel: "Branch" },
+  { day: "MAY 11", time: "17:00", amount: "8,850.89", channel: "ATM" },
+  { day: "MAY 11", time: "18:00", amount: "9,751.02", channel: "ATM" },
+  { day: "MAY 11", time: "22:00", amount: "8,901.62", channel: "ATM" },
+  { day: "MAY 12", time: "08:00", amount: "8,924.18", channel: "Branch" },
+  { day: "MAY 12", time: "18:00", amount: "9,762.61", channel: "ATM" },
 ];
 
-const TRIGGERED_RULES = ["HIGH_MONTHLY_VOLUME", "LARGE_SINGLE_TXN", "CROSS_BORDER_SPIKE"];
+const TRIGGERED_RULES = ["HIGH_MONTHLY_VOLUME", "FAN-OUT"];
+
+const OBSERVATIONS = [
+  "Monthly volume reached 22.36× the customer's expected activity.",
+  "Ten cash deposits were concentrated across a four-day period.",
+  "Cash deposits totalled approximately 90.1k.",
+  "Activity occurred across both ATM and branch channels.",
+  "The customer sent funds to 40 unique receivers.",
+  "The combination of volume deviation, cash activity and broad counterparty dispersion justified escalation.",
+];
 
 function fadeUpVariant(delay: number, distance = 20) {
   return {
@@ -98,15 +92,6 @@ function AnimatedNumber({
 
 export default function CaseSpotlight() {
   const [sectionInView, setSectionInView] = useState(false);
-  const [highlighted, setHighlighted] = useState<"A" | "B" | "C" | null>(null);
-
-  function handleTxHighlight(index: number, hovering: boolean) {
-    const key = index === 1 ? "B" : "A";
-    setHighlighted((current) => {
-      if (hovering) return key;
-      return current === key ? null : current;
-    });
-  }
 
   return (
     <section className="bg-paper relative border-t border-black/10 py-24 sm:py-28 lg:py-32">
@@ -119,7 +104,7 @@ export default function CaseSpotlight() {
       <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
           <p className="text-burgundy font-mono text-xs font-semibold tracking-[0.28em] uppercase">
-            Investigation Exhibit
+            Featured Investigation
           </p>
           <h2 className="mt-4 max-w-2xl font-serif text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
             Case Spotlight
@@ -135,7 +120,7 @@ export default function CaseSpotlight() {
         >
           <motion.div variants={fadeUpVariant(0, 10)} className="mt-10">
             <CaseTab tone="manila" onLoad>
-              Investigation File / C01983 / Month 06
+              Investigation File / C02177 / Month 05
             </CaseTab>
           </motion.div>
 
@@ -143,54 +128,57 @@ export default function CaseSpotlight() {
             {/* LEFT — case profile */}
             <div className="order-1 lg:order-none lg:col-span-3 lg:col-start-1 lg:row-start-1">
               <CaseProfile
-                customerId="C01983"
-                month={6}
+                customerId="C02177"
+                month={5}
+                badge="High priority"
+                subtitle="Unusual cash activity"
                 delay={0.1}
-                annotation="this one looked off"
+                annotation="this one escalated fast"
                 story={
                   <>
-                    C01983 recorded €18.2k in monthly activity against an
-                    expected €3.3k profile. One €14.8k wire accounted for most
-                    of the month&apos;s volume, while cross-border activity
-                    increased from a historical average of 54.6% to 100%.
+                    C02177 recorded €102,993.61 in May 2026 against an
+                    expected €4,605.19 profile. Ten cash deposits, totalling
+                    roughly €90.1k, landed across a four-day window at both
+                    ATM and branch channels, and funds moved on to 40 unique
+                    receivers.
                   </>
                 }
               />
             </div>
 
-            {/* CENTER — main evidence transaction */}
+            {/* CENTER — main evidence: deviation from expected */}
             <motion.div
               variants={fadeUpVariant(0.2)}
               className="order-2 lg:order-none lg:col-span-5 lg:col-start-4 lg:row-start-1"
             >
               <p className="font-mono text-[10px] tracking-[0.2em] text-black/40 uppercase">
-                Evidence B · Largest transaction
+                Evidence B · Deviation from expected
               </p>
 
               <p className="text-burgundy mt-3 font-mono text-[2.6rem] leading-none font-bold sm:text-6xl lg:text-7xl">
                 <AnimatedNumber
-                  value={14833.44}
+                  value={22.36}
                   active={sectionInView}
-                  formatter={currencyFmt}
+                  formatter={ratioFmt}
                   delay={0.35}
                   duration={1.4}
                 />
               </p>
 
               <p className="font-hand text-burgundy/70 mt-3 -rotate-2 text-lg leading-none">
-                81% of monthly volume
+                cash deposits ≈ 87.5% of monthly volume
               </p>
 
               <div className="mt-8 space-y-3">
                 <div>
                   <div className="flex justify-between font-mono text-[10px] tracking-[0.16em] text-black/40 uppercase">
                     <span>Expected</span>
-                    <span>€3.3k</span>
+                    <span>€4.6k</span>
                   </div>
                   <div className="relative mt-1.5 h-[6px] bg-black/[0.06]">
                     <motion.div
                       variants={barVariant(0.5)}
-                      style={{ width: "18.1%", transformOrigin: "left" }}
+                      style={{ width: "4.5%", transformOrigin: "left" }}
                       className="h-full bg-black/25"
                     />
                   </div>
@@ -199,7 +187,7 @@ export default function CaseSpotlight() {
                 <div>
                   <div className="text-burgundy/70 flex justify-between font-mono text-[10px] tracking-[0.16em] uppercase">
                     <span>Actual</span>
-                    <span>€18.2k</span>
+                    <span>€103.0k</span>
                   </div>
                   <div className="relative mt-1.5 h-[6px] bg-black/[0.06]">
                     <motion.div
@@ -216,32 +204,31 @@ export default function CaseSpotlight() {
             <div className="order-3 lg:order-none lg:col-span-4 lg:col-start-9 lg:row-start-1">
               <EvidenceMetric
                 tag="Evidence A"
-                label="Monthly volume"
-                note="actual vs expected behaviour"
-                highlighted={highlighted === "A"}
+                label="Cash deposits"
+                note="concentrated in four days"
                 delay={0.3}
               >
                 <div className="flex items-end justify-between gap-4">
                   <div>
                     <p className="font-mono text-[10px] tracking-[0.16em] text-black/40 uppercase">
-                      Expected
+                      Count
                     </p>
-                    <p className="mt-1 font-mono text-lg text-black/60">
+                    <p className="text-ink mt-1 font-mono text-2xl font-bold">
                       <AnimatedNumber
-                        value={3308.68}
+                        value={10}
                         active={sectionInView}
-                        formatter={currencyFmt}
+                        formatter={(v) => Math.round(v).toString()}
                         delay={0.4}
                       />
                     </p>
                   </div>
                   <div className="text-right">
                     <p className="text-burgundy/70 font-mono text-[10px] tracking-[0.16em] uppercase">
-                      Actual
+                      Total
                     </p>
-                    <p className="text-ink mt-1 font-mono text-lg font-bold">
+                    <p className="text-burgundy mt-1 font-mono text-lg font-bold">
                       <AnimatedNumber
-                        value={18239.24}
+                        value={90123.97}
                         active={sectionInView}
                         formatter={currencyFmt}
                         delay={0.5}
@@ -249,100 +236,28 @@ export default function CaseSpotlight() {
                     </p>
                   </div>
                 </div>
-
-                <div className="mt-3 flex items-baseline gap-2">
-                  <span className="text-burgundy font-mono text-2xl font-bold">
-                    <AnimatedNumber
-                      value={5.51}
-                      active={sectionInView}
-                      formatter={ratioFmt}
-                      delay={0.6}
-                    />
-                  </span>
-                  <span className="text-xs text-black/50">expected activity</span>
-                </div>
-              </EvidenceMetric>
-
-              <EvidenceMetric
-                tag="Evidence B"
-                label="Largest transaction"
-                note="one wire, most of the month"
-                highlighted={highlighted === "B"}
-                delay={0.45}
-              >
-                <p className="text-ink font-mono text-2xl font-bold">
-                  <AnimatedNumber
-                    value={14833.44}
-                    active={sectionInView}
-                    formatter={currencyFmt}
-                    delay={0.55}
-                  />
-                </p>
-                <p className="mt-2 font-mono text-sm text-black/55">
-                  <AnimatedNumber
-                    value={4.48}
-                    active={sectionInView}
-                    formatter={ratioFmt}
-                    delay={0.65}
-                  />{" "}
-                  expected activity
-                </p>
               </EvidenceMetric>
 
               <EvidenceMetric
                 tag="Evidence C"
-                label="Cross-border shift"
-                note="compared to their own history"
-                highlighted={highlighted === "C"}
-                delay={0.6}
+                label="Unique receivers"
+                note="funds moved on to 40 destinations"
+                delay={0.55}
               >
-                <div className="flex items-end justify-between gap-4">
-                  <div>
-                    <p className="font-mono text-[10px] tracking-[0.16em] text-black/40 uppercase">
-                      Historical avg
-                    </p>
-                    <p className="mt-1 font-mono text-lg text-black/60">
-                      <AnimatedNumber
-                        value={54.6}
-                        active={sectionInView}
-                        formatter={percent1Fmt}
-                        delay={0.7}
-                      />
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-burgundy/70 font-mono text-[10px] tracking-[0.16em] uppercase">
-                      This month
-                    </p>
-                    <p className="text-burgundy mt-1 font-mono text-2xl font-bold">
-                      <AnimatedNumber
-                        value={100}
-                        active={sectionInView}
-                        formatter={percent0Fmt}
-                        delay={0.8}
-                      />
-                    </p>
-                  </div>
-                </div>
-                <p className="mt-3 font-mono text-xs text-black/50">
+                <p className="text-ink font-mono text-3xl font-bold">
                   <AnimatedNumber
-                    value={45.4}
+                    value={40}
                     active={sectionInView}
-                    formatter={ppFmt}
-                    delay={0.9}
-                  />{" "}
-                  change
+                    formatter={(v) => Math.round(v).toString()}
+                    delay={0.65}
+                  />
                 </p>
               </EvidenceMetric>
             </div>
 
-            {/* CENTER (row 2) — transaction timeline */}
+            {/* CENTER (row 2) — cash deposit timeline */}
             <div className="order-4 lg:order-none lg:col-span-5 lg:col-start-4 lg:row-start-2">
-              <TransactionTimeline
-                transactions={TRANSACTIONS}
-                onHighlight={handleTxHighlight}
-                delay={0.75}
-              />
+              <CashDepositTimeline deposits={DEPOSITS} delay={0.75} />
             </div>
 
             {/* RIGHT (row 2) — triggered rules */}
@@ -351,10 +266,44 @@ export default function CaseSpotlight() {
             </div>
           </div>
 
-          <CaseNote delay={1.3} className="mt-16">
-            Three rules fired, but the alert does not prove money laundering.
-            It identifies behaviour that warrants investigation.
-          </CaseNote>
+          {/* investigator observations */}
+          <motion.div
+            variants={fadeUpVariant(1.0)}
+            className="bg-ivory-deep/60 shadow-paper-xs border-t border-r border-b border-l-2 border-t-black/10 border-r-black/10 border-b-black/10 border-l-burgundy/40 mt-16 max-w-2xl px-6 py-5"
+          >
+            <p className="text-burgundy/70 mb-3 font-mono text-[10px] font-bold tracking-[0.18em] uppercase">
+              Investigator observations
+            </p>
+            <ul className="space-y-2">
+              {OBSERVATIONS.map((line) => (
+                <li
+                  key={line}
+                  className="flex gap-2.5 text-[13px] leading-[1.7] text-black/65"
+                >
+                  <span aria-hidden="true" className="text-burgundy/60 mt-[2px]">
+                    •
+                  </span>
+                  {line}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* investigation assessment */}
+          <motion.div
+            variants={fadeUpVariant(1.15)}
+            className="mt-14 border-t-2 border-burgundy/30 pt-8"
+          >
+            <p className="text-burgundy font-mono text-[10px] font-bold tracking-[0.24em] uppercase">
+              Investigation assessment
+            </p>
+            <p className="mt-4 max-w-2xl font-serif text-2xl leading-snug italic sm:text-3xl">
+              &ldquo;Behaviour materially deviates from the customer baseline
+              and demonstrates multiple monitoring indicators. The case would
+              warrant enhanced review and additional source-of-funds/context
+              checks.&rdquo;
+            </p>
+          </motion.div>
         </motion.div>
       </div>
     </section>

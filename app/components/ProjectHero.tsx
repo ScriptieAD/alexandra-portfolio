@@ -12,16 +12,14 @@ import {
 } from "motion/react";
 import CaseTab from "./CaseTab";
 import ConfidentialStamp from "./ConfidentialStamp";
-import CaseMetadata, { type CaseMetadataItem } from "./CaseMetadata";
 import PinnedNote from "./PinnedNote";
 
-const METADATA: CaseMetadataItem[] = [
-  {
-    label: "Disciplines",
-    value: "AML Analytics · Transaction Monitoring · Risk",
-  },
-  { label: "Tools", value: "Python · Pandas · Statistical Analysis" },
-  { label: "Status", value: "Calibrated", accent: true },
+const TAGS = [
+  "Python",
+  "Pandas",
+  "SQL",
+  "Behavioural Analytics",
+  "Transaction Monitoring",
 ];
 
 const GRAIN =
@@ -29,18 +27,20 @@ const GRAIN =
 
 export default function ProjectHero({
   caseLabel = "CASE 001",
-  eyebrow = "FinCrime Analytics Lab",
-  title = "AML Transaction Monitoring Engine",
-  subtitle = "Behavioural monitoring, alert generation and threshold calibration for suspicious transaction activity.",
+  eyebrow = "Financial Crime & Fraud Analytics",
+  title = "Transaction Monitoring Case Study",
+  subtitle = "An end-to-end transaction monitoring case study focused on detecting, prioritising and investigating unusual customer behaviour using behavioural baselines, calibrated thresholds and transaction-network analysis.",
   note = "follow the behaviour, not just the transaction.",
-  metadata = METADATA,
+  tags = TAGS,
+  status = "Case status: Investigated",
 }: {
   caseLabel?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
   note?: string;
-  metadata?: CaseMetadataItem[];
+  tags?: string[];
+  status?: string;
 }) {
   const prefersReducedMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
@@ -158,21 +158,39 @@ export default function ProjectHero({
                 {title}
               </motion.h1>
 
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.46, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-5 flex flex-wrap gap-2"
+              >
+                {tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-[2px] border border-black/15 px-2.5 py-1 font-mono text-[10px] text-black/60"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </motion.div>
+
+              <motion.span
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.56, ease: [0.22, 1, 0.36, 1] }}
+                className="border-burgundy/50 text-burgundy/80 mt-5 inline-block rounded-sm border px-2.5 py-1 font-mono text-[9px] font-bold tracking-[0.18em] uppercase"
+              >
+                {status}
+              </motion.span>
+
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.55, delay: 0.66, ease: [0.22, 1, 0.36, 1] }}
                 className="mt-5 max-w-md text-[15px] leading-[1.75] text-black/60"
               >
                 {subtitle}
               </motion.p>
-
-              <CaseMetadata
-                items={metadata}
-                onLoad
-                delay={0.68}
-                className="mt-8"
-              />
 
               <motion.div
                 initial={{ opacity: 0, scaleX: 0 }}

@@ -20,6 +20,8 @@ export default function CaseProfile({
   month,
   story,
   annotation,
+  subtitle,
+  badge,
   delay = 0,
   className = "",
 }: {
@@ -27,6 +29,8 @@ export default function CaseProfile({
   month: number;
   story: ReactNode;
   annotation?: string;
+  subtitle?: string;
+  badge?: string;
   delay?: number;
   className?: string;
 }) {
@@ -42,13 +46,26 @@ export default function CaseProfile({
           </CaseTab>
         </motion.div>
 
-        <p className="text-burgundy font-mono text-[10px] tracking-[0.22em] uppercase">
-          Customer / Month
-        </p>
+        <div className="flex items-start justify-between gap-3">
+          <p className="text-burgundy font-mono text-[10px] tracking-[0.22em] uppercase">
+            Customer / Month
+          </p>
+          {badge && (
+            <span className="border-burgundy/50 text-burgundy/80 shrink-0 rounded-sm border px-2 py-1 text-right font-mono text-[9px] font-bold tracking-[0.16em] uppercase">
+              {badge}
+            </span>
+          )}
+        </div>
 
         <h3 className="mt-3 font-serif text-3xl leading-tight sm:text-4xl">
-          Case {customerId}
+          Case #{customerId}
         </h3>
+
+        {subtitle && (
+          <p className="text-burgundy/80 mt-1 font-mono text-xs font-semibold tracking-[0.14em] uppercase">
+            {subtitle}
+          </p>
+        )}
 
         <p className="mt-1 font-mono text-xs tracking-[0.14em] text-black/40 uppercase">
           Month {String(month).padStart(2, "0")}
