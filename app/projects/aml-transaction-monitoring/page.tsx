@@ -37,7 +37,12 @@ export default function AmlTransactionMonitoringPage() {
       <InvestigationNotes />
       <ProjectLimitations />
       <ProjectCapabilities />
-      <CaseClosed />
+      <CaseClosed
+        nextCase={{
+          title: "AML Network & Flow Analysis",
+          href: "/projects/aml-network-analysis",
+        }}
+      />
     </main>
   );
 }

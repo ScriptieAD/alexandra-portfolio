@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { motion } from "motion/react";
 import ClosingStatement from "./ClosingStatement";
 import CaseStatusStamp from "./CaseStatusStamp";
@@ -10,8 +11,28 @@ const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
 export default function CaseClosed({
+  caseLabel = "Case 001 / FinCrime Analytics Lab",
+  statement = (
+    <>
+      Built to detect unusual behaviour.
+      <br />
+      Calibrated to make better decisions.
+    </>
+  ),
+  subline = "From raw transactions to behavioural monitoring, alerts, case prioritisation and threshold calibration.",
+  stampCaseId = "Case 001",
+  stampStatus = "Calibrated",
+  footerTitle = "AML Transaction Monitoring Engine",
+  footerStack = "Python · Pandas · AML Analytics",
   nextCase,
 }: {
+  caseLabel?: string;
+  statement?: ReactNode;
+  subline?: ReactNode;
+  stampCaseId?: string;
+  stampStatus?: string;
+  footerTitle?: string;
+  footerStack?: string;
   nextCase?: { title: string; href: string };
 }) {
   return (
@@ -28,7 +49,7 @@ export default function CaseClosed({
             Case status
           </p>
           <p className="font-mono text-xs tracking-[0.28em] text-black/40 uppercase">
-            Case 001 / FinCrime Analytics Lab
+            {caseLabel}
           </p>
         </div>
 
@@ -36,15 +57,19 @@ export default function CaseClosed({
           <ClosingStatement
             delay={0}
             className="order-1 lg:order-none lg:col-span-7"
-            subline="From raw transactions to behavioural monitoring, alerts, case prioritisation and threshold calibration."
+            subline={subline}
           >
-            Built to detect unusual behaviour.
-            <br />
-            Calibrated to make better decisions.
+            {statement}
           </ClosingStatement>
 
           <div className="order-2 flex justify-center lg:order-none lg:col-span-5 lg:justify-end">
-            <CaseStatusStamp delay={0.3} rotate={-3} className="w-[220px] sm:w-[260px]" />
+            <CaseStatusStamp
+              delay={0.3}
+              rotate={-3}
+              caseId={stampCaseId}
+              status={stampStatus}
+              className="w-[220px] sm:w-[260px]"
+            />
           </div>
         </div>
 
@@ -60,8 +85,9 @@ export default function CaseClosed({
 
         <div className="mt-10 flex flex-col gap-12 lg:flex-row lg:items-end lg:justify-between">
           <CaseMetadataFooter
-            title="AML Transaction Monitoring Engine"
-            stack="Python · Pandas · AML Analytics"
+            caseId={stampCaseId}
+            title={footerTitle}
+            stack={footerStack}
             delay={0.65}
             className="lg:max-w-md"
           />

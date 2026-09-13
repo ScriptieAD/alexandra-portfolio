@@ -11,7 +11,12 @@ export type ChartEvidence = {
   alt: string;
 };
 
-export type Evidence = StatsEvidence | ChartEvidence;
+export type NetworkEvidence = {
+  kind: "network";
+  labels: string[];
+};
+
+export type Evidence = StatsEvidence | ChartEvidence | NetworkEvidence;
 
 export type CaseFile = {
   id: string;
@@ -42,6 +47,18 @@ export const caseFiles: CaseFile[] = [
   },
   {
     id: "002",
+    title: "AML Network & Flow Analysis",
+    tag: "Financial Crime Analytics · Network Analysis",
+    tools: ["Python", "Pandas", "NetworkX", "Matplotlib", "Graph Analysis"],
+    note: "Every account is a node. Every transaction, a trail.",
+    href: "/projects/aml-network-analysis",
+    evidence: {
+      kind: "network",
+      labels: ["FAN-IN", "FAN-OUT", "FLOW", "NETWORK"],
+    },
+  },
+  {
+    id: "003",
     title: "Metaverse Economy & Financial Risk",
     tag: "Crypto Forecasting · Time Series · Virtual Economies",
     tools: ["R", "ARIMA", "GARCH", "Time Series"],

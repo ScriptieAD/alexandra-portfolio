@@ -2,10 +2,67 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import Reveal from "./components/Reveal";
 import ProjectsSection from "./components/ProjectsSection";
 
 const CASE_FILE_HREF = "/projects/aml-transaction-monitoring";
+
+const GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
+
+function NavLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: ReactNode;
+}) {
+  return (
+    <Link href={href} className="group relative inline-block py-1">
+      {children}
+      <span
+        aria-hidden="true"
+        className="bg-burgundy absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
+      />
+    </Link>
+  );
+}
+
+function EditorialCta({
+  href,
+  children,
+  tone = "burgundy",
+}: {
+  href: string;
+  children: ReactNode;
+  tone?: "burgundy" | "cream";
+}) {
+  const underline = tone === "burgundy" ? "bg-burgundy-dark" : "bg-white";
+  const textColor =
+    tone === "burgundy"
+      ? "text-burgundy hover:text-burgundy-dark"
+      : "text-white hover:text-white/80";
+
+  return (
+    <a
+      href={href}
+      className={`group relative inline-flex items-center gap-2 font-mono text-xs font-semibold tracking-[0.14em] uppercase transition-colors duration-200 ${textColor}`}
+    >
+      {children}
+      <span
+        aria-hidden="true"
+        className="inline-block transition-transform duration-300 group-hover:translate-x-1"
+      >
+        ↗
+      </span>
+      <span
+        aria-hidden="true"
+        className={`absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 ${underline}`}
+      />
+    </a>
+  );
+}
 
 export default function Home() {
   const router = useRouter();
@@ -32,29 +89,13 @@ export default function Home() {
           </a>
 
           <div className="hidden items-center gap-8 text-sm md:flex">
-            <a href="#projects" className="transition hover:opacity-50">
-              Projects
-            </a>
-
-            <a href="#experience" className="transition hover:opacity-50">
-              Experience
-            </a>
-
-            <Link href="/about" className="transition hover:opacity-50">
-              About
-            </Link>
-
-            <a href="#contact" className="transition hover:opacity-50">
-              Contact
-            </a>
+            <NavLink href="#projects">Projects</NavLink>
+            <NavLink href="#experience">Experience</NavLink>
+            <NavLink href="/about">About</NavLink>
+            <NavLink href="#contact">Contact</NavLink>
           </div>
 
-          <a
-            href="#contact"
-            className="rounded-full bg-burgundy px-5 py-2.5 text-xs font-medium text-white transition hover:bg-burgundy-dark"
-          >
-            Let&apos;s connect
-          </a>
+          <EditorialCta href="#contact">Let&apos;s connect</EditorialCta>
         </div>
       </nav>
 
@@ -67,10 +108,13 @@ export default function Home() {
       </section>
 
       {/* ABOUT / SKILLS */}
-      <section
-        id="about"
-        className="mx-auto max-w-[1400px] px-6 py-28 md:px-10"
-      >
+      <section id="about" className="bg-paper relative overflow-hidden py-28">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[0.035] mix-blend-overlay"
+          style={{ backgroundImage: GRAIN }}
+        />
+        <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
           <div className="grid gap-16 lg:grid-cols-2">
 
@@ -102,10 +146,19 @@ export default function Home() {
 
               <Link
                 href="/about"
-                className="mt-8 inline-flex items-center gap-3 text-sm font-semibold text-burgundy"
+                className="group relative mt-8 inline-flex items-center gap-2.5 text-sm font-semibold text-burgundy"
               >
                 More about me
-                <span>→</span>
+                <span
+                  aria-hidden="true"
+                  className="inline-block transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  →
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="bg-burgundy-dark absolute -bottom-1 left-0 h-px w-[calc(100%-14px)] origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
+                />
               </Link>
             </div>
 
@@ -114,7 +167,7 @@ export default function Home() {
 
         {/* SKILLS */}
         <Reveal delay={0.1}>
-          <div className="mt-20 grid gap-px overflow-hidden rounded-[28px] border border-black/10 bg-black/10 md:grid-cols-4">
+          <div className="mt-24 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
 
             {[
               {
@@ -133,29 +186,40 @@ export default function Home() {
                 title: "Business",
                 text: "Reporting · Testing · Requirements",
               },
-            ].map((skill) => (
-              <div
-                key={skill.title}
-                className="bg-paper-card p-7"
-              >
-                <p className="font-serif text-2xl">{skill.title}</p>
-
-                <p className="mt-3 text-sm leading-6 text-black/50">
-                  {skill.text}
-                </p>
+            ].map((skill, i) => (
+              <div key={skill.title} className="relative">
+                <span
+                  aria-hidden="true"
+                  className="block h-px w-full origin-left bg-black/15"
+                />
+                <div className="pt-6">
+                  <p className="text-burgundy/70 font-mono text-[10px] tracking-[0.22em] uppercase">
+                    {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <p className="mt-3 font-serif text-2xl">{skill.title}</p>
+                  <p className="mt-3 text-sm leading-6 text-black/50">
+                    {skill.text}
+                  </p>
+                </div>
               </div>
             ))}
 
           </div>
         </Reveal>
+        </div>
       </section>
 
       {/* EXPERIENCE */}
       <section
         id="experience"
-        className="bg-paper-dark border-t border-black/10 py-28 text-white"
+        className="bg-paper-dark relative overflow-hidden border-t border-black/10 py-28 text-white"
       >
-        <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay"
+          style={{ backgroundImage: GRAIN }}
+        />
+        <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
 
           <Reveal>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-burgundy">
@@ -169,71 +233,45 @@ export default function Home() {
 
           <div className="mt-16 divide-y divide-white/10">
 
-            <Reveal>
-              <div className="grid gap-5 py-8 md:grid-cols-[1fr_1fr_2fr]">
-                <p className="text-sm text-white/40">
-                  Current
-                </p>
+            {[
+              {
+                status: "Current",
+                role: "Global Records",
+                domain: "Data & Analytics",
+                text: "Financial and market data analysis, reporting automation, dashboards, APIs, SQL databases and analytical workflows.",
+              },
+              {
+                status: "Previous",
+                role: "Business Analyst",
+                domain: "Software & Public Systems",
+                text: "Application analysis, test cases, feature validation, deployments and collaboration across technical teams.",
+              },
+              {
+                status: "Previous",
+                role: "Alpha Bank",
+                domain: "Digital Channels",
+                text: "Financial reporting, digital banking operations, issue monitoring and stakeholder collaboration.",
+              },
+            ].map((job, i) => (
+              <Reveal key={job.role} delay={i * 0.06}>
+                <div className="grid gap-5 py-8 md:grid-cols-[0.8fr_1.2fr_2fr]">
+                  <p className="font-mono text-[11px] tracking-[0.2em] text-white/35 uppercase">
+                    {job.status}
+                  </p>
 
-                <div>
-                  <p className="font-medium">Global Records</p>
-                  <p className="mt-1 text-sm text-white/40">
-                    Data & Analytics
+                  <div>
+                    <p className="font-serif text-xl">{job.role}</p>
+                    <p className="mt-1 text-sm text-white/40">
+                      {job.domain}
+                    </p>
+                  </div>
+
+                  <p className="max-w-2xl text-sm leading-7 text-white/55">
+                    {job.text}
                   </p>
                 </div>
-
-                <p className="max-w-2xl text-sm leading-7 text-white/55">
-                  Financial and market data analysis, reporting automation,
-                  dashboards, APIs, SQL databases and analytical workflows.
-                </p>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.06}>
-              <div className="grid gap-5 py-8 md:grid-cols-[1fr_1fr_2fr]">
-                <p className="text-sm text-white/40">
-                  Previous
-                </p>
-
-                <div>
-                  <p className="font-medium">
-                    Business Analyst
-                  </p>
-
-                  <p className="mt-1 text-sm text-white/40">
-                    Software & Public Systems
-                  </p>
-                </div>
-
-                <p className="max-w-2xl text-sm leading-7 text-white/55">
-                  Application analysis, test cases, feature validation,
-                  deployments and collaboration across technical teams.
-                </p>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.12}>
-              <div className="grid gap-5 py-8 md:grid-cols-[1fr_1fr_2fr]">
-                <p className="text-sm text-white/40">
-                  Previous
-                </p>
-
-                <div>
-                  <p className="font-medium">
-                    Alpha Bank
-                  </p>
-
-                  <p className="mt-1 text-sm text-white/40">
-                    Digital Channels
-                  </p>
-                </div>
-
-                <p className="max-w-2xl text-sm leading-7 text-white/55">
-                  Financial reporting, digital banking operations,
-                  issue monitoring and stakeholder collaboration.
-                </p>
-              </div>
-            </Reveal>
+              </Reveal>
+            ))}
 
           </div>
         </div>
@@ -242,9 +280,14 @@ export default function Home() {
       {/* CONTACT */}
       <footer
         id="contact"
-        className="bg-velvet text-white"
+        className="bg-velvet relative overflow-hidden text-white"
       >
-        <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay"
+          style={{ backgroundImage: GRAIN }}
+        />
+        <div className="relative mx-auto max-w-[1400px] px-6 py-24 md:px-10">
 
           <p className="text-xs uppercase tracking-[0.25em] text-white/50">
             Contact
@@ -257,12 +300,9 @@ export default function Home() {
               meaningful with data.
             </h2>
 
-            <a
-              href="mailto:your@email.com"
-              className="w-fit rounded-full bg-white px-7 py-3.5 text-sm font-medium text-burgundy transition hover:-translate-y-1"
-            >
+            <EditorialCta href="mailto:your@email.com" tone="cream">
               Email me
-            </a>
+            </EditorialCta>
 
           </div>
 

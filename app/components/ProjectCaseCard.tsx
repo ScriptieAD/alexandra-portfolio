@@ -7,6 +7,31 @@ import { ArrowUpRight, Lock } from "lucide-react";
 import type { CaseFile } from "../projects-data";
 import FileTab from "./FileTab";
 import StampEffect from "./StampEffect";
+import EvidenceTag from "./EvidenceTag";
+import NetworkDiagram, { type NetworkEdge, type NetworkNode } from "./NetworkDiagram";
+
+const CARD_NETWORK_NODES: NetworkNode[] = [
+  { id: "a", x: 18, y: 26, role: "muted" },
+  { id: "b", x: 12, y: 64, role: "muted" },
+  { id: "c", x: 22, y: 104, role: "muted" },
+  { id: "d", x: 50, y: 16, role: "muted" },
+  { id: "hub1", x: 76, y: 64, role: "highlight" },
+  { id: "hub2", x: 150, y: 78, role: "highlight" },
+  { id: "mid", x: 118, y: 34, role: "default" },
+  { id: "f", x: 186, y: 48, role: "muted" },
+  { id: "g", x: 182, y: 114, role: "muted" },
+];
+
+const CARD_NETWORK_EDGES: NetworkEdge[] = [
+  { from: "a", to: "hub1" },
+  { from: "b", to: "hub1" },
+  { from: "c", to: "hub1" },
+  { from: "d", to: "hub1" },
+  { from: "hub1", to: "hub2", highlighted: true },
+  { from: "hub2", to: "mid" },
+  { from: "hub2", to: "f" },
+  { from: "hub2", to: "g" },
+];
 
 const FINGERPRINT_RINGS = [22, 30, 38, 46, 54, 62];
 
@@ -68,6 +93,53 @@ function EvidenceFocal({ item, hovered }: { item: CaseFile; hovered: boolean }) 
               className="-right-2 -bottom-2 scale-[0.62]"
             />
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (item.evidence.kind === "network") {
+    const [tagA, , , tagD] = item.evidence.labels;
+    return (
+      <div className="relative mt-4 flex flex-1 items-center justify-center px-2 pt-3">
+        <div className="relative w-full max-w-[260px]">
+          <div
+            aria-hidden="true"
+            className="bg-manila/50 shadow-paper-xs absolute top-2 -left-2 h-[92%] w-[96%] rotate-2 rounded-[2px]"
+          />
+
+          <div className="bg-paper-card relative -rotate-1 rounded-[2px] px-4 pt-5 pb-4 drop-shadow-[0_8px_12px_rgba(64,45,35,0.14)]">
+            <p className="font-mono text-[7px] tracking-[0.14em] text-black/40 uppercase">
+              Network trace
+            </p>
+
+            <NetworkDiagram
+              nodes={CARD_NETWORK_NODES}
+              edges={CARD_NETWORK_EDGES}
+              viewBox="0 0 200 130"
+              ariaLabel="Account transaction network with a collection hub, flow and dispersion pattern"
+              className="mt-1.5 h-auto w-full"
+            />
+
+            {tagA && (
+              <EvidenceTag rotate={-6} className="absolute -top-2.5 -left-2">
+                {tagA}
+              </EvidenceTag>
+            )}
+            {tagD && (
+              <EvidenceTag rotate={5} tone="muted" className="absolute -top-2.5 -right-2">
+                {tagD}
+              </EvidenceTag>
+            )}
+          </div>
+
+          <StampEffect
+            label="Evidence found"
+            show={hovered}
+            tone="ink"
+            rotate={-8}
+            className="-right-2 -bottom-8 scale-[0.62]"
+          />
         </div>
       </div>
     );
