@@ -7,13 +7,12 @@ const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
 const LIMITATIONS = [
-  "Synthetic dataset",
-  "No KYC documentation available",
-  "No source-of-funds information",
-  "No device or IP intelligence",
-  "No external sanctions or adverse media screening",
-  "Thresholds would require validation and tuning in a production environment",
-  "Alerts represent unusual behaviour, not confirmed financial crime",
+  "The dataset is synthetic.",
+  "Thresholds are calibrated on this dataset and are not production AML thresholds.",
+  "Expected monthly volume is treated as a behavioural baseline.",
+  "Rule-based alerts represent unusual activity, not confirmed financial crime.",
+  "Ground-truth labels were used only for post-analysis validation.",
+  "A production transaction-monitoring system would require richer KYC, geography, product, counterparty and historical context.",
 ];
 
 export default function ProjectLimitations() {

@@ -6,11 +6,14 @@ import InvestigationFlow from "../../components/InvestigationFlow";
 import DetectionRules from "../../components/DetectionRules";
 import ThresholdCalibration from "../../components/ThresholdCalibration";
 import AlertDistribution from "../../components/AlertDistribution";
+import CasePrioritisation from "../../components/CasePrioritisation";
 import CaseSpotlight from "../../components/CaseSpotlight";
 import SeverityStory from "../../components/SeverityStory";
 import NetworkAnalysis from "../../components/NetworkAnalysis";
 import InvestigationWorkflow from "../../components/InvestigationWorkflow";
 import InvestigationNotes from "../../components/InvestigationNotes";
+import PostAnalysisValidation from "../../components/PostAnalysisValidation";
+import FinalCalibrationResult from "../../components/FinalCalibrationResult";
 import ProjectLimitations from "../../components/ProjectLimitations";
 import ProjectCapabilities from "../../components/ProjectCapabilities";
 import CaseClosed from "../../components/CaseClosed";
@@ -28,15 +31,35 @@ export default function AmlTransactionMonitoringPage() {
       <ProjectHero />
       <CaseBrief />
       <InvestigationAtAGlance />
+      <InvestigationWorkflow
+        eyebrow="Detection Pipeline"
+        title="From raw behaviour to a prioritised case"
+        steps={[
+          "Customer Behaviour Profiling",
+          "Feature Engineering",
+          "Threshold Calibration",
+          "Detection Rules",
+          "Alert Generation",
+          "Case Consolidation",
+          "Severity Assessment",
+          "Case Prioritisation",
+          "Post-analysis Validation",
+        ]}
+        description="Every stage below is covered in detail further down this page — from how customer behaviour is profiled through to how the rule-based prioritisation was checked against the dataset's ground truth."
+        annotation="nine stages, one investigation"
+      />
       <InvestigationFlow />
       <DetectionRules />
       <ThresholdCalibration />
       <AlertDistribution />
+      <CasePrioritisation />
       <CaseSpotlight />
       <SeverityStory />
       <NetworkAnalysis />
       <InvestigationWorkflow />
       <InvestigationNotes />
+      <PostAnalysisValidation />
+      <FinalCalibrationResult />
       <ProjectLimitations />
       <ProjectCapabilities />
       <CaseClosed

@@ -63,9 +63,11 @@ export default function ThresholdCalibration() {
 
         <Reveal delay={0.1}>
           <p className="mt-10 max-w-2xl text-lg leading-8 text-black/60">
-            Rather than picking round numbers by intuition, both detection
-            thresholds were set from the empirical distribution of observed
-            customer-month behaviour.
+            Rather than picking round numbers by intuition, two of the
+            project&apos;s three detection thresholds were set from the
+            empirical distribution of observed customer-month behaviour. The
+            third rule, CROSS_BORDER_SPIKE, uses a fixed percentage-point
+            threshold instead — covered in Detection Rules above.
           </p>
         </Reveal>
 
@@ -118,12 +120,16 @@ export default function ThresholdCalibration() {
 
         <Reveal delay={0.1} className="mt-10">
           <p className="max-w-xl text-sm leading-7 text-black/55">
-            Both thresholds were set at the 95th percentile of observed
-            behavioural ratios.
+            Both ratio-based thresholds were set at the 95th percentile of
+            observed behavioural ratios.
           </p>
         </Reveal>
 
-        <PercentileBar delay={0.1} className="mt-16 max-w-2xl" />
+        <PercentileBar
+          delay={0.1}
+          caption="both ratio-based thresholds sit here"
+          className="mt-16 max-w-2xl"
+        />
 
         <InsightCallout delay={0.1} className="mt-16 max-w-3xl">
           Detection quality is a trade-off, not a single number.

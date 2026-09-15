@@ -14,10 +14,7 @@ import NetworkDiagram, { type NetworkNode, type NetworkEdge } from "../../compon
 import FanFlowDiagram from "../../components/FanFlowDiagram";
 import TypologyCard from "../../components/TypologyCard";
 import RiskScoreMatrix from "../../components/RiskScoreMatrix";
-import CaseInvestigationSummary, {
-  buildNetworkEvidenceCaption,
-  type CaseMetrics,
-} from "../../components/CaseInvestigationSummary";
+import TriggeredRules from "../../components/TriggeredRules";
 import NetworkLegend, { NETWORK_LEGEND_SWATCH } from "../../components/NetworkLegend";
 import ProjectCapabilities from "../../components/ProjectCapabilities";
 import CaseClosed from "../../components/CaseClosed";
@@ -149,24 +146,21 @@ const EGO_EDGES: NetworkEdge[] = [
   { from: "C01016", to: "n4" },
 ];
 
-// Real, case-specific values for C01016 go here once pulled from the
-// underlying analysis. Any field left as `undefined` is automatically
-// omitted from the investigation summary below — never shown as 0 or a
-// placeholder.
-const CASE_C01016_METRICS: CaseMetrics = {
-  incomingCounterparties: undefined, // e.g. 3
-  outgoingCounterparties: undefined, // e.g. 9
-  incomingVolume: undefined, // EUR, e.g. 42250.10
-  outgoingVolume: undefined, // EUR
-  rapidPassThroughEvents: undefined,
-  fanInScore: undefined,
-  fanOutScore: undefined,
-  betweennessCentrality: undefined,
-  community: undefined, // e.g. "Cluster 4"
-  circularFlowDetected: undefined, // true | false
-  riskScore: undefined, // out of CASE_C01016_RISK_MAX below
-  riskClassification: undefined, // e.g. "Critical" — matches PRIORITY_BANDS labels
-};
+// Real, case-specific figures for C01016, from the underlying network
+// analysis. Every value below is a measured result — nothing here is
+// estimated or invented.
+const CASE_C01016_SUMMARY: { value: string; label: string; emphasized?: boolean }[] = [
+  { value: "36", label: "Inbound counterparties" },
+  { value: "28", label: "Outbound counterparties" },
+  { value: "€239.2K", label: "Inbound volume" },
+  { value: "€224.5K", label: "Outbound volume" },
+  { value: "93.8%", label: "Flow-through ratio" },
+  { value: "99.96th", label: "Betweenness percentile" },
+  { value: "7 / 7", label: "Network risk score", emphasized: true },
+  { value: "CRITICAL", label: "Priority", emphasized: true },
+];
+
+const CASE_C01016_TRIGGERED_RULES = ["HIGH_FAN_IN", "HIGH_FAN_OUT", "REPEATED_RAPID_FLOW"];
 
 const INVESTIGATION_FRAMEWORK: { label: string; text: string }[] = [
   { label: "Incoming counterparties", text: "Unique accounts sending funds to the account." },
@@ -290,8 +284,6 @@ const SCORE_RULES = [
   { label: "High betweenness", points: 2 },
 ];
 
-const CASE_C01016_RISK_MAX = SCORE_RULES.reduce((sum, rule) => sum + rule.points, 0);
-
 const PRIORITY_BANDS = [
   { range: "0", label: "No Priority", accent: "none" as const },
   { range: "1", label: "Low", accent: "low" as const },
@@ -312,8 +304,6 @@ const VALIDATION_TERMS = [
 ];
 
 export default function AmlNetworkAnalysisPage() {
-  const networkEvidenceCaption = buildNetworkEvidenceCaption(CASE_C01016_METRICS);
-
   return (
     <main className="bg-paper min-h-screen overflow-x-hidden text-ink">
       <Link
@@ -696,6 +686,9 @@ export default function AmlNetworkAnalysisPage() {
           <h2 className="mt-4 max-w-2xl font-serif text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
             Case #C01016
           </h2>
+          <p className="text-burgundy mt-3 font-mono text-sm font-bold tracking-[0.24em] uppercase">
+            Critical Network Case
+          </p>
         </Reveal>
 
         <Reveal delay={0.1}>
@@ -704,86 +697,201 @@ export default function AmlNetworkAnalysisPage() {
           </CaseTab>
         </Reveal>
 
-        <CaseInvestigationSummary
-          metrics={CASE_C01016_METRICS}
-          maxRiskScore={CASE_C01016_RISK_MAX}
-          delay={0.15}
-          className="mt-10 max-w-4xl"
-        />
+        {/* compact investigation summary — the headline figures, at a glance */}
+        <div className="mt-10 grid max-w-4xl grid-cols-2 divide-x divide-y divide-black/10 border-t border-l border-black/10 sm:grid-cols-4 sm:divide-y-0">
+          {CASE_C01016_SUMMARY.map((stat, i) => (
+            <Reveal
+              key={stat.label}
+              delay={0.1 + i * 0.05}
+              className="border-r border-b border-black/10 p-5 sm:p-6"
+            >
+              <p
+                className={`font-mono text-3xl leading-none font-bold sm:text-4xl ${
+                  stat.emphasized ? "text-burgundy" : "text-ink"
+                }`}
+              >
+                {stat.value}
+              </p>
+              <p className="mt-2.5 max-w-[16ch] text-xs leading-snug tracking-[0.04em] text-black/50 uppercase">
+                {stat.label}
+              </p>
+            </Reveal>
+          ))}
+        </div>
 
+        {/* the graph, kept close to the summary it illustrates */}
+        <div className="mt-10 max-w-2xl">
+          <div className="bg-paper-card shadow-paper-sm relative border border-black/10 p-6 sm:p-8">
+            <div className="absolute -top-3.5 left-6 z-10">
+              <CaseTab tone="paper" onLoad>
+                Exhibit / Ego Network
+              </CaseTab>
+            </div>
+
+            <NetworkDiagram
+              nodes={EGO_NODES}
+              edges={EGO_EDGES}
+              viewBox="0 0 260 172"
+              ariaLabel="C01016 shown as the central account, connected to flagged and ordinary counterparties"
+              className="h-auto w-full max-w-[420px]"
+            />
+
+            <NetworkLegend
+              className="mt-6"
+              items={[
+                { id: "focus", swatch: NETWORK_LEGEND_SWATCH.focus, label: "Investigated customer" },
+                { id: "flagged", swatch: NETWORK_LEGEND_SWATCH.flagged, label: "Flagged counterparty" },
+                { id: "other", swatch: NETWORK_LEGEND_SWATCH.other, label: "Other counterparty" },
+                { id: "direction", swatch: NETWORK_LEGEND_SWATCH.direction, label: "Transaction direction" },
+              ]}
+              notes={[
+                "Node size reflects account priority — the investigated customer is drawn largest, flagged counterparties larger than ordinary ones.",
+                "Bolder edges mark the specific flow path under investigation, not transaction volume.",
+              ]}
+            />
+          </div>
+
+          <p className="mt-3 text-center text-[11px] leading-relaxed text-black/40 italic">
+            Illustrative ego-network view — only the focus account and
+            flagged counterparties are labelled, to avoid clutter.
+          </p>
+        </div>
+
+        {/* the four-part investigation */}
+        <div className="mt-16 max-w-2xl space-y-14">
+          <Reveal>
+            <p className="text-burgundy font-mono text-xs font-semibold tracking-[0.28em] uppercase">
+              Network Profile
+            </p>
+            <p className="mt-3 text-[15px] leading-[1.75] text-black/65">
+              C01016 interacted with <strong className="text-ink">36 unique inbound</strong> and{" "}
+              <strong className="text-ink">28 unique outbound</strong> counterparties — both at or
+              above the project&apos;s high-connectivity detection threshold of 28 unique
+              counterparties (Section 03).
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.06}>
+            <p className="text-burgundy font-mono text-xs font-semibold tracking-[0.28em] uppercase">
+              Flow Behaviour
+            </p>
+            <p className="mt-3 text-[15px] leading-[1.75] text-black/65">
+              The account received <strong className="text-ink">€239,248.64</strong> and sent{" "}
+              <strong className="text-ink">€224,521.44</strong> onward. That works out to an
+              aggregate flow-through ratio of <strong className="text-ink">93.8%</strong> —
+              not a claim that the same funds moved on, but a sign that outgoing value
+              closely tracked incoming value over the period. The account also triggered
+              the <span className="font-mono text-burgundy">REPEATED_RAPID_FLOW</span> rule.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.12}>
+            <p className="text-burgundy font-mono text-xs font-semibold tracking-[0.28em] uppercase">
+              Network Position
+            </p>
+            <dl className="mt-4 max-w-sm space-y-2.5">
+              <div className="flex items-baseline justify-between gap-4">
+                <dt className="font-mono text-[11px] tracking-[0.1em] text-black/40 uppercase">
+                  Betweenness percentile
+                </dt>
+                <dd className="text-ink font-mono text-sm font-semibold">99.96th</dd>
+              </div>
+              <div className="flex items-baseline justify-between gap-4">
+                <dt className="font-mono text-[11px] tracking-[0.1em] text-black/40 uppercase">
+                  Community
+                </dt>
+                <dd className="text-ink font-mono text-sm font-semibold">9</dd>
+              </div>
+            </dl>
+            <p className="mt-4 text-[15px] leading-[1.75] text-black/65">
+              A betweenness percentile this high means C01016 sat in an unusually central
+              intermediary position within the transaction network — a structural pattern
+              worth investigating on its own, not proof of laundering.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.18}>
+            <p className="text-burgundy font-mono text-xs font-semibold tracking-[0.28em] uppercase">
+              Risk Assessment
+            </p>
+            <dl className="mt-4 max-w-sm space-y-2.5">
+              <div className="flex items-baseline justify-between gap-4">
+                <dt className="font-mono text-[11px] tracking-[0.1em] text-black/40 uppercase">
+                  Network risk score
+                </dt>
+                <dd className="text-burgundy font-mono text-sm font-bold">7 / 7</dd>
+              </div>
+              <div className="flex items-baseline justify-between gap-4">
+                <dt className="font-mono text-[11px] tracking-[0.1em] text-black/40 uppercase">
+                  Priority
+                </dt>
+                <dd className="text-burgundy font-mono text-sm font-bold">Critical</dd>
+              </div>
+              <div className="flex items-baseline justify-between gap-4">
+                <dt className="font-mono text-[11px] tracking-[0.1em] text-black/40 uppercase">
+                  Case type
+                </dt>
+                <dd className="text-ink font-mono text-sm font-semibold">
+                  High-Connectivity Pass-Through
+                </dd>
+              </div>
+            </dl>
+
+            <TriggeredRules rules={CASE_C01016_TRIGGERED_RULES} delay={0.1} className="mt-6" />
+          </Reveal>
+        </div>
+
+        {/* analyst interpretation + limitation */}
+        <Reveal delay={0.1} className="mt-14 max-w-2xl border-t-2 border-burgundy/30 pt-8">
+          <p className="text-burgundy font-mono text-[10px] font-bold tracking-[0.24em] uppercase">
+            Analyst Interpretation
+          </p>
+          <p className="mt-4 text-[15px] leading-[1.75] text-black/65">
+            C01016 combines unusually high inbound and outbound connectivity with repeated
+            rapid movement of funds and an extremely high network-centrality position. The
+            combination of these indicators makes the account a strong candidate for
+            enhanced investigation as a potential intermediary or pass-through account.
+          </p>
+        </Reveal>
+
+        <Reveal
+          delay={0.16}
+          className="bg-ivory-deep/60 shadow-paper-xs border-t border-r border-b border-l-2 border-t-black/10 border-r-black/10 border-b-black/10 border-l-burgundy/40 mt-6 max-w-2xl px-6 py-5"
+        >
+          <p className="text-[15px] leading-[1.7] text-black/70 italic">
+            &ldquo;These network indicators identify unusual transaction behaviour and
+            prioritise the account for review; they do not independently establish money
+            laundering.&rdquo;
+          </p>
+        </Reveal>
+
+        {/* full methodology, kept below the investigation case */}
         <div className="mt-16 border-t border-black/10 pt-12">
           <Reveal>
             <p className="font-mono text-[10px] font-bold tracking-[0.24em] text-black/40 uppercase">
               Full investigation framework
             </p>
           </Reveal>
-        </div>
 
-        <div className="mt-8 flex flex-col gap-14 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-14">
-          <div className="lg:col-span-6">
-            <Reveal delay={0.15}>
-              <p className="max-w-md text-[15px] leading-[1.75] text-black/60">
-                The summary above surfaces the headline figures for this
-                case. The framework below is the full set of criteria the
-                investigation evaluates for every flagged account.
-              </p>
-            </Reveal>
-
-            <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-              {INVESTIGATION_FRAMEWORK.map((item, i) => (
-                <Reveal key={item.label} delay={0.1 + i * 0.04}>
-                  <p className="font-mono text-xs font-bold tracking-tight text-black/75">
-                    {item.label}
-                  </p>
-                  <p className="mt-1.5 text-[13px] leading-[1.65] text-black/55">
-                    {item.text}
-                  </p>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-
-          <div className="lg:col-span-6">
-            <div className="bg-paper-card shadow-paper-sm relative border border-black/10 p-6 sm:p-8">
-              <div className="absolute -top-3.5 left-6 z-10">
-                <CaseTab tone="paper" onLoad>
-                  Exhibit / Ego Network
-                </CaseTab>
-              </div>
-
-              <NetworkDiagram
-                nodes={EGO_NODES}
-                edges={EGO_EDGES}
-                viewBox="0 0 260 172"
-                ariaLabel="C01016 shown as the central account, connected to flagged and ordinary counterparties"
-                className="h-auto w-full max-w-[420px]"
-              />
-
-              <NetworkLegend
-                className="mt-6"
-                items={[
-                  { id: "focus", swatch: NETWORK_LEGEND_SWATCH.focus, label: "Investigated customer" },
-                  { id: "flagged", swatch: NETWORK_LEGEND_SWATCH.flagged, label: "Flagged counterparty" },
-                  { id: "other", swatch: NETWORK_LEGEND_SWATCH.other, label: "Other counterparty" },
-                  { id: "direction", swatch: NETWORK_LEGEND_SWATCH.direction, label: "Transaction direction" },
-                ]}
-                notes={[
-                  "Node size reflects the account's role in this view — the investigated customer is drawn largest.",
-                  "Bolder edges mark the specific flow path under investigation, not transaction volume.",
-                ]}
-              />
-            </div>
-
-            {networkEvidenceCaption && (
-              <p className="mt-4 max-w-md text-center text-[13px] leading-relaxed text-black/60">
-                {networkEvidenceCaption}
-              </p>
-            )}
-
-            <p className="mt-3 text-center text-[11px] leading-relaxed text-black/40 italic">
-              Illustrative ego-network view — only the focus account and
-              flagged counterparties are labelled, to avoid clutter.
+          <Reveal delay={0.05}>
+            <p className="mt-4 max-w-md text-[15px] leading-[1.75] text-black/60">
+              The case above surfaces the headline figures for C01016. The framework
+              below is the full set of criteria the investigation evaluates for every
+              flagged account.
             </p>
+          </Reveal>
+
+          <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+            {INVESTIGATION_FRAMEWORK.map((item, i) => (
+              <Reveal key={item.label} delay={0.1 + i * 0.04}>
+                <p className="font-mono text-xs font-bold tracking-tight text-black/75">
+                  {item.label}
+                </p>
+                <p className="mt-1.5 text-[13px] leading-[1.65] text-black/55">
+                  {item.text}
+                </p>
+              </Reveal>
+            ))}
           </div>
         </div>
       </Section>

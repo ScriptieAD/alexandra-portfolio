@@ -142,10 +142,12 @@ export default function SeverityStory() {
           </div>
 
           <CaseNote delay={0.9} className="mt-14">
-            This case produced an extreme monthly-volume alert, but unlike
-            C02177, nearly all activity was driven by one transaction. This
-            distinction demonstrates why rule outputs require investigation
-            rather than automatic classification.
+            This case produced an extreme monthly-volume alert, with nearly
+            all activity concentrated in a single transaction — a pattern
+            also seen in C01222, though at roughly half the magnitude
+            (33.66× versus 68.87× expected volume). The same combination of
+            triggered rules does not always mean the same underlying
+            severity.
           </CaseNote>
         </motion.div>
       </div>

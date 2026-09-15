@@ -74,7 +74,7 @@ export default function InvestigationNotes() {
           <NoteFragment
             id="04"
             title="Two cases, two different stories"
-            copy="C02177 and C00046 both cleared the same volume threshold, but one spread funds across 40 receivers while the other rested on a single transaction. The rule was identical; the underlying behaviour was not."
+            copy="C01222 and C00046 both triggered the same two behavioural rules, but at very different magnitudes — 68.87× versus 33.66× expected volume. Triggering the same rules does not guarantee the same underlying severity."
             highlight="same alert, different story"
             variant="memo"
             rotate={1.4}

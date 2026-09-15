@@ -27,10 +27,12 @@ function markVariant(delay: number) {
 
 export default function PercentileBar({
   markerLabel = "95th percentile",
+  caption = "both thresholds sit here",
   delay = 0,
   className = "",
 }: {
   markerLabel?: string;
+  caption?: string;
   delay?: number;
   className?: string;
 }) {
@@ -103,7 +105,7 @@ export default function PercentileBar({
         variants={markVariant(delay + 0.9)}
         className="font-hand text-burgundy/70 mt-4 -rotate-1 text-base leading-none"
       >
-        {markerLabel} — both thresholds sit here
+        {markerLabel} — {caption}
       </motion.p>
     </motion.div>
   );

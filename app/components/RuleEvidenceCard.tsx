@@ -18,6 +18,7 @@ export type Rule = {
   explanation: ReactNode;
   metric: string;
   threshold?: string;
+  alerts?: number;
   note: string;
   code: string;
   emphasized?: boolean;
@@ -128,14 +129,28 @@ export default function RuleEvidenceCard({
           className="mt-7 flex flex-wrap items-end justify-between gap-6"
         >
           <RuleMetric metric={rule.metric} />
-          {rule.threshold && (
-            <ThresholdStamp
-              value={rule.threshold}
-              hovered={hovered}
-              rotate={rule.emphasized ? -8 : -6}
-              delay={delay + 0.42}
-            />
-          )}
+
+          <div className="flex items-end gap-6">
+            {rule.alerts !== undefined && (
+              <div>
+                <p className="text-[10px] font-semibold tracking-[0.2em] text-black/40 uppercase">
+                  Alerts
+                </p>
+                <p className="text-ink mt-1.5 font-mono text-2xl font-bold">
+                  {rule.alerts.toLocaleString()}
+                </p>
+              </div>
+            )}
+
+            {rule.threshold && (
+              <ThresholdStamp
+                value={rule.threshold}
+                hovered={hovered}
+                rotate={rule.emphasized ? -8 : -6}
+                delay={delay + 0.42}
+              />
+            )}
+          </div>
         </motion.div>
 
         <div className="mt-7">
