@@ -219,8 +219,11 @@ export default function ProjectCaseCard({
         Case {item.id}
       </FileTab>
 
-      <div className="flex items-center justify-end">
-        <span className="flex items-center gap-1.5 text-[9px] uppercase tracking-[0.14em] text-black/35">
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-black/40">
+          {item.category}
+        </span>
+        <span className="flex shrink-0 items-center gap-1.5 text-[9px] uppercase tracking-[0.14em] text-black/35">
           <Lock aria-hidden="true" className="h-2.5 w-2.5" strokeWidth={2} />
           Confidential
         </span>
@@ -234,8 +237,8 @@ export default function ProjectCaseCard({
         {item.tag}
       </p>
 
-      <p className="mt-1.5 font-mono text-[10px] text-black/45">
-        {item.tools.join(" · ")}
+      <p className="mt-2 max-w-[38ch] text-[12px] leading-[1.5] text-black/55">
+        {item.summary}
       </p>
 
       <EvidenceFocal item={item} hovered={hovered} />

@@ -38,11 +38,12 @@ function AnimatedStat({
   delay: number;
   formatter: (v: number) => string;
 }) {
-  const motionValue = useMotionValue(0);
+  const motionValue = useMotionValue(value);
   const display = useTransform(motionValue, formatter);
 
   useEffect(() => {
     if (!active) return;
+    motionValue.set(0);
     const controls = animate(motionValue, value, {
       duration: 1.2,
       delay,

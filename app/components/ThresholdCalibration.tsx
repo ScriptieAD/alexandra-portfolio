@@ -20,11 +20,12 @@ function AnimatedRatio({
   active: boolean;
   delay?: number;
 }) {
-  const motionValue = useMotionValue(0);
+  const motionValue = useMotionValue(value);
   const display = useTransform(motionValue, ratioFmt);
 
   useEffect(() => {
     if (!active) return;
+    motionValue.set(0);
     const controls = animate(motionValue, value, {
       duration: 1.3,
       delay,

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ProjectHero from "../../components/ProjectHero";
 import CaseBrief from "../../components/CaseBrief";
+import InvestigationAtAGlance from "../../components/InvestigationAtAGlance";
 import InvestigationFlow from "../../components/InvestigationFlow";
 import DetectionRules from "../../components/DetectionRules";
 import ThresholdCalibration from "../../components/ThresholdCalibration";
@@ -26,6 +27,7 @@ export default function AmlTransactionMonitoringPage() {
 
       <ProjectHero />
       <CaseBrief />
+      <InvestigationAtAGlance />
       <InvestigationFlow />
       <DetectionRules />
       <ThresholdCalibration />

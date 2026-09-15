@@ -20,10 +20,10 @@ export type Evidence = StatsEvidence | ChartEvidence | NetworkEvidence;
 
 export type CaseFile = {
   id: string;
+  category: string;
   title: string;
   tag: string;
-  tools: string[];
-  note: string;
+  summary: string;
   href: string;
   evidence: Evidence;
 };
@@ -31,10 +31,11 @@ export type CaseFile = {
 export const caseFiles: CaseFile[] = [
   {
     id: "001",
-    title: "Transaction Behaviour Analysis",
-    tag: "Fraud Analytics",
-    tools: ["Python", "Pandas", "SQL"],
-    note: "Pattern detected in high-risk behaviour.",
+    category: "Transaction Monitoring",
+    title: "Behavioural AML Detection",
+    tag: "50K Transactions · 2.5K Customers · Python / Pandas",
+    summary:
+      "Behavioural profiling, threshold calibration, detection rules and case investigation.",
     href: "/projects/aml-transaction-monitoring",
     evidence: {
       kind: "stats",
@@ -47,10 +48,11 @@ export const caseFiles: CaseFile[] = [
   },
   {
     id: "002",
+    category: "Network Analysis",
     title: "AML Network & Flow Analysis",
-    tag: "Financial Crime Analytics · Network Analysis",
-    tools: ["Python", "Pandas", "NetworkX", "Matplotlib", "Graph Analysis"],
-    note: "Every account is a node. Every transaction, a trail.",
+    tag: "Graph Analysis · NetworkX · Flow Detection",
+    summary:
+      "Fan-in/fan-out, rapid pass-through, circular flows and network risk scoring.",
     href: "/projects/aml-network-analysis",
     evidence: {
       kind: "network",
@@ -59,10 +61,10 @@ export const caseFiles: CaseFile[] = [
   },
   {
     id: "003",
-    title: "Metaverse Economy & Financial Risk",
-    tag: "Crypto Forecasting · Time Series · Virtual Economies",
-    tools: ["R", "ARIMA", "GARCH", "Time Series"],
-    note: "The forecast held. The variance — and the oversight — didn't.",
+    category: "Quantitative Research",
+    title: "MANA Market Dynamics",
+    tag: "ARIMA · GARCH · Time Series",
+    summary: "Market modelling, volatility analysis and forecasting.",
     href: "/projects/metaverse-economy-mana-forecasting",
     evidence: {
       kind: "chart",

@@ -22,11 +22,12 @@ export default function EvidenceCounter({
 }) {
   const [inView, setInView] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const motionValue = useMotionValue(0);
+  const motionValue = useMotionValue(value);
   const rounded = useTransform(motionValue, (v) => Math.round(v).toLocaleString());
 
   useEffect(() => {
     if (!inView) return;
+    motionValue.set(0);
     const controls = animate(motionValue, value, {
       duration: 1.2,
       delay: delay + 0.15,

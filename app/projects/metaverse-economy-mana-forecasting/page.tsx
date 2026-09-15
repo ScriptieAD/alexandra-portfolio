@@ -280,22 +280,25 @@ export default function MetaverseEconomyManaForecastingPage() {
         />
         <div className="relative mx-auto max-w-[1100px] px-6 md:px-10">
           <Reveal onLoad>
-            <CaseTab tone="manila" onLoad>
-              Case Study / Bachelor Thesis
-            </CaseTab>
+            <div className="flex flex-wrap items-center gap-3">
+              <CaseTab tone="manila" onLoad>
+                Case 003
+              </CaseTab>
+              <span className="border-burgundy/50 text-burgundy/80 inline-block rounded-sm border px-2 py-1 font-mono text-[9px] font-bold tracking-[0.16em] uppercase">
+                Quantitative Research
+              </span>
+            </div>
           </Reveal>
 
           <Reveal onLoad delay={0.1}>
             <h1 className="mt-6 max-w-3xl font-serif text-4xl leading-[1.1] sm:text-5xl lg:text-[3.4rem]">
-              Metaverse Economy, Crypto Forecasting &amp; Financial Crime
-              Risks
+              MANA Market Dynamics &amp; Time-Series Forecasting
             </h1>
           </Reveal>
 
           <Reveal onLoad delay={0.18}>
             <p className="text-burgundy mt-5 font-mono text-xs font-semibold tracking-[0.24em] uppercase">
-              Time Series Analysis · Econometrics · Virtual Economies ·
-              Financial Crime
+              Bachelor Thesis · ARIMA · GARCH · Time Series
             </p>
           </Reveal>
 
@@ -347,14 +350,20 @@ export default function MetaverseEconomyManaForecastingPage() {
       {/* FINANCIAL CYBERCRIME & FRAUD-RELATED RISKS */}
       <Section>
         <Reveal>
-          <Eyebrow>Virtual Asset Risk</Eyebrow>
+          <div className="flex flex-wrap items-center gap-3">
+            <Eyebrow>Virtual Asset Risk</Eyebrow>
+            <span className="border-black/20 text-black/45 inline-block rounded-sm border px-2 py-1 font-mono text-[9px] font-bold tracking-[0.16em] uppercase">
+              Qualitative context
+            </span>
+          </div>
           <h2 className="mt-4 max-w-2xl font-serif text-3xl leading-[1.1] sm:text-4xl">
             Financial Cybercrime &amp; Fraud-Related Risks
           </h2>
           <p className="mt-5 max-w-xl text-[13px] leading-relaxed text-black/45 italic">
-            Qualitative risk research from the thesis, not a dedicated
-            fraud-detection or AML transaction-monitoring project, and
-            separate from the ARIMA/GARCH modelling work.
+            Qualitative research context from the thesis — distinct from
+            the quantitative ARIMA/GARCH forecasting work elsewhere in
+            this project, and not a dedicated fraud-detection or AML
+            transaction-monitoring system.
           </p>
         </Reveal>
 
@@ -612,7 +621,7 @@ export default function MetaverseEconomyManaForecastingPage() {
         />
         <div className="relative mx-auto flex max-w-[1100px] flex-wrap items-center justify-between gap-6 px-6 md:px-10">
           <p className="font-mono text-xs tracking-[0.2em] text-black/40 uppercase">
-            Case Study / Bachelor Thesis
+            Case 003 · Quantitative Research
           </p>
           <Link
             href="/#projects"

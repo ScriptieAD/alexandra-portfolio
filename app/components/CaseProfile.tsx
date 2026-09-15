@@ -72,7 +72,7 @@ export default function CaseProfile({
         </p>
 
         <div className="mt-6 border-t border-black/10 pt-6">
-          <p className="max-w-sm text-[15px] leading-[1.75] text-black/65">{story}</p>
+          <div className="max-w-sm text-[15px] leading-[1.75] text-black/65">{story}</div>
         </div>
 
         {annotation && (

@@ -14,6 +14,11 @@ import NetworkDiagram, { type NetworkNode, type NetworkEdge } from "../../compon
 import FanFlowDiagram from "../../components/FanFlowDiagram";
 import TypologyCard from "../../components/TypologyCard";
 import RiskScoreMatrix from "../../components/RiskScoreMatrix";
+import CaseInvestigationSummary, {
+  buildNetworkEvidenceCaption,
+  type CaseMetrics,
+} from "../../components/CaseInvestigationSummary";
+import NetworkLegend, { NETWORK_LEGEND_SWATCH } from "../../components/NetworkLegend";
 import ProjectCapabilities from "../../components/ProjectCapabilities";
 import CaseClosed from "../../components/CaseClosed";
 
@@ -144,6 +149,25 @@ const EGO_EDGES: NetworkEdge[] = [
   { from: "C01016", to: "n4" },
 ];
 
+// Real, case-specific values for C01016 go here once pulled from the
+// underlying analysis. Any field left as `undefined` is automatically
+// omitted from the investigation summary below — never shown as 0 or a
+// placeholder.
+const CASE_C01016_METRICS: CaseMetrics = {
+  incomingCounterparties: undefined, // e.g. 3
+  outgoingCounterparties: undefined, // e.g. 9
+  incomingVolume: undefined, // EUR, e.g. 42250.10
+  outgoingVolume: undefined, // EUR
+  rapidPassThroughEvents: undefined,
+  fanInScore: undefined,
+  fanOutScore: undefined,
+  betweennessCentrality: undefined,
+  community: undefined, // e.g. "Cluster 4"
+  circularFlowDetected: undefined, // true | false
+  riskScore: undefined, // out of CASE_C01016_RISK_MAX below
+  riskClassification: undefined, // e.g. "Critical" — matches PRIORITY_BANDS labels
+};
+
 const INVESTIGATION_FRAMEWORK: { label: string; text: string }[] = [
   { label: "Incoming counterparties", text: "Unique accounts sending funds to the account." },
   { label: "Outgoing counterparties", text: "Unique accounts receiving funds from the account." },
@@ -266,6 +290,8 @@ const SCORE_RULES = [
   { label: "High betweenness", points: 2 },
 ];
 
+const CASE_C01016_RISK_MAX = SCORE_RULES.reduce((sum, rule) => sum + rule.points, 0);
+
 const PRIORITY_BANDS = [
   { range: "0", label: "No Priority", accent: "none" as const },
   { range: "1", label: "Low", accent: "low" as const },
@@ -286,6 +312,8 @@ const VALIDATION_TERMS = [
 ];
 
 export default function AmlNetworkAnalysisPage() {
+  const networkEvidenceCaption = buildNetworkEvidenceCaption(CASE_C01016_METRICS);
+
   return (
     <main className="bg-paper min-h-screen overflow-x-hidden text-ink">
       <Link
@@ -676,13 +704,28 @@ export default function AmlNetworkAnalysisPage() {
           </CaseTab>
         </Reveal>
 
-        <div className="mt-10 flex flex-col gap-14 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-14">
+        <CaseInvestigationSummary
+          metrics={CASE_C01016_METRICS}
+          maxRiskScore={CASE_C01016_RISK_MAX}
+          delay={0.15}
+          className="mt-10 max-w-4xl"
+        />
+
+        <div className="mt-16 border-t border-black/10 pt-12">
+          <Reveal>
+            <p className="font-mono text-[10px] font-bold tracking-[0.24em] text-black/40 uppercase">
+              Full investigation framework
+            </p>
+          </Reveal>
+        </div>
+
+        <div className="mt-8 flex flex-col gap-14 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-14">
           <div className="lg:col-span-6">
             <Reveal delay={0.15}>
               <p className="max-w-md text-[15px] leading-[1.75] text-black/60">
-                The framework below is what the investigation evaluates for
-                every flagged account. It is presented here as a framework,
-                not as headline figures for this case.
+                The summary above surfaces the headline figures for this
+                case. The framework below is the full set of criteria the
+                investigation evaluates for every flagged account.
               </p>
             </Reveal>
 
@@ -701,7 +744,13 @@ export default function AmlNetworkAnalysisPage() {
           </div>
 
           <div className="lg:col-span-6">
-            <div className="bg-paper-card shadow-paper-sm border border-black/10 p-6 sm:p-8">
+            <div className="bg-paper-card shadow-paper-sm relative border border-black/10 p-6 sm:p-8">
+              <div className="absolute -top-3.5 left-6 z-10">
+                <CaseTab tone="paper" onLoad>
+                  Exhibit / Ego Network
+                </CaseTab>
+              </div>
+
               <NetworkDiagram
                 nodes={EGO_NODES}
                 edges={EGO_EDGES}
@@ -710,22 +759,28 @@ export default function AmlNetworkAnalysisPage() {
                 className="h-auto w-full max-w-[420px]"
               />
 
-              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 border-t border-black/10 pt-5">
-                <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.1em] text-black/50 uppercase">
-                  <span aria-hidden="true" className="bg-burgundy border-paper-card inline-block h-3 w-3 rounded-full border-2" />
-                  Focus account
-                </span>
-                <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.1em] text-black/50 uppercase">
-                  <span aria-hidden="true" className="bg-burgundy inline-block h-2 w-2 rounded-full" />
-                  Flagged counterparty
-                </span>
-                <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.1em] text-black/50 uppercase">
-                  <span aria-hidden="true" className="bg-burgundy/25 inline-block h-1.5 w-1.5 rounded-full" />
-                  Other counterparty
-                </span>
-              </div>
+              <NetworkLegend
+                className="mt-6"
+                items={[
+                  { id: "focus", swatch: NETWORK_LEGEND_SWATCH.focus, label: "Investigated customer" },
+                  { id: "flagged", swatch: NETWORK_LEGEND_SWATCH.flagged, label: "Flagged counterparty" },
+                  { id: "other", swatch: NETWORK_LEGEND_SWATCH.other, label: "Other counterparty" },
+                  { id: "direction", swatch: NETWORK_LEGEND_SWATCH.direction, label: "Transaction direction" },
+                ]}
+                notes={[
+                  "Node size reflects the account's role in this view — the investigated customer is drawn largest.",
+                  "Bolder edges mark the specific flow path under investigation, not transaction volume.",
+                ]}
+              />
             </div>
-            <p className="mt-4 text-center text-[11px] leading-relaxed text-black/40 italic">
+
+            {networkEvidenceCaption && (
+              <p className="mt-4 max-w-md text-center text-[13px] leading-relaxed text-black/60">
+                {networkEvidenceCaption}
+              </p>
+            )}
+
+            <p className="mt-3 text-center text-[11px] leading-relaxed text-black/40 italic">
               Illustrative ego-network view — only the focus account and
               flagged counterparties are labelled, to avoid clutter.
             </p>
@@ -821,7 +876,7 @@ export default function AmlNetworkAnalysisPage() {
         footerTitle="AML Network & Flow Analysis Engine"
         footerStack="Python · Pandas · NetworkX · Graph Analytics"
         nextCase={{
-          title: "Metaverse Economy & Financial Risk",
+          title: "MANA Market Dynamics & Time-Series Forecasting",
           href: "/projects/metaverse-economy-mana-forecasting",
         }}
       />
