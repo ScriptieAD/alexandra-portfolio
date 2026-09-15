@@ -40,9 +40,9 @@ export const caseFiles: CaseFile[] = [
     evidence: {
       kind: "stats",
       items: [
-        { label: "Alerts", value: "723" },
-        { label: "High-Risk Overlap", value: "613" },
-        { label: "Rules", value: "2" },
+        { label: "Alerts", value: "2,007" },
+        { label: "Cases", value: "1,366" },
+        { label: "Detection rules", value: "3" },
       ],
     },
   },

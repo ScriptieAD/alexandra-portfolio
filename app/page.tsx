@@ -300,9 +300,17 @@ export default function Home() {
               meaningful with data.
             </h2>
 
-            <EditorialCta href="mailto:your@email.com" tone="cream">
-              Email me
-            </EditorialCta>
+            <div className="flex flex-col items-start gap-3 md:items-end">
+              <EditorialCta href="mailto:craciunescu.alexandra77a@gmail.com" tone="cream">
+                Email me
+              </EditorialCta>
+              <a
+                href="mailto:craciunescu.alexandra77a@gmail.com"
+                className="font-mono text-xs text-white/50 transition-colors duration-200 hover:text-white/80"
+              >
+                craciunescu.alexandra77a@gmail.com
+              </a>
+            </div>
 
           </div>
 

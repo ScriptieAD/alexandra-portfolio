@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useSyncExternalStore } from "react";
 import { motion } from "motion/react";
 import Reveal from "./Reveal";
 import InvestigationStep, { type FlowStep } from "./InvestigationStep";
@@ -71,64 +71,57 @@ const STEPS: Step[] = [
 
 const EMPHASIZED = new Set([2, 3, 4]);
 
-function DesktopStep({
-  index,
-  onHoverChange,
-}: {
-  index: number;
-  onHoverChange: (index: number, hovering: boolean) => void;
-}) {
-  const step = STEPS[index];
-  const emphasized = EMPHASIZED.has(index);
+// Grid-column start classes must be static, literal strings so Tailwind's
+// content scanner can find them — an interpolated `col-start-${n}` string
+// would not be generated.
+const STEP_COL_START = ["lg:col-start-1", "lg:col-start-3", "lg:col-start-5", "lg:col-start-7", "lg:col-start-9"];
+const CONNECTOR_COL_START = ["lg:col-start-2", "lg:col-start-4", "lg:col-start-6", "lg:col-start-8"];
 
-  return (
-    <div role="listitem" className="min-w-0 flex-1">
-      <motion.div
-        initial={{ opacity: 0, y: step.offsetY + 26, rotate: step.rotate - 3 }}
-        whileInView={{ opacity: 1, y: step.offsetY, rotate: step.rotate }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{
-          duration: 0.6,
-          delay: index * 0.1,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-      >
-        <InvestigationStep
-          step={step}
-          emphasized={emphasized}
-          delay={index * 0.1}
-          onHoverChange={(h) => onHoverChange(index, h)}
-        />
-      </motion.div>
+const DESKTOP_QUERY = "(min-width: 1024px)";
 
-      {step.annotation && (
-        <InvestigationAnnotation
-          className="mt-6 ml-1"
-          rotate={step.annotationRotate}
-          delay={1.5}
-        >
-          {step.annotation}
-        </InvestigationAnnotation>
-      )}
-    </div>
-  );
+function subscribeToDesktopQuery(callback: () => void) {
+  const mq = window.matchMedia(DESKTOP_QUERY);
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
 }
 
-function DesktopConnector({
+function getIsDesktopSnapshot() {
+  return window.matchMedia(DESKTOP_QUERY).matches;
+}
+
+function getIsDesktopServerSnapshot() {
+  return false;
+}
+
+/**
+ * Tracks the lg breakpoint so the same step nodes can use a different
+ * Framer Motion entrance — a per-step rotate/offset settle on desktop vs.
+ * an alternating left/right slide on mobile — without ever duplicating the
+ * step content itself in the DOM. `useSyncExternalStore` keeps this
+ * SSR-safe: the server (and the client's first hydration pass) always see
+ * `false`, then it syncs to the real viewport immediately after.
+ */
+function useIsDesktop() {
+  return useSyncExternalStore(subscribeToDesktopQuery, getIsDesktopSnapshot, getIsDesktopServerSnapshot);
+}
+
+function StepConnector({
+  colStartClass,
+  hovered,
   a,
   b,
-  hovered,
   delay,
   emphasized = false,
 }: {
+  colStartClass: string;
+  hovered: number | null;
   a: number;
   b: number;
-  hovered: number | null;
   delay: number;
   emphasized?: boolean;
 }) {
   return (
-    <div aria-hidden="true" className="w-10 shrink-0 pt-4 xl:w-16">
+    <div aria-hidden="true" className={`hidden pt-4 lg:row-start-1 lg:block ${colStartClass}`}>
       <FlowConnector
         orientation="horizontal"
         emphasized={emphasized}
@@ -141,6 +134,8 @@ function DesktopConnector({
 
 export default function InvestigationFlow() {
   const [hovered, setHovered] = useState<number | null>(null);
+  const [flowInView, setFlowInView] = useState(false);
+  const isDesktop = useIsDesktop();
 
   const handleHoverChange = useCallback((index: number, hovering: boolean) => {
     setHovered((current) => {
@@ -167,69 +162,65 @@ export default function InvestigationFlow() {
           </h2>
         </Reveal>
 
-        {/* DESKTOP TRAIL */}
-        <div
+        <motion.div
           role="list"
           aria-label="AML investigation pipeline stages"
-          className="mt-20 hidden items-start lg:flex"
+          initial={false}
+          whileInView={{}}
+          onViewportEnter={() => setFlowInView(true)}
+          viewport={{ once: true, margin: "-100px" }}
+          className="relative mt-16 grid grid-cols-1 gap-y-14 lg:mt-20 lg:grid-cols-[1fr_2.5rem_1fr_2.5rem_1fr_2.5rem_1fr_2.5rem_1fr] lg:items-start lg:gap-y-0"
         >
-          <DesktopStep index={0} onHoverChange={handleHoverChange} />
-          <DesktopConnector a={0} b={1} hovered={hovered} delay={0.08} />
-          <DesktopStep index={1} onHoverChange={handleHoverChange} />
-          <DesktopConnector a={1} b={2} hovered={hovered} delay={0.18} />
-
-          <div role="listitem" className="relative min-w-0 flex-[3]">
-            <div
-              aria-hidden="true"
-              className="bg-burgundy/[0.05] absolute -inset-x-8 -inset-y-10 -z-10"
-            />
-            <div role="list" className="flex items-start">
-              <DesktopStep index={2} onHoverChange={handleHoverChange} />
-              <DesktopConnector a={2} b={3} hovered={hovered} delay={0.4} emphasized />
-              <DesktopStep index={3} onHoverChange={handleHoverChange} />
-              <DesktopConnector a={3} b={4} hovered={hovered} delay={0.52} emphasized />
-              <DesktopStep index={4} onHoverChange={handleHoverChange} />
-            </div>
-          </div>
-        </div>
-
-        {/* MOBILE TRAIL */}
-        <div
-          role="list"
-          aria-label="AML investigation pipeline stages"
-          className="relative mt-16 flex flex-col gap-14 lg:hidden"
-        >
+          {/* mobile-only connecting line — desktop uses the connectors below instead */}
           <motion.div
             aria-hidden="true"
             initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            animate={{ scaleY: flowInView ? 1 : 0 }}
             transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
             style={{ transformOrigin: "top" }}
-            className="bg-black/15 absolute top-1 bottom-1 left-[15px] w-px"
+            className="bg-black/15 absolute top-1 bottom-1 left-[15px] w-px lg:hidden"
+          />
+
+          {/* desktop-only shared highlight panel behind the emphasized group */}
+          <div
+            aria-hidden="true"
+            className="bg-burgundy/[0.05] pointer-events-none -z-10 hidden lg:col-start-5 lg:col-end-10 lg:row-start-1 lg:-my-10 lg:block lg:self-stretch"
           />
 
           {STEPS.map((step, i) => {
             const emphasized = EMPHASIZED.has(i);
-            return (
-              <div key={step.num} role="listitem" className="relative pl-11">
-                {emphasized && (
-                  <div
-                    aria-hidden="true"
-                    className="bg-burgundy/[0.05] absolute -inset-x-4 -inset-y-4 -z-10"
-                  />
-                )}
+            const initial = isDesktop
+              ? { opacity: 0, y: step.offsetY + 26, rotate: step.rotate - 3 }
+              : { opacity: 0, x: i % 2 === 0 ? -22 : 22 };
+            const animate = isDesktop
+              ? { opacity: 1, y: step.offsetY, rotate: step.rotate }
+              : { opacity: 1, x: 0 };
 
+            return (
+              <div
+                key={step.num}
+                role="listitem"
+                className={`relative pl-11 lg:row-start-1 lg:pl-0 ${STEP_COL_START[i]}`}
+              >
+                {/* mobile-only dot marker */}
                 <span
                   aria-hidden="true"
-                  className={`absolute top-1 left-[15px] h-2.5 w-2.5 -translate-x-1/2 rounded-full ${
+                  className={`absolute top-1 left-[15px] h-2.5 w-2.5 -translate-x-1/2 rounded-full lg:hidden ${
                     emphasized ? "bg-burgundy" : "bg-black/30"
                   }`}
                 />
 
+                {/* mobile-only individual highlight (desktop uses the shared panel above) */}
+                {emphasized && (
+                  <div
+                    aria-hidden="true"
+                    className="bg-burgundy/[0.05] absolute -inset-x-4 -inset-y-4 -z-10 lg:hidden"
+                  />
+                )}
+
                 <motion.div
-                  initial={{ opacity: 0, x: i % 2 === 0 ? -22 : 22 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={initial}
+                  whileInView={animate}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{
                     duration: 0.6,
@@ -237,14 +228,19 @@ export default function InvestigationFlow() {
                     ease: [0.22, 1, 0.36, 1],
                   }}
                 >
-                  <InvestigationStep step={step} emphasized={emphasized} delay={i * 0.1} />
+                  <InvestigationStep
+                    step={step}
+                    emphasized={emphasized}
+                    delay={i * 0.1}
+                    onHoverChange={(h) => handleHoverChange(i, h)}
+                  />
                 </motion.div>
 
                 {step.annotation && (
                   <InvestigationAnnotation
-                    className="mt-5"
+                    className="mt-6 ml-1 lg:mt-6"
                     rotate={step.annotationRotate}
-                    delay={0.6}
+                    delay={isDesktop ? 1.5 : 0.6}
                   >
                     {step.annotation}
                   </InvestigationAnnotation>
@@ -252,7 +248,26 @@ export default function InvestigationFlow() {
               </div>
             );
           })}
-        </div>
+
+          <StepConnector colStartClass={CONNECTOR_COL_START[0]} hovered={hovered} a={0} b={1} delay={0.08} />
+          <StepConnector colStartClass={CONNECTOR_COL_START[1]} hovered={hovered} a={1} b={2} delay={0.18} />
+          <StepConnector
+            colStartClass={CONNECTOR_COL_START[2]}
+            hovered={hovered}
+            a={2}
+            b={3}
+            delay={0.4}
+            emphasized
+          />
+          <StepConnector
+            colStartClass={CONNECTOR_COL_START[3]}
+            hovered={hovered}
+            a={3}
+            b={4}
+            delay={0.52}
+            emphasized
+          />
+        </motion.div>
       </div>
     </section>
   );
