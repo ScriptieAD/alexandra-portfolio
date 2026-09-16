@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import Reveal from "../../components/Reveal";
 import SelectedImpactSection from "./SelectedImpactSection";
@@ -55,30 +56,32 @@ const SCRAPBOOK = [
         caption: "dashboard_v04_final_FINAL.jsx",
         captionStyle: "font-mono",
         rotate: "-rotate-3",
+        image: "/about/global-records/dashboard.jpg",
+        imageAlt: "Tandem artist dashboard catalog view",
     },
     {
         label: "python script",
         caption: "yes, it finally worked.",
         captionStyle: "font-serif italic",
         rotate: "rotate-2",
+        image: "/about/global-records/python-script.png",
+        imageAlt: "Backend route handler code for uploading a track",
     },
     {
         label: "supabase schema",
         caption: "SELECT * FROM my_problems;",
         captionStyle: "font-mono",
         rotate: "-rotate-2",
+        image: "/about/global-records/supabase-schema.png",
+        imageAlt: "Supabase schema diagram for the music catalog database",
     },
     {
         label: "automated spreadsheet",
         caption: "runs while I sleep.",
         captionStyle: "font-serif italic",
         rotate: "rotate-3",
-    },
-    {
-        label: "api response",
-        caption: "structured data, finally.",
-        captionStyle: "font-mono",
-        rotate: "-rotate-1",
+        image: "/about/global-records/automated-spreadsheet.png",
+        imageAlt: "Google Apps Script code for automating a spreadsheet",
     },
 ];
 
@@ -96,17 +99,14 @@ export default function GlobalRecordsCaseStudy() {
                     <div className="mt-12 border-t border-black/10">
                         {PROJECTS.map((project, index) => (
                             <Reveal key={project.number} delay={index * 0.1}>
-                                <Link
-                                    href="/#projects"
-                                    className="group -mx-4 flex flex-col gap-4 border-b border-black/10 px-4 py-8 transition duration-300 hover:-translate-y-0.5 hover:bg-black/[0.02] sm:flex-row sm:items-start sm:justify-between"
-                                >
+                                <div className="-mx-4 flex flex-col gap-4 border-b border-black/10 px-4 py-8 sm:flex-row sm:items-start sm:justify-between">
                                     <div className="flex gap-6">
                                         <span className="pt-1 text-xs tracking-[0.2em] text-black/35">
                                             {project.number}
                                         </span>
 
                                         <div>
-                                            <h3 className="font-serif text-2xl transition group-hover:text-burgundy sm:text-3xl">
+                                            <h3 className="font-serif text-2xl sm:text-3xl">
                                                 {project.title}
                                             </h3>
 
@@ -119,14 +119,7 @@ export default function GlobalRecordsCaseStudy() {
                                             </p>
                                         </div>
                                     </div>
-
-                                    <span className="ml-12 flex shrink-0 items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-black/40 transition group-hover:text-burgundy sm:ml-0">
-                                        View the details
-                                        <span className="transition group-hover:translate-x-1">
-                                            →
-                                        </span>
-                                    </span>
-                                </Link>
+                                </div>
                             </Reveal>
                         ))}
                     </div>
@@ -249,7 +242,7 @@ export default function GlobalRecordsCaseStudy() {
                         </p>
 
                         <p className="mt-5 max-w-lg leading-7 text-black/50">
-                            A small, growing scrapbook — space reserved for anonymised
+                            A small, growing scrapbook, space reserved for anonymised
                             screenshots as I add them.
                         </p>
                     </Reveal>
@@ -265,7 +258,19 @@ export default function GlobalRecordsCaseStudy() {
                                             {frame.label}
                                         </span>
 
-                                        <div className="flex-1 rounded-sm border border-dashed border-black/15" />
+                                        {frame.image ? (
+                                            <div className="relative flex-1 overflow-hidden rounded-sm border border-black/15">
+                                                <Image
+                                                    src={frame.image}
+                                                    alt={frame.imageAlt ?? ""}
+                                                    fill
+                                                    className="object-cover"
+                                                    sizes="(max-width: 640px) 192px, 224px"
+                                                />
+                                            </div>
+                                        ) : (
+                                            <div className="flex-1 rounded-sm border border-dashed border-black/15" />
+                                        )}
                                     </div>
 
                                     <p

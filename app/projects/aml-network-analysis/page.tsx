@@ -908,10 +908,10 @@ export default function AmlNetworkAnalysisPage() {
         <Reveal delay={0.1}>
           <p className="mt-8 max-w-2xl text-base leading-[1.8] text-black/60">
             The laundering labels supplied with the synthetic dataset were
-            intentionally excluded from the network-risk detection logic.
-            They were used only after the analysis was completed, to
-            evaluate how well the methodology identified labelled suspicious
-            activity.
+            intentionally excluded from the network-risk detection logic —
+            the rules and scoring model were built entirely from
+            transactional network behaviour, not from the labels
+            themselves.
           </p>
         </Reveal>
 
@@ -929,14 +929,26 @@ export default function AmlNetworkAnalysisPage() {
         <Reveal delay={0.3} className="mt-14">
           <div className="bg-ivory-deep/60 shadow-paper-xs border-t border-r border-b border-l-2 border-t-black/10 border-r-black/10 border-b-black/10 border-l-burgundy/40 max-w-2xl px-5 py-4">
             <p className="text-burgundy/70 mb-1.5 font-mono text-[10px] font-bold tracking-[0.18em] uppercase">
-              Methodology note
+              Independent validation layer
             </p>
             <p className="text-[13px] leading-[1.7] text-black/60 italic">
-              This separation exists so that detection logic reflects
-              genuine behavioural patterns, rather than being reverse-
-              engineered from the answer key.
+              Dataset labels were used only after the network detection
+              workflow was completed, as an independent validation layer.
+              The detection logic itself was based entirely on
+              transactional network behaviour and was not trained on the
+              provided labels.
             </p>
           </div>
+        </Reveal>
+
+        <Reveal delay={0.36} className="mt-6">
+          <p className="max-w-2xl text-[13px] leading-[1.7] text-black/45">
+            Quantitative network-model validation — precision, recall and a
+            confusion matrix — will be added here once it can be
+            calculated directly from this project&apos;s own analysis.
+            Those figures are not yet available for the network model and
+            are not included above.
+          </p>
         </Reveal>
       </Section>
 

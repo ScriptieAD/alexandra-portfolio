@@ -87,7 +87,7 @@ Like any fast-paced business, the music industry comes with its own challenges. 
         description:
             "Testing applications, writing test cases, validating features and translating business needs into technical requirements.",
         longDescription:
-            "This role was where I first learned to think in requirements — sitting between the people who needed a system to work and the people building it. I spent my days testing software for public-facing systems, writing structured test cases, and making sure new features actually solved the problem they were meant to.",
+            "This role was where I first learned to think in requirements, sitting between the people who needed a system to work and the people building it. I spent my days testing software for public-facing systems, writing structured test cases, and making sure new features actually solved the problem they were meant to.",
         highlights: [
             {
                 title: "Wrote and executed test cases across multiple releases of public-sector software",
