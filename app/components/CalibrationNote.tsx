@@ -27,7 +27,7 @@ export default function CalibrationNote({
 
       <p className="mt-4 max-w-xs text-[11px] leading-relaxed text-black/50 italic">
         Ground-truth laundering labels were used only after rule generation,
-        for validation and calibration — not to build the detection rules.
+        for validation and calibration, not to build the detection rules.
       </p>
     </motion.div>
   );

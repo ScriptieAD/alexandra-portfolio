@@ -44,7 +44,7 @@ export default function AmlTransactionMonitoringPage() {
           "Case Prioritisation",
           "Post-analysis Validation",
         ]}
-        description="Every stage below is covered in detail further down this page — from how customer behaviour is profiled through to how the rule-based prioritisation was checked against the dataset's ground truth."
+        description="Every stage below is covered in detail further down this page, from how customer behaviour is profiled through to how the rule-based prioritisation was checked against the dataset's ground truth."
         annotation="nine stages, one investigation"
       />
       <InvestigationFlow />

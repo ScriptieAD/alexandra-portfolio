@@ -169,7 +169,7 @@ const INVESTIGATION_FRAMEWORK: { label: string; text: string }[] = [
   { label: "Outgoing volume", text: "Total value of funds sent onward." },
   { label: "Overall flow ratio", text: "Outgoing volume relative to incoming volume." },
   { label: "Network risk score", text: "Combined score from the scoring framework above." },
-  { label: "Network case type", text: "Typology classification — collection, hub, pass-through, and so on." },
+  { label: "Network case type", text: "Typology classification, such as collection, hub, pass-through, and so on." },
   { label: "Betweenness centrality", text: "The account's position between other parts of the network." },
   { label: "Community membership", text: "The cluster the account belongs to, from community detection." },
   { label: "Triggered network rules", text: "Which network detection rules the account crossed." },
@@ -252,7 +252,7 @@ const TYPOLOGIES = [
     code: "TYPE_03",
     title: "NETWORK HUB",
     criteria: "High fan-in + high fan-out",
-    description: "Both concentrates and disperses funds — a structural chokepoint in the network.",
+    description: "Both concentrates and disperses funds, a structural chokepoint in the network.",
     rotate: -0.8,
     emphasized: true,
   },
@@ -267,7 +267,7 @@ const TYPOLOGIES = [
     code: "TYPE_05",
     title: "HIGH-CONNECTIVITY PASS-THROUGH",
     criteria: "High fan-in + high fan-out + rapid flow",
-    description: "Combines structural centrality with rapid pass-through behaviour — the highest-priority typology.",
+    description: "Combines structural centrality with rapid pass-through behaviour, the highest-priority typology.",
     rotate: -1,
     emphasized: true,
   },
@@ -317,7 +317,7 @@ export default function AmlNetworkAnalysisPage() {
         caseLabel="CASE 002"
         eyebrow="Financial Crime Analytics · Network Analysis"
         title="AML Network & Flow Analysis"
-        subtitle="A transaction-network investigation that treats transactions as a directed graph — surfacing suspicious account relationships, concentration and dispersion patterns, rapid movement of funds, and potentially circular transaction flows."
+        subtitle="A transaction-network investigation that treats transactions as a directed graph, surfacing suspicious account relationships, concentration and dispersion patterns, rapid movement of funds, and potentially circular transaction flows."
         note="follow the connections, not just the transaction."
         tags={["Python", "Pandas", "NetworkX", "Matplotlib", "Graph Analysis"]}
         status="Case status: Investigated"
@@ -344,7 +344,7 @@ export default function AmlNetworkAnalysisPage() {
               </p>
               <p className="mt-5 max-w-xl text-base leading-[1.8] text-black/60">
                 The objective was to identify accounts behaving as collection
-                points, dispersion accounts, intermediaries or network hubs —
+                points, dispersion accounts, intermediaries or network hubs,
                 without using the dataset&apos;s laundering labels to define
                 the detection logic.
               </p>
@@ -465,7 +465,7 @@ export default function AmlNetworkAnalysisPage() {
             28
           </p>
           <p className="mt-3 max-w-md text-sm leading-7 text-black/55">
-            unique counterparties — applied to both unique senders and unique
+            unique counterparties, applied to both unique senders and unique
             receivers, per account.
           </p>
         </Reveal>
@@ -516,7 +516,7 @@ export default function AmlNetworkAnalysisPage() {
               <PassThroughFlow />
             </div>
             <p className="mt-4 text-center text-[11px] leading-relaxed text-black/40 italic">
-              Illustrative visualisation only — not a dataset finding.
+              Illustrative visualisation only, not a dataset finding.
             </p>
           </div>
         </div>
@@ -658,7 +658,7 @@ export default function AmlNetworkAnalysisPage() {
         </div>
 
         <InvestigationAnnotation className="mt-14" rotate={-2} delay={0.2}>
-          connectivity alone isn&apos;t evidence — timing and amount are
+          connectivity alone isn&apos;t evidence; timing and amount are
         </InvestigationAnnotation>
       </Section>
 
@@ -745,14 +745,14 @@ export default function AmlNetworkAnalysisPage() {
                 { id: "direction", swatch: NETWORK_LEGEND_SWATCH.direction, label: "Transaction direction" },
               ]}
               notes={[
-                "Node size reflects account priority — the investigated customer is drawn largest, flagged counterparties larger than ordinary ones.",
+                "Node size reflects account priority. The investigated customer is drawn largest, flagged counterparties larger than ordinary ones.",
                 "Bolder edges mark the specific flow path under investigation, not transaction volume.",
               ]}
             />
           </div>
 
           <p className="mt-3 text-center text-[11px] leading-relaxed text-black/40 italic">
-            Illustrative ego-network view — only the focus account and
+            Illustrative ego-network view: only the focus account and
             flagged counterparties are labelled, to avoid clutter.
           </p>
         </div>
@@ -765,7 +765,7 @@ export default function AmlNetworkAnalysisPage() {
             </p>
             <p className="mt-3 text-[15px] leading-[1.75] text-black/65">
               C01016 interacted with <strong className="text-ink">36 unique inbound</strong> and{" "}
-              <strong className="text-ink">28 unique outbound</strong> counterparties — both at or
+              <strong className="text-ink">28 unique outbound</strong> counterparties, both at or
               above the project&apos;s high-connectivity detection threshold of 28 unique
               counterparties (Section 03).
             </p>
@@ -778,7 +778,7 @@ export default function AmlNetworkAnalysisPage() {
             <p className="mt-3 text-[15px] leading-[1.75] text-black/65">
               The account received <strong className="text-ink">€239,248.64</strong> and sent{" "}
               <strong className="text-ink">€224,521.44</strong> onward. That works out to an
-              aggregate flow-through ratio of <strong className="text-ink">93.8%</strong> —
+              aggregate flow-through ratio of <strong className="text-ink">93.8%</strong>,
               not a claim that the same funds moved on, but a sign that outgoing value
               closely tracked incoming value over the period. The account also triggered
               the <span className="font-mono text-burgundy">REPEATED_RAPID_FLOW</span> rule.
@@ -805,7 +805,7 @@ export default function AmlNetworkAnalysisPage() {
             </dl>
             <p className="mt-4 text-[15px] leading-[1.75] text-black/65">
               A betweenness percentile this high means C01016 sat in an unusually central
-              intermediary position within the transaction network — a structural pattern
+              intermediary position within the transaction network, a structural pattern
               worth investigating on its own, not proof of laundering.
             </p>
           </Reveal>
@@ -908,8 +908,8 @@ export default function AmlNetworkAnalysisPage() {
         <Reveal delay={0.1}>
           <p className="mt-8 max-w-2xl text-base leading-[1.8] text-black/60">
             The laundering labels supplied with the synthetic dataset were
-            intentionally excluded from the network-risk detection logic —
-            the rules and scoring model were built entirely from
+            intentionally excluded from the network-risk detection logic.
+            The rules and scoring model were built entirely from
             transactional network behaviour, not from the labels
             themselves.
           </p>
@@ -943,8 +943,8 @@ export default function AmlNetworkAnalysisPage() {
 
         <Reveal delay={0.36} className="mt-6">
           <p className="max-w-2xl text-[13px] leading-[1.7] text-black/45">
-            Quantitative network-model validation — precision, recall and a
-            confusion matrix — will be added here once it can be
+            Quantitative network-model validation, such as precision, recall
+            and a confusion matrix, will be added here once it can be
             calculated directly from this project&apos;s own analysis.
             Those figures are not yet available for the network model and
             are not included above.
@@ -978,7 +978,7 @@ export default function AmlNetworkAnalysisPage() {
             description: "Separating detection methodology from labelled ground truth and evaluating performance afterwards.",
           },
         ]}
-        description="This project moves beyond isolated transaction analysis into network-based investigation — designing typologies, engineering detection logic, applying graph analytics and validating methodology against real-world evaluation concepts, all within a Financial Crime & AML context."
+        description="This project moves beyond isolated transaction analysis into network-based investigation, designing typologies, engineering detection logic, applying graph analytics and validating methodology against real-world evaluation concepts, all within a Financial Crime & AML context."
       />
 
       <CaseClosed

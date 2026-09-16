@@ -360,7 +360,7 @@ export default function MetaverseEconomyManaForecastingPage() {
             Financial Cybercrime &amp; Fraud-Related Risks
           </h2>
           <p className="mt-5 max-w-xl text-[13px] leading-relaxed text-black/45 italic">
-            Qualitative research context from the thesis — distinct from
+            Qualitative research context from the thesis, distinct from
             the quantitative ARIMA/GARCH forecasting work elsewhere in
             this project, and not a dedicated fraud-detection or AML
             transaction-monitoring system.
@@ -572,7 +572,7 @@ export default function MetaverseEconomyManaForecastingPage() {
         eyebrow="Analytical Workflow"
         title="How the two threads connect"
         steps={ANALYTICAL_FLOW}
-        description="Quantitative forecasting and financial-crime risk research approached the same emerging economy from two different angles — one modelling its price behaviour, the other its exposure."
+        description="Quantitative forecasting and financial-crime risk research approached the same emerging economy from two different angles, one modelling its price behaviour, the other its exposure."
         annotation="the model that failed said the most"
       />
 

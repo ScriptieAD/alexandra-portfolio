@@ -67,7 +67,7 @@ export default function ThresholdCalibration() {
             project&apos;s three detection thresholds were set from the
             empirical distribution of observed customer-month behaviour. The
             third rule, CROSS_BORDER_SPIKE, uses a fixed percentage-point
-            threshold instead — covered in Detection Rules above.
+            threshold instead, covered in Detection Rules above.
           </p>
         </Reveal>
 

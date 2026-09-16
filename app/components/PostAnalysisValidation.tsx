@@ -55,7 +55,7 @@ export default function PostAnalysisValidation() {
             Raising the threshold improves precision but reduces recall,
             illustrating the operational trade-off between alert quality and
             detection coverage. Threshold {SELECTED_THRESHOLD.toFixed(1)}× was
-            selected as the working threshold for this project — not because
+            selected as the working threshold for this project, not because
             it is universally optimal, but because it balanced alert quality
             against case coverage for this dataset.
           </p>

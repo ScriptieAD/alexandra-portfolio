@@ -171,11 +171,6 @@ export default function AboutPage() {
                                 </p>
 
                                 <p>
-                                    At Global Records, I work on financial and market analysis,
-                                    automated reporting, APIs, and internal analytical tools.
-                                </p>
-
-                                <p>
                                     I&apos;m now building on that experience through practical
                                     financial crime and transaction-monitoring projects.
                                 </p>

@@ -74,7 +74,7 @@ const RULES: Rule[] = [
     explanation: (
       <>
         Compares a customer&apos;s current cross-border transaction ratio
-        against their own <Marked>historical baseline</Marked> — a spike
+        against their own <Marked>historical baseline</Marked>. A spike
         signals a behavioural change, not that cross-border activity is
         inherently suspicious.
       </>

@@ -21,9 +21,9 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Alexandra Crăciunescu — Data & Financial Crime Analytics",
+  title: "Alexandra Crăciunescu, Data & Financial Crime Analytics",
   description:
-    "Portfolio of Alexandra Crăciunescu — data analysis, technology and a growing focus on financial crime and fraud analytics.",
+    "Portfolio of Alexandra Crăciunescu, data analysis, technology and a growing focus on financial crime and fraud analytics.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

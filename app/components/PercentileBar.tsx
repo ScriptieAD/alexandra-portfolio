@@ -105,7 +105,7 @@ export default function PercentileBar({
         variants={markVariant(delay + 0.9)}
         className="font-hand text-burgundy/70 mt-4 -rotate-1 text-base leading-none"
       >
-        {markerLabel} — {caption}
+        {markerLabel}, {caption}
       </motion.p>
     </motion.div>
   );

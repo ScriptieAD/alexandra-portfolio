@@ -74,7 +74,7 @@ export default function InvestigationNotes() {
           <NoteFragment
             id="04"
             title="Two cases, two different stories"
-            copy="C01222 and C00046 both triggered the same two behavioural rules, but at very different magnitudes — 68.87× versus 33.66× expected volume. Triggering the same rules does not guarantee the same underlying severity."
+            copy="C01222 and C00046 both triggered the same two behavioural rules, but at very different magnitudes, 68.87× versus 33.66× expected volume. Triggering the same rules does not guarantee the same underlying severity."
             highlight="same alert, different story"
             variant="memo"
             rotate={1.4}
