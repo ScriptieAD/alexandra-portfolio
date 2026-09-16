@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { SELECTED_CALIBRATION_POINT, STRICT_CALIBRATION_POINT } from "./calibrationData";
 
 function fadeUpVariant(delay: number, distance = 20) {
   return {
@@ -33,16 +34,18 @@ export default function CalibrationComparison({
         <p className="font-mono text-[10px] tracking-[0.2em] text-black/40 uppercase">
           Strict version
         </p>
-        <p className="text-ink mt-2 font-mono text-2xl font-bold">Threshold 5.0×</p>
+        <p className="text-ink mt-2 font-mono text-2xl font-bold">
+          Threshold {STRICT_CALIBRATION_POINT.threshold.toFixed(1)}×
+        </p>
 
         <div className="mt-5 space-y-3 border-t border-black/10 pt-5 font-mono text-sm">
           <div className="flex justify-between">
             <span className="text-black/40 uppercase tracking-[0.1em]">Precision</span>
-            <span className="text-black/70 font-bold">81.1%</span>
+            <span className="text-black/70 font-bold">{STRICT_CALIBRATION_POINT.precision.toFixed(1)}%</span>
           </div>
           <div className="flex justify-between">
             <span className="text-black/40 uppercase tracking-[0.1em]">Recall</span>
-            <span className="text-black/70 font-bold">28.9%</span>
+            <span className="text-black/70 font-bold">{STRICT_CALIBRATION_POINT.recall.toFixed(1)}%</span>
           </div>
         </div>
 
@@ -59,16 +62,18 @@ export default function CalibrationComparison({
         <p className="text-burgundy font-mono text-[10px] tracking-[0.2em] uppercase">
           Calibrated version
         </p>
-        <p className="text-burgundy mt-2 font-mono text-2xl font-bold">Threshold 3.0×</p>
+        <p className="text-burgundy mt-2 font-mono text-2xl font-bold">
+          Threshold {SELECTED_CALIBRATION_POINT.threshold.toFixed(1)}×
+        </p>
 
         <div className="mt-5 space-y-3 border-t border-black/10 pt-5 font-mono text-sm">
           <div className="flex justify-between">
             <span className="text-black/40 uppercase tracking-[0.1em]">Precision</span>
-            <span className="text-ink font-bold">72.1%</span>
+            <span className="text-ink font-bold">{SELECTED_CALIBRATION_POINT.precision.toFixed(1)}%</span>
           </div>
           <div className="flex justify-between">
             <span className="text-black/40 uppercase tracking-[0.1em]">Recall</span>
-            <span className="text-ink font-bold">51.5%</span>
+            <span className="text-ink font-bold">{SELECTED_CALIBRATION_POINT.recall.toFixed(1)}%</span>
           </div>
         </div>
 

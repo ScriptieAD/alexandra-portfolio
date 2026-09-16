@@ -6,15 +6,20 @@ import PerformanceMetric from "./PerformanceMetric";
 import EvidenceCounter from "./EvidenceCounter";
 import ConfusionMatrix from "./ConfusionMatrix";
 import OutcomeInsight from "./OutcomeInsight";
+import { CONFUSION_MATRIX, SELECTED_CALIBRATION_POINT, STRICT_CALIBRATION_POINT } from "./calibrationData";
 
 const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
+const { tp, fp, fn, tn } = CONFUSION_MATRIX;
+const { threshold: selectedThreshold, precision, recall } = SELECTED_CALIBRATION_POINT;
+const { threshold: strictThreshold, precision: strictPrecision, recall: strictRecall } = STRICT_CALIBRATION_POINT;
+
 const OUTCOMES = [
-  { label: "caught", value: 176 },
-  { label: "false alarms", value: 68 },
-  { label: "missed", value: 166 },
-  { label: "correctly ignored", value: 956 },
+  { label: "caught", value: tp },
+  { label: "false alarms", value: fp },
+  { label: "missed", value: fn },
+  { label: "correctly ignored", value: tn },
 ];
 
 export default function FinalCalibrationResult() {
@@ -29,7 +34,7 @@ export default function FinalCalibrationResult() {
       <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
           <p className="text-burgundy font-mono text-xs font-semibold tracking-[0.28em] uppercase">
-            Operating Point / Threshold 3.0
+            Operating Point / Threshold {selectedThreshold.toFixed(1)}
           </p>
           <h2 className="mt-4 max-w-2xl font-serif text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
             Final Calibrated Result
@@ -41,9 +46,9 @@ export default function FinalCalibrationResult() {
 
         <Reveal delay={0.1}>
           <p className="mt-10 max-w-2xl text-lg leading-8 text-black/60">
-            After calibration, the monitoring system identified 176
-            laundering cases while maintaining 72.1% precision and improving
-            recall to 51.5%.
+            After calibration, the monitoring system identified {tp}{" "}
+            laundering cases while maintaining {precision.toFixed(1)}%
+            precision and improving recall to {recall.toFixed(1)}%.
           </p>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-black/60">
             The final threshold prioritised broader laundering coverage
@@ -53,15 +58,15 @@ export default function FinalCalibrationResult() {
 
         <Reveal delay={0.15}>
           <div className="mt-14">
-            <ThresholdStamp value="3.0" label="Final threshold" rotate={-4} />
+            <ThresholdStamp value={selectedThreshold.toFixed(1)} label="Final threshold" rotate={-4} />
           </div>
         </Reveal>
 
         <div className="mt-8 flex flex-col gap-14 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-14 lg:gap-y-16">
           {/* LEFT — precision / recall, the strongest numbers */}
           <div className="order-1 lg:order-none lg:col-span-5 lg:col-start-1 lg:row-start-1">
-            <PerformanceMetric value={72.1} label="Precision" tone="burgundy" delay={0.2} />
-            <PerformanceMetric value={51.5} label="Recall" tone="ink" delay={0.35} />
+            <PerformanceMetric value={precision} label="Precision" tone="burgundy" delay={0.2} />
+            <PerformanceMetric value={recall} label="Recall" tone="ink" delay={0.35} />
           </div>
 
           {/* RIGHT — forensic evidence counters */}
@@ -72,7 +77,7 @@ export default function FinalCalibrationResult() {
             <div className="mt-5 grid grid-cols-2 gap-4 sm:gap-5">
               <EvidenceCounter
                 label="TP"
-                value={176}
+                value={tp}
                 caption="laundering correctly prioritised"
                 rotate={-2}
                 delay={0.5}
@@ -80,21 +85,21 @@ export default function FinalCalibrationResult() {
               />
               <EvidenceCounter
                 label="FP"
-                value={68}
+                value={fp}
                 caption="normal case prioritised"
                 rotate={2}
                 delay={0.6}
               />
               <EvidenceCounter
                 label="FN"
-                value={166}
+                value={fn}
                 caption="laundering not prioritised"
                 rotate={2}
                 delay={0.7}
               />
               <EvidenceCounter
                 label="TN"
-                value={956}
+                value={tn}
                 caption="normal case correctly left below threshold"
                 rotate={-2}
                 delay={0.8}
@@ -104,10 +109,10 @@ export default function FinalCalibrationResult() {
 
           {/* CONFUSION MATRIX — full width */}
           <ConfusionMatrix
-            tn={956}
-            fp={68}
-            fn={166}
-            tp={176}
+            tn={tn}
+            fp={fp}
+            fn={fn}
+            tp={tp}
             delay={0.9}
             className="order-2 lg:order-none lg:col-span-12 lg:row-start-2"
           />
@@ -129,8 +134,8 @@ export default function FinalCalibrationResult() {
 
         <OutcomeInsight
           sentence="Calibration turned a high-precision, low-recall system into a more balanced monitoring workflow."
-          comparisonBefore="Threshold 5.0 → 81.1% precision / 28.9% recall"
-          comparisonAfter="Threshold 3.0 → 72.1% precision / 51.5% recall"
+          comparisonBefore={`Threshold ${strictThreshold.toFixed(1)} → ${strictPrecision.toFixed(1)}% precision / ${strictRecall.toFixed(1)}% recall`}
+          comparisonAfter={`Threshold ${selectedThreshold.toFixed(1)} → ${precision.toFixed(1)}% precision / ${recall.toFixed(1)}% recall`}
           delay={0.1}
           className="mt-16 border-t border-black/10 pt-14"
         />

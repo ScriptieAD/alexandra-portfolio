@@ -17,11 +17,12 @@ export default function PerformanceMetric({
   className?: string;
 }) {
   const [inView, setInView] = useState(false);
-  const motionValue = useMotionValue(0);
+  const motionValue = useMotionValue(value);
   const display = useTransform(motionValue, (v) => `${v.toFixed(1)}%`);
 
   useEffect(() => {
     if (!inView) return;
+    motionValue.set(0);
     const controls = animate(motionValue, value, {
       duration: 1.3,
       delay,

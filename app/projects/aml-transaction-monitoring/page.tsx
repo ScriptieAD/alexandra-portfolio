@@ -9,7 +9,6 @@ import AlertDistribution from "../../components/AlertDistribution";
 import CasePrioritisation from "../../components/CasePrioritisation";
 import CaseSpotlight from "../../components/CaseSpotlight";
 import SeverityStory from "../../components/SeverityStory";
-import NetworkAnalysis from "../../components/NetworkAnalysis";
 import InvestigationWorkflow from "../../components/InvestigationWorkflow";
 import InvestigationNotes from "../../components/InvestigationNotes";
 import PostAnalysisValidation from "../../components/PostAnalysisValidation";
@@ -55,7 +54,6 @@ export default function AmlTransactionMonitoringPage() {
       <CasePrioritisation />
       <CaseSpotlight />
       <SeverityStory />
-      <NetworkAnalysis />
       <InvestigationWorkflow />
       <InvestigationNotes />
       <PostAnalysisValidation />
