@@ -2,9 +2,14 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { useState } from "react";
 import Reveal from "./components/Reveal";
 import ProjectsSection from "./components/ProjectsSection";
 import { experiences } from "./about/experiences-data";
+
+const CONTACT_EMAIL = "craciunescu.alexandra77a@gmail.com";
+const CONTACT_PHONE = "+40 787 446 709";
+const CONTACT_PHONE_TEL = "+40787446709";
 
 const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
@@ -31,10 +36,12 @@ function EditorialCta({
   href,
   children,
   tone = "burgundy",
+  onClick,
 }: {
   href: string;
   children: ReactNode;
   tone?: "burgundy" | "cream";
+  onClick?: () => void;
 }) {
   const underline = tone === "burgundy" ? "bg-burgundy-dark" : "bg-white";
   const textColor =
@@ -45,6 +52,7 @@ function EditorialCta({
   return (
     <a
       href={href}
+      onClick={onClick}
       className={`group relative inline-flex items-center gap-2 font-mono text-xs font-semibold tracking-[0.14em] uppercase transition-colors duration-200 ${textColor}`}
     >
       {children}
@@ -63,10 +71,24 @@ function EditorialCta({
 }
 
 export default function Home() {
+  const [copiedField, setCopiedField] = useState<"email" | "phone" | null>(
+    null,
+  );
+
   function handleOpenCase() {
     document.getElementById("case-index")?.scrollIntoView({
       behavior: "smooth",
       block: "start",
+    });
+  }
+
+  function handleCopyContact(value: string, field: "email" | "phone") {
+    // mailto:/tel: links silently do nothing on machines with no default
+    // mail app or phone handler configured, so back them up with a
+    // clipboard copy the visitor can paste wherever they actually need it.
+    navigator.clipboard?.writeText(value).then(() => {
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2000);
     });
   }
 
@@ -211,27 +233,39 @@ export default function Home() {
             </h2>
 
             <div className="flex flex-col items-start gap-3 md:items-end">
-              <EditorialCta href="mailto:craciunescu.alexandra77a@gmail.com" tone="cream">
+              <EditorialCta
+                href={`mailto:${CONTACT_EMAIL}`}
+                tone="cream"
+                onClick={() => handleCopyContact(CONTACT_EMAIL, "email")}
+              >
                 Email me
               </EditorialCta>
               <a
-                href="mailto:craciunescu.alexandra77a@gmail.com"
+                href={`mailto:${CONTACT_EMAIL}`}
+                onClick={() => handleCopyContact(CONTACT_EMAIL, "email")}
                 className="font-mono text-xs text-white/50 transition-colors duration-200 hover:text-white/80"
               >
-                craciunescu.alexandra77a@gmail.com
+                {CONTACT_EMAIL}
               </a>
+
+              <a
+                href={`tel:${CONTACT_PHONE_TEL}`}
+                onClick={() => handleCopyContact(CONTACT_PHONE, "phone")}
+                className="mt-2 font-mono text-xs text-white/50 transition-colors duration-200 hover:text-white/80"
+              >
+                {CONTACT_PHONE}
+              </a>
+
+              <p
+                aria-live="polite"
+                className={`font-mono text-xs text-white/70 transition-opacity duration-200 ${
+                  copiedField ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                Copied to clipboard
+              </p>
             </div>
 
-          </div>
-
-          <div className="mt-20 flex flex-col justify-between gap-4 border-t border-white/20 pt-8 text-xs text-white/50 sm:flex-row">
-            <p>Alexandra Crăciunescu</p>
-
-            <p>
-              Data · Financial Crime · Technology
-            </p>
-
-            <p>© 2026</p>
           </div>
 
         </div>
