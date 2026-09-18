@@ -29,10 +29,10 @@ export default function PostAnalysisValidation() {
 
         <Reveal delay={0.1}>
           <p className="mt-8 max-w-2xl text-lg leading-8 text-black/60">
-            The dataset&apos;s laundering labels were not used to build the
+            I did not use the dataset&apos;s laundering labels to build the
             detection rules or calibrate the underlying behavioural
-            features. They were used only afterwards, to evaluate how well
-            the rule-based case prioritisation aligned with the dataset&apos;s
+            features. I used them only afterwards, to evaluate how well the
+            rule-based case prioritisation aligned with the dataset&apos;s
             ground truth.
           </p>
         </Reveal>
@@ -54,10 +54,11 @@ export default function PostAnalysisValidation() {
           <p className="text-[15px] leading-[1.75] text-black/60">
             Raising the threshold improves precision but reduces recall,
             illustrating the operational trade-off between alert quality and
-            detection coverage. Threshold {SELECTED_THRESHOLD.toFixed(1)}× was
-            selected as the working threshold for this project, not because
-            it is universally optimal, but because it balanced alert quality
-            against case coverage for this dataset.
+            detection coverage. I selected threshold{" "}
+            {SELECTED_THRESHOLD.toFixed(1)}× as the working threshold for
+            this project, not because it is universally optimal, but
+            because it balanced alert quality against case coverage for
+            this dataset.
           </p>
         </Reveal>
       </div>

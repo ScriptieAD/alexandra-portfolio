@@ -145,8 +145,8 @@ export default function CaseBrief() {
                   Methodology note
                 </p>
                 <p className="text-[13px] leading-[1.7] text-black/60 italic">
-                  The dataset&apos;s laundering labels were not used as the
-                  analytical answer. Detection logic was developed
+                  I did not use the dataset&apos;s laundering labels as the
+                  analytical answer. I developed detection logic
                   independently from customer behaviour and transaction
                   patterns.
                 </p>

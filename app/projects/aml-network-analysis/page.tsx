@@ -338,13 +338,13 @@ export default function AmlNetworkAnalysisPage() {
             <Reveal delay={0.1}>
               <p className="mt-8 max-w-xl text-base leading-[1.8] text-black/60">
                 Traditional transaction monitoring evaluates individual
-                transactions or customer behaviour. This project extends that
-                analysis by treating transactions as a directed network,
-                allowing suspicious relationships and the movement of funds
-                between accounts to be investigated.
+                transactions or customer behaviour. I extended that analysis
+                by treating transactions as a directed network, so I could
+                investigate suspicious relationships and the movement of
+                funds between accounts.
               </p>
               <p className="mt-5 max-w-xl text-base leading-[1.8] text-black/60">
-                The objective was to identify accounts behaving as collection
+                My objective was to identify accounts behaving as collection
                 points, dispersion accounts, intermediaries or network hubs,
                 without using the dataset&apos;s laundering labels to define
                 the detection logic.
@@ -401,7 +401,7 @@ export default function AmlNetworkAnalysisPage() {
 
             <Reveal delay={0.2} className="mt-8">
               <p className="font-mono text-[10px] tracking-[0.2em] text-black/40 uppercase">
-                Edges were aggregated using
+                I aggregated edges using
               </p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {EDGE_ATTRIBUTES.map((attr, i) => (
@@ -485,8 +485,8 @@ export default function AmlNetworkAnalysisPage() {
           <div className="lg:col-span-6">
             <Reveal delay={0.1}>
               <p className="max-w-md text-base leading-[1.8] text-black/60">
-                The analysis searched for accounts that receive funds, send a
-                similar amount shortly afterwards, and repeat this behaviour
+                I searched for accounts that receive funds, send a similar
+                amount shortly afterwards, and repeat this behaviour
                 multiple times.
               </p>
             </Reveal>
@@ -567,8 +567,8 @@ export default function AmlNetworkAnalysisPage() {
                     Betweenness centrality
                   </dt>
                   <dd className="mt-2 max-w-md text-[14px] leading-[1.7] text-black/60">
-                    Used to identify accounts positioned between different
-                    parts of the transaction network.
+                    I used this to identify accounts positioned between
+                    different parts of the transaction network.
                   </dd>
                 </div>
               </Reveal>
@@ -578,7 +578,7 @@ export default function AmlNetworkAnalysisPage() {
                     Community detection
                   </dt>
                   <dd className="mt-2 max-w-md text-[14px] leading-[1.7] text-black/60">
-                    Greedy modularity was used to identify clusters of
+                    I used greedy modularity to identify clusters of
                     strongly connected accounts.
                   </dd>
                 </div>
@@ -589,7 +589,7 @@ export default function AmlNetworkAnalysisPage() {
                     Directed graph
                   </dt>
                   <dd className="mt-2 max-w-md text-[14px] leading-[1.7] text-black/60">
-                    The network was built using NetworkX as a directed graph,
+                    I built the network using NetworkX as a directed graph,
                     with transaction volume and transaction count stored on
                     each edge.
                   </dd>
@@ -908,11 +908,10 @@ export default function AmlNetworkAnalysisPage() {
 
         <Reveal delay={0.1}>
           <p className="mt-8 max-w-2xl text-base leading-[1.8] text-black/60">
-            The laundering labels supplied with the synthetic dataset were
-            intentionally excluded from the network-risk detection logic.
-            The rules and scoring model were built entirely from
-            transactional network behaviour, not from the labels
-            themselves.
+            I intentionally excluded the laundering labels supplied with the
+            synthetic dataset from the network-risk detection logic. I
+            built the rules and scoring model entirely from transactional
+            network behaviour, not from the labels themselves.
           </p>
         </Reveal>
 
@@ -933,11 +932,11 @@ export default function AmlNetworkAnalysisPage() {
               Independent validation layer
             </p>
             <p className="text-[13px] leading-[1.7] text-black/60 italic">
-              Dataset labels were used only after the network detection
-              workflow was completed, as an independent validation layer.
-              The detection logic itself was based entirely on
-              transactional network behaviour and was not trained on the
-              provided labels.
+              I used the dataset labels only after completing the network
+              detection workflow, as an independent validation layer. I
+              based the detection logic itself entirely on transactional
+              network behaviour and did not train it on the provided
+              labels.
             </p>
           </div>
         </Reveal>
@@ -979,7 +978,7 @@ export default function AmlNetworkAnalysisPage() {
             description: "Separating detection methodology from labelled ground truth and evaluating performance afterwards.",
           },
         ]}
-        description="This project moves beyond isolated transaction analysis into network-based investigation, designing typologies, engineering detection logic, applying graph analytics and validating methodology against real-world evaluation concepts, all within a Financial Crime & AML context."
+        description="This project demonstrates my ability to move beyond isolated transaction analysis into network-based investigation: designing typologies, engineering detection logic, applying graph analytics and validating methodology against real-world evaluation concepts, within a Financial Crime & AML context."
       />
 
       <CaseClosed
@@ -994,6 +993,7 @@ export default function AmlNetworkAnalysisPage() {
         subline="From a directed transaction graph to typology classification, risk scoring and validated network detection logic."
         stampCaseId="Case 002"
         stampStatus="Investigated"
+        footerStatus="Investigation Complete"
         footerTitle="AML Network & Flow Analysis Engine"
         footerStack="Python · Pandas · NetworkX · Graph Analytics"
         nextCase={{

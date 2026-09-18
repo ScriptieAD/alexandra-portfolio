@@ -56,8 +56,8 @@ export default function InvestigationAtAGlance() {
             className="max-w-md lg:shrink-0 lg:border-l lg:border-black/10 lg:pl-16"
           >
             <p className="text-[15px] leading-[1.75] text-black/60">
-              Built an end-to-end behavioural transaction monitoring workflow
-              that compares customer activity against expected and
+              I built an end-to-end behavioural transaction monitoring
+              workflow that compares customer activity against expected and
               historical behaviour, generates rule-based alerts,
               consolidates them into investigation cases and assigns
               risk-based case priority.

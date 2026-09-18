@@ -63,8 +63,8 @@ export default function ThresholdCalibration() {
 
         <Reveal delay={0.1}>
           <p className="mt-10 max-w-2xl text-lg leading-8 text-black/60">
-            Rather than picking round numbers by intuition, two of the
-            project&apos;s three detection thresholds were set from the
+            Rather than picking round numbers by intuition, I calibrated two
+            of the project&apos;s three detection thresholds from the
             empirical distribution of observed customer-month behaviour. The
             third rule, CROSS_BORDER_SPIKE, uses a fixed percentage-point
             threshold instead, covered in Detection Rules above.
@@ -120,7 +120,7 @@ export default function ThresholdCalibration() {
 
         <Reveal delay={0.1} className="mt-10">
           <p className="max-w-xl text-sm leading-7 text-black/55">
-            Both ratio-based thresholds were set at the 95th percentile of
+            I set both ratio-based thresholds at the 95th percentile of
             observed behavioural ratios.
           </p>
         </Reveal>

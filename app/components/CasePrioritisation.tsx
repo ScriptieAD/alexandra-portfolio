@@ -35,11 +35,11 @@ export default function CasePrioritisation() {
 
         <Reveal delay={0.1}>
           <p className="mt-8 max-w-2xl text-lg leading-8 text-black/60">
-            For every triggered rule, the project calculates how strongly the
-            observed behaviour exceeds its detection threshold. The
-            strongest of those ratios across all triggered rules, the{" "}
+            For every triggered rule, I calculate how strongly the observed
+            behaviour exceeds its detection threshold. I use the strongest
+            of those ratios across all triggered rules, the{" "}
             <span className="text-ink font-semibold">maximum threshold ratio</span>,{" "}
-            is then used to derive the case&apos;s severity.
+            to derive the case&apos;s severity.
           </p>
         </Reveal>
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ProjectHero from "../../components/ProjectHero";
+import CaseFileBrief from "../../components/CaseFileBrief";
 import CaseBrief from "../../components/CaseBrief";
 import InvestigationAtAGlance from "../../components/InvestigationAtAGlance";
 import InvestigationFlow from "../../components/InvestigationFlow";
@@ -28,6 +29,7 @@ export default function AmlTransactionMonitoringPage() {
       </Link>
 
       <ProjectHero />
+      <CaseFileBrief />
       <CaseBrief />
       <InvestigationAtAGlance />
       <InvestigationWorkflow
@@ -44,7 +46,7 @@ export default function AmlTransactionMonitoringPage() {
           "Case Prioritisation",
           "Post-analysis Validation",
         ]}
-        description="Every stage below is covered in detail further down this page, from how customer behaviour is profiled through to how the rule-based prioritisation was checked against the dataset's ground truth."
+        description="Every stage below is covered in detail further down this page, from how I profiled customer behaviour through to how I checked the rule-based prioritisation against the dataset's ground truth."
         annotation="nine stages, one investigation"
       />
       <InvestigationFlow />

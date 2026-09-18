@@ -32,7 +32,7 @@ export default function InvestigationNotes() {
           <NoteFragment
             id="01"
             title="Behaviour beats isolated transactions"
-            copy="Absolute thresholds can miss context. Comparing a customer with their expected profile and their own historical behaviour produced more meaningful signals."
+            copy="Absolute thresholds can miss context. I compared each customer with their expected profile and their own historical behaviour, which produced more meaningful signals."
             highlight="context > raw amount"
             variant="typed"
             rotate={-1.2}
@@ -63,7 +63,7 @@ export default function InvestigationNotes() {
           <NoteFragment
             id="03"
             title="Percentile thresholds scale with behaviour"
-            copy="Setting thresholds from the data's own behavioural distribution, rather than a fixed cutoff, kept the alert queue proportional to how unusual the activity actually is."
+            copy="I set thresholds from the data's own behavioural distribution, rather than a fixed cutoff, which kept the alert queue proportional to how unusual the activity actually is."
             highlight="percentile-based, not guessed"
             stamp="Calibrated"
             variant="typed"

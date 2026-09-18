@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { animate, motion, useMotionValue, useTransform } from "motion/react";
+import { animate, motion, useMotionValue, useMotionValueEvent } from "motion/react";
 
 export default function PerformanceMetric({
   value,
@@ -18,7 +18,14 @@ export default function PerformanceMetric({
 }) {
   const [inView, setInView] = useState(false);
   const motionValue = useMotionValue(value);
-  const display = useTransform(motionValue, (v) => `${v.toFixed(1)}%`);
+  // Rendered as real React text (seeded with the final value) rather than
+  // a motion-value-as-child, so the correct number is in the HTML from the
+  // first paint instead of depending on the count-up animation to fill it in.
+  const [display, setDisplay] = useState(`${value.toFixed(1)}%`);
+
+  useMotionValueEvent(motionValue, "change", (v) => {
+    setDisplay(`${v.toFixed(1)}%`);
+  });
 
   useEffect(() => {
     if (!inView) return;

@@ -24,6 +24,7 @@ export default function CaseClosed({
   stampStatus = "Calibrated",
   footerTitle = "AML Transaction Monitoring Engine",
   footerStack = "Python · Pandas · AML Analytics",
+  footerStatus = "Calibrated",
   nextCase,
 }: {
   caseLabel?: string;
@@ -33,6 +34,7 @@ export default function CaseClosed({
   stampStatus?: string;
   footerTitle?: string;
   footerStack?: string;
+  footerStatus?: string;
   nextCase?: { title: string; href: string };
 }) {
   return (
@@ -88,6 +90,7 @@ export default function CaseClosed({
             caseId={stampCaseId}
             title={footerTitle}
             stack={footerStack}
+            status={footerStatus}
             delay={0.65}
             className="lg:max-w-md"
           />

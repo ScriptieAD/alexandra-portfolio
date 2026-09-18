@@ -46,13 +46,15 @@ export default function FinalCalibrationResult() {
 
         <Reveal delay={0.1}>
           <p className="mt-10 max-w-2xl text-lg leading-8 text-black/60">
-            After calibration, the monitoring system identified {tp}{" "}
-            laundering cases while maintaining {precision.toFixed(1)}%
-            precision and improving recall to {recall.toFixed(1)}%.
+            After calibration, I correctly flagged {tp} of the dataset&apos;s
+            labelled laundering cases while maintaining{" "}
+            {precision.toFixed(1)}% precision and improving recall to{" "}
+            {recall.toFixed(1)}%.
           </p>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-black/60">
-            The final threshold prioritised broader laundering coverage
-            without creating an unmanageable alert queue.
+            I set the final threshold to prioritise broader coverage of
+            labelled laundering cases, without creating an unmanageable
+            alert queue.
           </p>
         </Reveal>
 
@@ -133,7 +135,7 @@ export default function FinalCalibrationResult() {
         </Reveal>
 
         <OutcomeInsight
-          sentence="Calibration turned a high-precision, low-recall system into a more balanced monitoring workflow."
+          sentence="By recalibrating the threshold, I turned a high-precision, low-recall system into a more balanced monitoring workflow."
           comparisonBefore={`Threshold ${strictThreshold.toFixed(1)} → ${strictPrecision.toFixed(1)}% precision / ${strictRecall.toFixed(1)}% recall`}
           comparisonAfter={`Threshold ${selectedThreshold.toFixed(1)} → ${precision.toFixed(1)}% precision / ${recall.toFixed(1)}% recall`}
           delay={0.1}
