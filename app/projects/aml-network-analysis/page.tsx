@@ -321,6 +321,7 @@ export default function AmlNetworkAnalysisPage() {
         note="follow the connections, not just the transaction."
         tags={["Python", "Pandas", "NetworkX", "Matplotlib", "Graph Analysis"]}
         status="Case status: Investigated"
+        currentHref="/projects/aml-network-analysis"
       />
 
       {/* 01 — CASE OVERVIEW */}

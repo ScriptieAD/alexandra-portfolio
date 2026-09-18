@@ -13,6 +13,7 @@ import {
 import CaseTab from "./CaseTab";
 import ConfidentialStamp from "./ConfidentialStamp";
 import PinnedNote from "./PinnedNote";
+import OtherProjects from "./OtherProjects";
 
 const TAGS = [
   "Python",
@@ -33,6 +34,7 @@ export default function ProjectHero({
   note = "follow the behaviour, not just the transaction.",
   tags = TAGS,
   status = "Case status: Investigated",
+  currentHref = "/projects/aml-transaction-monitoring",
 }: {
   caseLabel?: string;
   eyebrow?: string;
@@ -41,6 +43,7 @@ export default function ProjectHero({
   note?: string;
   tags?: string[];
   status?: string;
+  currentHref?: string;
 }) {
   const prefersReducedMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
@@ -74,7 +77,7 @@ export default function ProjectHero({
   return (
     <section
       ref={sectionRef}
-      className="bg-paper relative flex min-h-screen items-center overflow-hidden py-28"
+      className="bg-paper-quiet relative flex min-h-screen items-center overflow-hidden py-28"
     >
       <div
         aria-hidden="true"
@@ -213,6 +216,12 @@ export default function ProjectHero({
                 </PinnedNote>
               </motion.div>
             </motion.div>
+          </div>
+        </div>
+
+        <div className="pointer-events-none absolute inset-0 hidden items-center justify-end lg:flex">
+          <div className="pointer-events-auto mr-[5%] w-full max-w-[260px] xl:mr-[8%]">
+            <OtherProjects currentHref={currentHref} />
           </div>
         </div>
       </motion.div>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import Reveal from "../../components/Reveal";
+import OtherProjects from "../../components/OtherProjects";
 import CaseTab from "../../components/CaseTab";
 import PinnedNote from "../../components/PinnedNote";
 import MarginNote from "../../components/MarginNote";
@@ -314,6 +315,12 @@ export default function MetaverseEconomyManaForecastingPage() {
               </p>
             </div>
           </Reveal>
+
+          <div className="pointer-events-none absolute inset-0 hidden items-center justify-end lg:flex">
+            <div className="pointer-events-auto mr-[5%] w-full max-w-[260px] xl:mr-[8%]">
+              <OtherProjects currentHref="/projects/metaverse-economy-mana-forecasting" />
+            </div>
+          </div>
         </div>
       </section>
 

@@ -16,7 +16,18 @@ export type NetworkEvidence = {
   labels: string[];
 };
 
-export type Evidence = StatsEvidence | ChartEvidence | NetworkEvidence;
+/** A layered evidence-board composition built from real prop photography. */
+export type DossierEvidence = {
+  kind: "dossier";
+  folder: string;
+  note: string;
+  photo: string;
+  stamp: string;
+  paper: string;
+  alt: string;
+};
+
+export type Evidence = StatsEvidence | ChartEvidence | NetworkEvidence | DossierEvidence;
 
 export type CaseFile = {
   id: string;
@@ -26,6 +37,16 @@ export type CaseFile = {
   summary: string;
   href: string;
   evidence: Evidence;
+  /** 2–3 headline figures already established on the project's own page. */
+  metrics: string[];
+  /** Methodology / tech stack, already shown elsewhere for this project. */
+  tags: string[];
+  /** Short handwritten-style investigator's note, not a data point. */
+  note?: string;
+  /** Optional short supporting line shown beside the CTA. */
+  microcopy?: string;
+  /** The one case the homepage should visually foreground. */
+  featured?: boolean;
 };
 
 export const caseFiles: CaseFile[] = [
@@ -38,13 +59,25 @@ export const caseFiles: CaseFile[] = [
       "Behavioural profiling, threshold calibration, detection rules and case investigation.",
     href: "/projects/aml-transaction-monitoring",
     evidence: {
-      kind: "stats",
-      items: [
-        { label: "Alerts", value: "2,007" },
-        { label: "Cases", value: "1,366" },
-        { label: "Detection rules", value: "3" },
-      ],
+      kind: "dossier",
+      folder: "/projects/aml-transaction-monitoring/dossier/dossier-folder.png",
+      note: "/projects/aml-transaction-monitoring/dossier/alert-note.png",
+      photo: "/projects/aml-transaction-monitoring/dossier/evidence-photo.png",
+      stamp: "/projects/aml-transaction-monitoring/dossier/evidence-stamp.png",
+      paper: "/projects/aml-transaction-monitoring/dossier/grid-paper.png",
+      alt: "Case file AML-2024-017 with an alert log, investigation photo and evidence stamp",
     },
+    metrics: [
+      "50K Transactions",
+      "2.5K Customers",
+      "2,007 Alerts",
+      "1,366 Cases",
+      "3 Detection Rules",
+    ],
+    tags: ["Python", "Pandas", "Behavioural Detection", "Threshold Calibration"],
+    note: "Flagged by behaviour, not by guesswork.",
+    microcopy: "Real data. Real patterns. A safer financial system.",
+    featured: true,
   },
   {
     id: "002",
@@ -58,6 +91,9 @@ export const caseFiles: CaseFile[] = [
       kind: "network",
       labels: ["FAN-IN", "FAN-OUT", "FLOW", "NETWORK"],
     },
+    metrics: ["36 Inbound Counterparties", "28 Outbound Counterparties", "7 / 7 Risk Score"],
+    tags: ["NetworkX", "Graph Analysis", "Flow Detection"],
+    note: "Money rarely moves in straight lines.",
   },
   {
     id: "003",
@@ -73,5 +109,8 @@ export const caseFiles: CaseFile[] = [
       height: 385,
       alt: "MANA price evolution",
     },
+    metrics: ["ARIMA(2,0,2) Model", "GARCH Volatility", "Bachelor Thesis"],
+    tags: ["R", "ARIMA", "GARCH"],
+    note: "Volatility leaves its own fingerprints.",
   },
 ];

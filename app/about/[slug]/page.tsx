@@ -4,6 +4,8 @@ import Reveal from "../../components/Reveal";
 import ArtechBadge from "../../components/ArtechBadge";
 import WhatIDidAccordion from "../../components/WhatIDidAccordion";
 import GlobalRecordsCaseStudy from "./GlobalRecordsCaseStudy";
+import GlobalRecordsTools from "./GlobalRecordsTools";
+import GlobalRecordsScrapbook from "./GlobalRecordsScrapbook";
 import { experiences } from "../experiences-data";
 
 export function generateStaticParams() {
@@ -33,7 +35,7 @@ export default async function ExperiencePage({
     const next = experiences[index + 1];
 
     return (
-        <main className="bg-paper min-h-screen text-ink">
+        <main className="bg-paper-quiet min-h-screen text-ink">
 
             {/* NAVBAR */}
             <nav className="sticky top-0 z-50 border-b border-black/10 bg-ivory/90 backdrop-blur-md">
@@ -130,7 +132,11 @@ export default async function ExperiencePage({
                     </div>
                 </Reveal>
 
+                {exp.slug === "global-records" && <GlobalRecordsTools />}
+
             </section>
+
+            {exp.slug === "global-records" && <GlobalRecordsScrapbook />}
 
             {exp.slug === "global-records" && <GlobalRecordsCaseStudy />}
 

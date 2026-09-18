@@ -46,13 +46,6 @@ const focusAreas: FocusArea[] = [
     },
 ];
 
-const skillGroups = [
-    { title: "Data", items: ["Python", "SQL", "Pandas", "Analytics"] },
-    { title: "Technology", items: ["JavaScript", "React", "APIs", "Supabase"] },
-    { title: "Risk", items: ["Fraud", "AML", "Transaction Monitoring"] },
-    { title: "Business", items: ["Reporting", "Testing", "Requirements"] },
-];
-
 export default function AboutPage() {
     return (
         <main className="bg-paper-quiet min-h-screen overflow-x-hidden text-ink">
@@ -338,50 +331,6 @@ export default function AboutPage() {
                                             {exp.description}
                                         </p>
                                     </Link>
-                                </div>
-                            </Reveal>
-                        ))}
-
-                    </div>
-                </div>
-            </section>
-
-            {/* TOOLKIT */}
-            <section className="bg-paper-dark py-24 text-white">
-
-                <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-
-                    <Reveal>
-                        <div className="max-w-xl">
-                            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-burgundy">
-                                Toolkit
-                            </p>
-
-                            <h2 className="mt-5 font-serif text-5xl">
-                                Things I work
-                                <br />
-                                with.
-                            </h2>
-                        </div>
-                    </Reveal>
-
-                    <div className="mt-14 grid gap-px overflow-hidden rounded-[24px] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
-
-                        {skillGroups.map((group, index) => (
-                            <Reveal key={group.title} delay={index * 0.06}>
-                                <div className="bg-paper-dark h-full p-8">
-                                    <p className="font-serif text-2xl">{group.title}</p>
-
-                                    <ul className="mt-5 space-y-2">
-                                        {group.items.map((item) => (
-                                            <li
-                                                key={item}
-                                                className="text-sm leading-6 text-white/75"
-                                            >
-                                                {item}
-                                            </li>
-                                        ))}
-                                    </ul>
                                 </div>
                             </Reveal>
                         ))}

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import Reveal from "../../components/Reveal";
 import SelectedImpactSection from "./SelectedImpactSection";
@@ -25,63 +24,6 @@ const PROJECTS = [
         stack: "Python / Google Apps Script / APIs",
         description:
             "Turning repetitive reporting processes into automated workflows.",
-    },
-];
-
-const DATA_FLOW = [
-    "Digital sources",
-    "Python / ETL",
-    "Database",
-    "API",
-    "Dashboard",
-    "Business decision",
-];
-
-const TOOLS = [
-    { name: "Python", description: "ETL / cleaning / automation" },
-    { name: "Pandas", description: "data cleaning / transformation" },
-    { name: "SQL", description: "querying / modelling / data logic" },
-    { name: "Supabase", description: "database / storage / RLS / APIs" },
-    { name: "React", description: "internal analytics tools" },
-    { name: "Node.js", description: "backend / API logic" },
-    { name: "Google Apps Script", description: "reporting / automation" },
-    { name: "YouTube API", description: "data retrieval / automation" },
-    { name: "Selenium", description: "browser automation" },
-    { name: "Google Sheets", description: "reporting / lightweight storage" },
-];
-
-const SCRAPBOOK = [
-    {
-        label: "dashboard",
-        caption: "dashboard_v04_final_FINAL.jsx",
-        captionStyle: "font-mono",
-        rotate: "-rotate-3",
-        image: "/about/global-records/dashboard.jpg",
-        imageAlt: "Tandem artist dashboard catalog view",
-    },
-    {
-        label: "python script",
-        caption: "yes, it finally worked.",
-        captionStyle: "font-serif italic",
-        rotate: "rotate-2",
-        image: "/about/global-records/python-script.png",
-        imageAlt: "Backend route handler code for uploading a track",
-    },
-    {
-        label: "supabase schema",
-        caption: "SELECT * FROM my_problems;",
-        captionStyle: "font-mono",
-        rotate: "-rotate-2",
-        image: "/about/global-records/supabase-schema.png",
-        imageAlt: "Supabase schema diagram for the music catalog database",
-    },
-    {
-        label: "automated spreadsheet",
-        caption: "runs while I sleep.",
-        captionStyle: "font-serif italic",
-        rotate: "rotate-3",
-        image: "/about/global-records/automated-spreadsheet.png",
-        imageAlt: "Google Apps Script code for automating a spreadsheet",
     },
 ];
 
@@ -126,77 +68,6 @@ export default function GlobalRecordsCaseStudy() {
                 </div>
             </section>
 
-            {/* HOW THE DATA MOVES */}
-            <section className="border-t border-black/10">
-                <div className="mx-auto max-w-[1100px] px-6 py-24 md:px-10">
-                    <Reveal>
-                        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-burgundy">
-                            How the data moves
-                        </p>
-
-                        <h2 className="mt-5 max-w-xl font-serif text-4xl leading-[1.05] sm:text-5xl">
-                            Roughly how it all connects.
-                        </h2>
-                    </Reveal>
-
-                    <Reveal delay={0.1}>
-                        <div className="mt-14 flex flex-col items-start gap-2 md:flex-row md:flex-wrap md:items-center md:gap-3">
-                            {DATA_FLOW.map((step, index) => (
-                                <div key={step} className="flex items-center gap-3 md:gap-3">
-                                    <span className="font-mono text-xs uppercase tracking-[0.15em] text-black/60">
-                                        {step}
-                                    </span>
-
-                                    {index < DATA_FLOW.length - 1 && (
-                                        <span className="text-black/25">
-                                            <span className="md:hidden">↓</span>
-                                            <span className="hidden md:inline">→</span>
-                                        </span>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    </Reveal>
-
-                    <Reveal delay={0.18}>
-                        <p className="mt-10 -rotate-1 font-serif text-base italic text-black/40">
-                            &ldquo;data goes in → chaos happens → useful thing comes out&rdquo;
-                        </p>
-                    </Reveal>
-                </div>
-            </section>
-
-            {/* TOOLS I ACTUALLY USED HERE */}
-            <section className="border-t border-black/10">
-                <div className="mx-auto max-w-[1100px] px-6 py-24 md:px-10">
-                    <Reveal>
-                        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-burgundy">
-                            Tools I actually used here
-                        </p>
-
-                        <p className="mt-5 max-w-lg leading-7 text-black/50">
-                            Hover a tool to see what it was actually for.
-                        </p>
-                    </Reveal>
-
-                    <Reveal delay={0.1}>
-                        <div className="mt-10 flex flex-wrap gap-x-3 gap-y-8">
-                            {TOOLS.map((tool) => (
-                                <div key={tool.name} className="group relative">
-                                    <span className="inline-flex cursor-default items-center rounded-full border border-black/15 px-4 py-2 text-sm text-black/70 transition group-hover:border-burgundy/40 group-hover:text-burgundy">
-                                        {tool.name}
-                                    </span>
-
-                                    <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-md bg-ink px-2.5 py-1 font-mono text-[10px] text-white/90 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
-                                        {tool.description}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </Reveal>
-                </div>
-            </section>
-
             {/* WHAT I LEARNED */}
             <section className="border-t border-black/10">
                 <div className="mx-auto max-w-[1100px] px-6 py-24 md:px-10">
@@ -229,58 +100,6 @@ export default function GlobalRecordsCaseStudy() {
                                 useful data = context + question + action
                             </p>
                         </Reveal>
-                    </div>
-                </div>
-            </section>
-
-            {/* BEHIND THE SCENES */}
-            <section className="border-t border-black/10">
-                <div className="mx-auto max-w-[1100px] px-6 py-24 md:px-10">
-                    <Reveal>
-                        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-burgundy">
-                            Behind the scenes
-                        </p>
-
-                        <p className="mt-5 max-w-lg leading-7 text-black/50">
-                            A small, growing scrapbook, space reserved for anonymised
-                            screenshots as I add them.
-                        </p>
-                    </Reveal>
-
-                    <div className="mt-14 flex flex-wrap justify-center gap-x-10 gap-y-14">
-                        {SCRAPBOOK.map((frame, index) => (
-                            <Reveal key={frame.label} delay={index * 0.08}>
-                                <div className={`relative ${frame.rotate}`}>
-                                    <span className="absolute -top-3 left-1/2 h-5 w-14 -translate-x-1/2 rotate-2 bg-rose-200/70 shadow-sm" />
-
-                                    <div className="bg-paper-card flex aspect-[4/3] w-48 flex-col justify-between rounded-sm border border-black/10 p-3 shadow-md sm:w-56">
-                                        <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-black/35">
-                                            {frame.label}
-                                        </span>
-
-                                        {frame.image ? (
-                                            <div className="relative flex-1 overflow-hidden rounded-sm border border-black/15">
-                                                <Image
-                                                    src={frame.image}
-                                                    alt={frame.imageAlt ?? ""}
-                                                    fill
-                                                    className="object-cover"
-                                                    sizes="(max-width: 640px) 192px, 224px"
-                                                />
-                                            </div>
-                                        ) : (
-                                            <div className="flex-1 rounded-sm border border-dashed border-black/15" />
-                                        )}
-                                    </div>
-
-                                    <p
-                                        className={`mt-3 text-center text-xs text-black/45 ${frame.captionStyle}`}
-                                    >
-                                        {frame.caption}
-                                    </p>
-                                </div>
-                            </Reveal>
-                        ))}
                     </div>
                 </div>
             </section>

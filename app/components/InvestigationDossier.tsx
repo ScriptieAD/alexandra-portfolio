@@ -307,7 +307,7 @@ export default function InvestigationDossier({
       {/* main case file sheet — aligned to sit right on top of
           DossierBase's own blank main-sheet area */}
       <Layer className="top-[2%] left-[16%] z-20 w-[80%] sm:left-[20%] sm:w-[74%] lg:top-[15%] lg:left-[34%] lg:w-[48%]">
-        <CaseFileSheet delay={0.28} onOpen={onOpenCase} />
+        <CaseFileSheet delay={0.5} onOpen={onOpenCase} />
       </Layer>
       </div>
     </div>

@@ -1,12 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import Reveal from "./components/Reveal";
 import ProjectsSection from "./components/ProjectsSection";
-
-const CASE_FILE_HREF = "/projects/aml-transaction-monitoring";
+import { experiences } from "./about/experiences-data";
 
 const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
@@ -65,10 +63,11 @@ function EditorialCta({
 }
 
 export default function Home() {
-  const router = useRouter();
-
   function handleOpenCase() {
-    router.push(CASE_FILE_HREF);
+    document.getElementById("case-index")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   }
 
   return (
@@ -107,172 +106,83 @@ export default function Home() {
         <ProjectsSection onOpenCase={handleOpenCase} />
       </section>
 
-      {/* ABOUT / SKILLS */}
-      <section id="about" className="bg-paper relative overflow-hidden py-28">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.035] mix-blend-overlay"
-          style={{ backgroundImage: GRAIN }}
-        />
-        <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
-        <Reveal>
-          <div className="grid gap-16 lg:grid-cols-2">
+      {/* EXPERIENCE — same background timeline used on /about */}
+      <section id="experience" className="border-t border-black/10 py-24">
+        <div className="mx-auto max-w-[1400px] px-6 md:px-10">
 
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-burgundy">
-                About
-              </p>
+          <div className="grid gap-16 lg:grid-cols-[0.7fr_1.3fr]">
 
-              <h2 className="mt-5 max-w-xl font-serif text-5xl leading-[1.05]">
-                Analytical thinking
-                with a creative edge.
-              </h2>
-            </div>
+            <Reveal>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-burgundy">
+                  Background
+                </p>
 
-            <div>
-              <p className="max-w-xl text-lg leading-8 text-black/60">
-                My background combines data, business and technology. I
-                enjoy understanding how systems work, spotting patterns and
-                turning complex information into practical, clear solutions.
-              </p>
-
-              <p className="mt-6 max-w-xl text-lg leading-8 text-black/60">
-                More recently, I&apos;ve been focusing on financial crime,
-                fraud analytics and transaction monitoring, building
-                hands-on projects to better understand how data can be used
-                to detect unusual behaviour and support real-world
-                investigations.
-              </p>
-
-              <Link
-                href="/about"
-                className="group relative mt-8 inline-flex items-center gap-2.5 text-sm font-semibold text-burgundy"
-              >
-                More about me
-                <span
-                  aria-hidden="true"
-                  className="inline-block transition-transform duration-300 group-hover:translate-x-1"
-                >
-                  →
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="bg-burgundy-dark absolute -bottom-1 left-0 h-px w-[calc(100%-14px)] origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
-                />
-              </Link>
-            </div>
-
-          </div>
-        </Reveal>
-
-        {/* SKILLS */}
-        <Reveal delay={0.1}>
-          <div className="mt-24 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-
-            {[
-              {
-                title: "Data",
-                text: "Python · Pandas · SQL · Analytics",
-              },
-              {
-                title: "Technology",
-                text: "JavaScript · React · APIs · Supabase",
-              },
-              {
-                title: "Risk",
-                text: "Fraud · AML · Transaction Monitoring",
-              },
-              {
-                title: "Business",
-                text: "Reporting · Testing · Requirements",
-              },
-            ].map((skill, i) => (
-              <div key={skill.title} className="relative">
-                <span
-                  aria-hidden="true"
-                  className="block h-px w-full origin-left bg-black/15"
-                />
-                <div className="pt-6">
-                  <p className="text-burgundy/70 font-mono text-[10px] tracking-[0.22em] uppercase">
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <p className="mt-3 font-serif text-2xl">{skill.title}</p>
-                  <p className="mt-3 text-sm leading-6 text-black/50">
-                    {skill.text}
-                  </p>
-                </div>
+                <h2 className="mt-5 font-serif text-5xl leading-[1.05]">
+                  From business
+                  <br />
+                  to data.
+                </h2>
               </div>
-            ))}
+            </Reveal>
 
-          </div>
-        </Reveal>
-        </div>
-      </section>
+            <div className="relative border-l border-black/10 pl-9 sm:pl-12">
 
-      {/* EXPERIENCE */}
-      <section
-        id="experience"
-        className="bg-paper-dark relative overflow-hidden border-t border-black/10 py-28 text-white"
-      >
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay"
-          style={{ backgroundImage: GRAIN }}
-        />
-        <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
+              {experiences.map((exp, index) => (
+                <Reveal key={exp.company} delay={index * 0.08}>
+                  <div
+                    className={`relative ${index !== experiences.length - 1
+                      ? "mb-14 border-b border-black/10 pb-14"
+                      : ""
+                      }`}
+                  >
+                    <span
+                      className={`absolute -left-[41px] top-1.5 rounded-full sm:-left-[53px] ${exp.current
+                        ? "h-3 w-3 bg-burgundy"
+                        : "h-2 w-2 bg-black/25"
+                        }`}
+                    />
 
-          <Reveal>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-burgundy">
-              Experience
-            </p>
+                    <Link
+                      href={`/about/${exp.slug}`}
+                      className="group/exp -mx-4 block rounded-2xl px-4 py-2 transition hover:bg-black/[0.03] motion-reduce:transition-colors"
+                    >
+                      <div className="flex flex-wrap items-center gap-3">
+                        <p className="text-xs uppercase tracking-[0.2em] text-black/50">
+                          {exp.period}
+                        </p>
 
-            <h2 className="mt-5 font-serif text-5xl">
-              Where data meets business.
-            </h2>
-          </Reveal>
+                        {exp.current && (
+                          <span className="rounded-full bg-burgundy/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-burgundy">
+                            Current
+                          </span>
+                        )}
+                      </div>
 
-          <div className="mt-16 divide-y divide-white/10">
+                      <h3
+                        className={`mt-3 flex items-center gap-3 font-serif transition group-hover/exp:text-burgundy ${exp.current ? "text-4xl md:text-5xl" : "text-3xl"
+                          }`}
+                      >
+                        {exp.company}
 
-            {[
-              {
-                status: "Current",
-                role: "Global Records",
-                domain: "Data & Analytics",
-                text: "Financial and market data analysis, reporting automation, dashboards, APIs, SQL databases and analytical workflows.",
-              },
-              {
-                status: "Previous",
-                role: "Business Analyst",
-                domain: "Software & Public Systems",
-                text: "Application analysis, test cases, feature validation, deployments and collaboration across technical teams.",
-              },
-              {
-                status: "Previous",
-                role: "Alpha Bank",
-                domain: "Digital Channels",
-                text: "Financial reporting, digital banking operations, issue monitoring and stakeholder collaboration.",
-              },
-            ].map((job, i) => (
-              <Reveal key={job.role} delay={i * 0.06}>
-                <div className="grid gap-5 py-8 md:grid-cols-[0.8fr_1.2fr_2fr]">
-                  <p className="font-mono text-[11px] tracking-[0.2em] text-white/35 uppercase">
-                    {job.status}
-                  </p>
+                        <span className="-translate-x-1 text-xl opacity-0 transition group-hover/exp:translate-x-0 group-hover/exp:opacity-100 motion-reduce:translate-x-0">
+                          →
+                        </span>
+                      </h3>
 
-                  <div>
-                    <p className="font-serif text-xl">{job.role}</p>
-                    <p className="mt-1 text-sm text-white/40">
-                      {job.domain}
-                    </p>
+                      <p className="mt-2 text-sm font-medium">
+                        {exp.role}
+                      </p>
+
+                      <p className="mt-4 max-w-xl leading-7 text-black/60">
+                        {exp.description}
+                      </p>
+                    </Link>
                   </div>
+                </Reveal>
+              ))}
 
-                  <p className="max-w-2xl text-sm leading-7 text-white/55">
-                    {job.text}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-
+            </div>
           </div>
         </div>
       </section>

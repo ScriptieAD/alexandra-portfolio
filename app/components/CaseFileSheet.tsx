@@ -100,10 +100,10 @@ export default function CaseFileSheet({
       <button
         type="button"
         onClick={onOpen}
-        aria-label="Open case: Financial Crime & Fraud Analytics"
+        aria-label="Explore my work — scroll to projects"
         className="bg-burgundy hover:bg-burgundy-dark shadow-paper-xs mt-8 flex w-full items-center justify-center gap-2.5 rounded-sm py-3.5 font-mono text-xs font-semibold tracking-[0.2em] text-white uppercase transition-colors duration-300 motion-reduce:transition-none sm:py-4 lg:mt-3"
       >
-        Open case
+        Explore my work
         <ArrowUpRight
           aria-hidden="true"
           className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5 motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0"
